@@ -17,7 +17,7 @@ The app is designed for home cooks to simplify the meal planning process. Whethe
 
 ### Features
 
-List the functionality that your app will include. These can be written as user stories or descriptions with related details. Do not describe _how_ these features are implemented, only _what_ needs to be implemented.
+This app currently includes the following list of features:
 
 - **Search:** Users can search up a recipe within the app by entering key ingredients.
 
@@ -153,7 +153,7 @@ This app will have a user login system to allow users to save their favourite re
 Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
 
 ### Sprint 1
--
+
 ### Sprint 2
 
 ### Sprint 3
