@@ -59,9 +59,9 @@ This app currently includes the following list of features:
 <img src="./public/images/wireframes2.png" alt="app wireframes"/>
 
 
-### Data Scheme
+### Data
 
-<img src="./public/images/datamap.png" alt="data map">
+<img src="./public/images/datamap.png" alt="data map" width="400px" />
 
 ### Endpoints
 
