@@ -69,6 +69,8 @@ Describe your data and the relationships between them. You can show this visuall
 - Geolocation
 - Stores
 
+<img src="./public/images/datamap.png" alt="data map">
+
 ### Endpoints
 
 List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
@@ -132,6 +134,11 @@ List endpoints that your server will implement, including HTTP methods, paramete
     ```
     /api/users/:id
     ```
+  - Delete a user's recipe
+    ```
+    /api/users/:id/recipes/:id
+    ```
+
 - RESPONSES: 
   - 200 success for all GET and PUT/PATCH requests
   - 201 created new content for POST requests
@@ -153,7 +160,7 @@ This app will have a user login system to allow users to save their favourite re
 Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
 
 ### Sprint 1
--
+
 ### Sprint 2
 
 ### Sprint 3
