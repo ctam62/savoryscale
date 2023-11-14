@@ -59,13 +59,7 @@ This app currently includes the following list of features:
 <img src="./public/images/wireframes2.png" alt="app wireframes"/>
 
 
-### Data
-
-- User
-- Recipes
-- Price List
-- Geolocation
-- Stores
+### Data Scheme
 
 <img src="./public/images/datamap.png" alt="data map">
 
