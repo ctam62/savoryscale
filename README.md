@@ -17,7 +17,7 @@ The app is designed for home cooks to simplify the meal planning process. Whethe
 
 ### Features
 
-List the functionality that your app will include. These can be written as user stories or descriptions with related details. Do not describe _how_ these features are implemented, only _what_ needs to be implemented.
+This app currently includes the following list of features:
 
 - **Search:** Users can search up a recipe within the app by entering key ingredients.
 
@@ -25,7 +25,7 @@ List the functionality that your app will include. These can be written as user 
 
 - **Recipe budgeting:** Providing an estimated cost of ingredients to help users budget for their meals more effectively.
 
--	**Cost-effective planning:** Suggest alternative ingredients or provide cost-saving tips to help users make budget-friendly choices without compromising nutrition.
+-	**Cost-effective planning:** Suggest alternative ingredients to help users make budget-friendly choices without compromising nutrition.
 
 - **Smart shopping:** Generate a complete grocery list from a user's scaled recipes to assist them in purchasing the right quantities of ingredients.
 
@@ -61,8 +61,6 @@ List the functionality that your app will include. These can be written as user 
 
 ### Data
 
-Describe your data and the relationships between them. You can show this visually using diagrams, or write it out.
-
 - User
 - Recipes
 - Price List
@@ -73,7 +71,7 @@ Describe your data and the relationships between them. You can show this visuall
 
 ### Endpoints
 
-List endpoints that your server will implement, including HTTP methods, parameters, and example responses.
+This app's API server has the following list of endpoints:
 
 **HTTP methods:**
 
@@ -149,8 +147,8 @@ List endpoints that your server will implement, including HTTP methods, paramete
 
 ### Auth
 
-This app will have a user login system to allow users to save their favourite recipes and scaling inputs.
-  * Users will have the option to create an account through the app or using their existing gmail account.
+This app includes a user login system to allow users to save their favourite recipes and scaling inputs.
+  * Users have the option to create an account through the app or use their existing gmail account.
   * OAuth 2.0 will be implemented.
 
 <br>
