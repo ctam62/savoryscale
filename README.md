@@ -149,13 +149,24 @@ This app includes a user login system to allow users to save their favourite rec
 
 ## Roadmap
 
-Scope your project as a sprint. Break down the tasks that will need to be completed and map out timeframes for implementation. Think about what you can reasonably complete before the due date. The more detail you provide, the easier it will be to build.
-
 ### Sprint 1
+- Home Page, Recipe Page, Grocery List Page
+- Connect to Spoonacular API
+- Create SavoryScale API server and endpoints
+  - recipes table 
+  - scaled recips table
 
 ### Sprint 2
+- User Login integration
+- Save recipes per user
+- User recipe customization
 
 ### Sprint 3
+- Walmart API/Superstore API integration
+- Ingredient costs from grocery store
+
+### Sprint 4
+- Google Maps / Mapbox API integration to find local grocery stores
 
 <br>
 
