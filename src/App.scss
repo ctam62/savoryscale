@@ -1,0 +1,10 @@
+@use './styles/reset';
+@use './styles/fonts';
+@use './styles/global';
+@use './styles/variables' as *;
+
+#root {
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: $site-padding $site-padding 8rem;
+}
