@@ -5,10 +5,4 @@
     &__logo {
         @include heading;
     }
-
-    &__subheader {
-        @include subheading;
-        margin: 1rem 0;
-        color: $color-accent;
-    }
 }
