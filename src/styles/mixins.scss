@@ -20,7 +20,7 @@
 
 @mixin heading {
     font-size: var(--text-heading-size);
-    font-weight: bold;
+    font-weight: 400;
     font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
 }
 
@@ -58,10 +58,11 @@
 }
 
 @mixin button {
-    border: 0.1563rem solid $color-accent-secondary;
+    background: $color-accent-tertiary;
     border-radius: 1rem;
     padding: 0.625rem 1.25rem;
-    font-weight: 900;
+    font-weight: 600;
+    font-size: 0.875rem;
 
     &:hover,
     &--selected {

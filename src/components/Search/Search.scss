@@ -3,13 +3,13 @@
 
 .search {
     display: flex;
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 3.125rem;
     border: 0.0625rem solid $color-accent;
     margin-bottom: 1rem;
 
     &-icon {
-        width: 1.5625rem;
+        width: 1.2rem;
         margin-right: 0.5rem;
     }
 
@@ -18,16 +18,16 @@
         border: none;
         width: 100%;
         @include search-text;
-    }
 
-    &::placeholder {
-        color: $color-accent;
-        opacity: 1;
-        /* Firefox */
-    }
+        &::placeholder {
+            color: $color-accent;
+            opacity: 1;
+            /* Firefox */
+        }
 
-    &::-ms-input-placeholder {
-        /* Edge 12 -18 */
-        color: $color-accent;
+        &::-ms-input-placeholder {
+            /* Edge 12 -18 */
+            color: $color-accent;
+        }
     }
 }
