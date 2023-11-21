@@ -36,7 +36,7 @@
 
 @mixin search-text {
     font-size: var(--text-search-size);
-    font-weight: bold;
+    font-weight: 600;
     color: $color-accent;
     line-height: 1.5rem;
 }
@@ -58,12 +58,14 @@
 }
 
 @mixin button {
-    border: 2px solid $color-secondary;
-    border-radius: 10px;
+    border: 0.1563rem solid $color-accent-secondary;
+    border-radius: 1rem;
     padding: 0.625rem 1.25rem;
+    font-weight: 900;
 
     &:hover,
     &--selected {
-        background: $color-highlight;
+        background: $color-accent-secondary;
+        color: $color-highlight;
     }
 }

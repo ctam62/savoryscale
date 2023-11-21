@@ -3,7 +3,7 @@ import searchIcon from '../../assets/icons/search.svg';
 
 export const Search = () => {
     return (
-        <div className="search">
+        <div className='search'>
             <img className='search-icon' src={searchIcon} alt='search icon' />
             <input
                 className='search-input'
