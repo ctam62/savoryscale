@@ -1,22 +1,14 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
 .header {
     &__logo {
-        @include nav-text;
+        @include heading;
     }
 
-    &__search {
-        display: flex;
-        padding: 1rem;
-        border-radius: 3.125rem;
-        border: 0.0625rem solid #ccc;
-
-        &-icon {
-            width: 1.5625rem;
-            margin-right: 0.5rem;
-        }
-
-        &-input {
-            outline: none;
-            border: none;
-        }
+    &__subheader {
+        @include subheading;
+        margin: 1rem 0;
+        color: $color-accent;
     }
 }
