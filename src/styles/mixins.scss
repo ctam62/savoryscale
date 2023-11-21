@@ -21,6 +21,7 @@
 @mixin heading {
     font-size: var(--text-heading-size);
     font-weight: bold;
+    font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
 }
 
 @mixin subheading {
