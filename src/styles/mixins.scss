@@ -1,0 +1,68 @@
+@use './variables' as *;
+
+@mixin tablet {
+    @media (min-width: $tablet-breakpoint) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: $desktop-breakpoint) {
+        @content;
+    }
+}
+
+@mixin letter {
+    max-width: $letter-width;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@mixin heading {
+    font-size: var(--text-heading-size);
+    font-weight: bold;
+}
+
+@mixin subheading {
+    font-size: var(--text-subheading-size);
+    font-weight: bold;
+}
+
+@mixin card-label {
+    font-size: var(--text-card-label-size);
+    font-weight: bold;
+}
+
+@mixin search-text {
+    font-size: var(--text-search-size);
+    font-weight: bold;
+    // color: $color-accent;
+    line-height: 1.5rem;
+}
+
+@mixin body-text {
+    font-size: var(--text-body-size);
+}
+
+@mixin body-text-small {
+    font-size: var(--text-bodysmall-size);
+}
+
+@mixin nav-text {
+    font-size: var(--text-nav-size);
+}
+
+@mixin small-text {
+    font-size: var(--text-small-size);
+}
+
+@mixin button {
+    border: 2px solid $color-primary;
+    border-radius: 10px;
+    padding: 0.625rem 1.25rem;
+
+    // &:hover,
+    // &--selected {
+    //     background: $color-accent-tertiary;
+    // }
+}
