@@ -2,6 +2,6 @@ import './HomePage.scss';
 
 export const HomePage = () => {
     return (
-        <div>HomePage</div>
+        <h1>Find a recipe and scale it</h1>
     )
 }

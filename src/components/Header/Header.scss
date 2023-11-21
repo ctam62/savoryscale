@@ -1,4 +1,8 @@
 .header {
+    &__logo {
+        @include nav-text;
+    }
+
     &__search {
         display: flex;
         padding: 1rem;
