@@ -1,0 +1,40 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.recipe-nav {
+    margin: 1.5rem 0;
+    min-width: fit-content;
+    font-weight: 400;
+    font-size: 0.75rem;
+    @include small-text;
+    color: $color-accent;
+
+    @include tablet {
+        font-size: 1.25rem;
+    }
+
+    &__list {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-radius: 3rem;
+        background-color: $color-accent-tertiary;
+
+        &-item {
+            width: 50%;
+            min-width: fit-content;
+            padding: 0.75rem;
+            cursor: pointer;
+
+            @include tablet {
+                padding: 1rem 2rem;
+            }
+
+            &--active {
+                border-radius: 3rem;
+                background-color: $color-accent-secondary;
+                color: $color-highlight;
+            }
+        }
+    }
+}
