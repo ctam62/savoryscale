@@ -6,7 +6,7 @@ import { Filters } from '../../components/Filters/Filters';
 import { SearchResults } from '../../components/SearchResults/SearchResults';
 import { CardGrid } from '../../components/CardGrid/CardGrid';
 
-export const HomePage = ({ recipeList, handleBookmark }) => {
+export const HomePage = ({ recipeList, handleLikeButton }) => {
 
     const [popularRecipes, setPopularRecipes] = useState([]);
 
@@ -27,10 +27,10 @@ export const HomePage = ({ recipeList, handleBookmark }) => {
                 results={popularRecipes}
                 title="title"
                 image="image"
-                handleBookmark={handleBookmark}
+                handleLikeButton={handleLikeButton}
                 recipeList={recipeList}
             />
-            <SearchResults recipeList={recipeList} handleBookmark={handleBookmark} />
+            <SearchResults recipeList={recipeList} handleLikeButton={handleLikeButton} />
         </main>
     );
 };
