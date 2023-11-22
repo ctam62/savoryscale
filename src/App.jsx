@@ -36,7 +36,7 @@ function App() {
         <Routes>
           <Route path='/'
             element={<HomePage recipeList={recipeList} handleLikeButton={handleLikeButton} />} />
-          <Route path='/recipe/:id' element={<RecipePage />} />
+          <Route path='/recipe/:recipeId' element={<RecipePage recipeList={recipeList} handleLikeButton={handleLikeButton} />} />
         </Routes>
       </BrowserRouter>
     </>
