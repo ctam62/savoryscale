@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { CardGrid } from '../CardGrid/CardGrid';
 import recipeData from '../../data/spoonacular_recipes.json';
 
-export const SearchResults = ({ query, recipeList, handleBookmark }) => {
+export const SearchResults = ({ query, recipeList, handleLikeButton }) => {
     const [results, setResults] = useState([]);
     const apiUrl = import.meta.env.SPOONACULAR_API_URL;
     const apiKey = import.meta.env.SPOONACULAR_API_KEY;
@@ -25,7 +25,7 @@ export const SearchResults = ({ query, recipeList, handleBookmark }) => {
                 title="title"
                 image="image"
                 cookTime="readyInMinutes"
-                handleBookmark={handleBookmark}
+                handleLikeButton={handleLikeButton}
                 recipeList={recipeList}
             />
         </section>
