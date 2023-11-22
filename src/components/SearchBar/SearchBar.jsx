@@ -1,7 +1,7 @@
-import './Search.scss';
+import './SearchBar.scss';
 import searchIcon from '../../assets/icons/search.svg';
 
-export const Search = () => {
+export const SearchBar = () => {
     return (
         <div className='search'>
             <img className='search-icon' src={searchIcon} alt='search icon' />
@@ -11,5 +11,5 @@ export const Search = () => {
                 name='search'
                 placeholder='What are you craving?' />
         </div>
-    )
-}
+    );
+};
