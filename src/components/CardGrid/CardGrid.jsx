@@ -2,7 +2,7 @@ import './CardGrid.scss';
 import { useEffect, useState } from 'react';
 import { Card } from '../Card/Card';
 
-export const CardGrid = ({ results, title, image, cookTime, handleBookmark, recipeList }) => {
+export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, recipeList }) => {
     const [quantityToShow, setQuantityToShow] = useState(1);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export const CardGrid = ({ results, title, image, cookTime, handleBookmark, reci
                         title={result[title]}
                         image={result[image]}
                         cookTime={result[cookTime]}
-                        handleBookmark={() => handleBookmark(result)}
+                        handleLikeButton={() => handleLikeButton(result)}
                         inCollection={recipeList.map(recipe => recipe.id).includes(result.id)}
                     />
                 ).slice(0, quantityToShow)}
