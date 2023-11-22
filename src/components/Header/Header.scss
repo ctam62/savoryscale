@@ -2,6 +2,8 @@
 @use './../../styles/variables.scss' as *;
 
 .header {
+    padding: $site-padding;
+
     &__logo {
         @include heading;
     }

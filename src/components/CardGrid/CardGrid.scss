@@ -33,16 +33,13 @@
         }
     }
 
-
     &__heading {
         @include subheading;
         @include letter;
         padding-bottom: 3rem;
     }
 
-
-
     &__placeholder {
-        aspect-ratio: 27 / 40;
+        aspect-ratio: 3 / 4;
     }
 }

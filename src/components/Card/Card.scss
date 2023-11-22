@@ -22,23 +22,13 @@
 
     &__button {
         position: relative;
-        height: 2.5rem;
-        width: 2.5rem;
         margin: 1rem;
-        padding: 1rem;
         left: 70%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: $color-highlight;
-        border-radius: 0.8rem;
-        box-shadow: 0 0.4375rem 1.8125rem 0 rgba(100, 100, 111, 0.2);
-        z-index: 2;
+        @include icon-button;
     }
 
     &__like {
-        width: 1.25rem;
-        cursor: pointer;
+        @include icon-clickable;
     }
 
     &__image {

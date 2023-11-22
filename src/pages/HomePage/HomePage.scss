@@ -1,8 +1,12 @@
 @use './../../styles/mixins.scss' as *;
 @use './../../styles/variables.scss' as *;
 
-.home__subheader {
-    @include subheading;
-    margin: 1rem 0;
-    color: $color-accent;
+.home {
+    padding: $site-padding;
+
+    &__subheader {
+        @include subheading;
+        margin: 1rem 0;
+        color: $color-accent;
+    }
 }

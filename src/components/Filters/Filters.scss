@@ -7,6 +7,15 @@
     flex-wrap: wrap;
     gap: 1rem;
 
+    @include tablet {
+        margin: 1rem auto;
+        width: 80%;
+    }
+
+    @include desktop {
+        max-width: 70%;
+    }
+
     &__button {
         @include button;
         border-radius: 0.75rem;
