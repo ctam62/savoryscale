@@ -154,7 +154,7 @@ This app includes a user login system to allow users to save their favourite rec
 - Connect to Spoonacular API
 - Create SavoryScale API server and endpoints
   - recipes table 
-  - scaled recips table
+  - scaled recipes table
 
 ### Sprint 2
 - User Login integration
