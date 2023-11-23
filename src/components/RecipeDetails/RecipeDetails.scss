@@ -1,0 +1,37 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.recipe-details {
+    &__nutrition {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 1rem;
+
+        @include small-device {
+            flex-wrap: wrap;
+        }
+    }
+
+    &__item {
+        width: 25%;
+        background: $color-highlight;
+        padding: 1rem;
+        border-radius: 1rem;
+        font-weight: bold;
+
+        @include small-device {
+            width: 45%;
+        }
+    }
+
+    &__text {
+        font-weight: 400;
+    }
+
+    &__summary {
+        margin-top: 1.5rem;
+        text-align: justify;
+    }
+}
