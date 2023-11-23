@@ -1,16 +1,12 @@
-import './ServingControls.scss';
-import { useState } from 'react';
+import './Servings.scss';
 import minusIcon from '../../assets/icons/minus.svg';
 import plusIcon from '../../assets/icons/plus.svg';
 
-export const ServingControls = ({ recipe }) => {
-
-    const [servings, setServings] = useState(recipe.servings);
-
+export const Servings = ({ servings, setServings }) => {
     return (
-        <article className="recipe__servings">
+        <article className="servings">
             <h3>Servings</h3>
-            <div className="recipe__controls">
+            <div className="servings__controls">
                 <button className="recipe__button recipe__button--controls" onClick={() => setServings(servings - 1)}>
                     <img className="recipe__icons" src={minusIcon} alt="minus icon" />
                 </button>
