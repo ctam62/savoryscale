@@ -1,10 +1,14 @@
 import './RecipeSubNav.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export const RecipeSubNav = ({ navItems }) => {
+export const RecipeSubNav = ({ navItems, setActiveTab }) => {
 
     const [item1, item2] = navItems;
     const [tab, setTab] = useState(item1);
+
+    useEffect(() => {
+        setActiveTab(tab);
+    }, [tab]);
 
     return (
         <nav className="recipe-nav">
