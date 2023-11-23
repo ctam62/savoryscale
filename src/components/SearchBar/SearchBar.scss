@@ -5,7 +5,8 @@
     display: flex;
     padding: 0.5rem;
     border-radius: 3.125rem;
-    border: 0.0625rem solid $color-accent;
+    // border: 0.0625rem solid $color-accent;
+    background-color: $color-highlight;
 
     @include tablet {
         max-width: 80%;
@@ -26,6 +27,7 @@
         border: none;
         width: 100%;
         @include search-text;
+        background-color: $color-highlight;
 
         &::placeholder {
             color: $color-accent;

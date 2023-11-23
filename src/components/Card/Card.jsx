@@ -10,14 +10,16 @@ export const Card = ({ id, title, image, cookTime, handleLikeButton, inCollectio
 
     return (
         <article className="card">
-            <button className="card__button" type="button">
-                <img
-                    className="card__like"
-                    src={inCollection ? likeActiveIcon : likeIcon}
-                    alt="like icon add recipe to like list"
-                    onClick={handleLikeButton}
-                />
-            </button>
+            <div className="card__header">
+                <button className="card__button" type="button">
+                    <img
+                        className="card__like"
+                        src={inCollection ? likeActiveIcon : likeIcon}
+                        alt="like icon add recipe to like list"
+                        onClick={handleLikeButton}
+                    />
+                </button>
+            </div>
             <div className="card__body" onClick={() => navigate(`/recipe/${id}`)}>
                 <img className="card__image" src={image} alt={title} />
                 <div className="card__text">

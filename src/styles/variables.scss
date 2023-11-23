@@ -1,11 +1,12 @@
+$small-device-breakpoint: 390px;
 $tablet-breakpoint: 768px;
 $desktop-breakpoint: 1280px;
 
 :root {
     --site-padding: 1rem;
-    --letter-width: 35rem;
+    --letter-width: 25rem;
 
-    --text-heading-size: 2.25rem;
+    --text-heading-size: 2.5rem;
     --text-subheading-size: 1.25rem;
     --text-card-label-size: 1.125rem;
     --text-search-size: 1rem;
@@ -18,18 +19,19 @@ $desktop-breakpoint: 1280px;
         --site-padding: 2rem;
         --letter-width: 50rem;
 
-        --text-heading-size: 2.5rem;
+        --text-heading-size: 2.75rem;
         --text-subheading-size: 2rem;
         --text-card-label-size: 0.95rem;
         --text-search-size: 1rem;
         --text-body-size: 1.25rem;
-        --text-bodysmall-size: 0.875rem;
+        --text-bodysmall-size: 1.25rem;
         --text-nav-size: 1.25rem;
         --text-small-size: 1rem;
     }
 
     @media (min-width: $desktop-breakpoint) {
-        --letter-width: 65rem;
+        --letter-width: 55rem;
+        --text-bodysmall-size: 1.5rem;
     }
 }
 
@@ -37,10 +39,10 @@ $site-padding: var(--site-padding);
 $letter-width: var(--letter-width);
 
 $color-primary: #333;
-$color-secondary: #8BDFC3;
+$color-secondary: #F9F9F9;
 $color-accent: #B2B2B2;
 $color-accent-secondary: #72C49E;
-$color-accent-tertiary: #F7F7F7;
+$color-accent-tertiary: #EEE;
 $color-highlight: #FFF;
 $color-tertiary: #FBAE17;
-$color-quarternary: #F05C51;
+$color-quarternary: #f8ac9c;
