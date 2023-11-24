@@ -1,0 +1,186 @@
+{
+    "ingredients": [
+        {
+            "name": "diced additional toppings: avocado",
+            "image": "avocado.jpg",
+            "price": 597.01,
+            "amount": {
+                "metric": {
+                    "value": 8.0,
+                    "unit": "servings"
+                },
+                "us": {
+                    "value": 8.0,
+                    "unit": "servings"
+                }
+            }
+        },
+        {
+            "name": "diced carrots",
+            "image": "sliced-carrot.png",
+            "price": 32.13,
+            "amount": {
+                "metric": {
+                    "value": 3.0,
+                    "unit": "medium"
+                },
+                "us": {
+                    "value": 3.0,
+                    "unit": "medium"
+                }
+            }
+        },
+        {
+            "name": "diced celery stalks",
+            "image": "celery.jpg",
+            "price": 4.51,
+            "amount": {
+                "metric": {
+                    "value": 3.0,
+                    "unit": ""
+                },
+                "us": {
+                    "value": 3.0,
+                    "unit": ""
+                }
+            }
+        },
+        {
+            "name": "shredded chicken breast",
+            "image": "cooked-chicken-breast.png",
+            "price": 584.27,
+            "amount": {
+                "metric": {
+                    "value": 280.0,
+                    "unit": "g"
+                },
+                "us": {
+                    "value": 2.0,
+                    "unit": "cups"
+                }
+            }
+        },
+        {
+            "name": "italian flat leaf parsley",
+            "image": "parsley.jpg",
+            "price": 118.8,
+            "amount": {
+                "metric": {
+                    "value": 30.0,
+                    "unit": "g"
+                },
+                "us": {
+                    "value": 0.5,
+                    "unit": "cup"
+                }
+            }
+        },
+        {
+            "name": "garlic",
+            "image": "garlic.png",
+            "price": 40.0,
+            "amount": {
+                "metric": {
+                    "value": 6.0,
+                    "unit": "cloves"
+                },
+                "us": {
+                    "value": 6.0,
+                    "unit": "cloves"
+                }
+            }
+        },
+        {
+            "name": "olive oil",
+            "image": "olive-oil.jpg",
+            "price": 33.35,
+            "amount": {
+                "metric": {
+                    "value": 2.0,
+                    "unit": "Tbsps"
+                },
+                "us": {
+                    "value": 2.0,
+                    "unit": "Tbsps"
+                }
+            }
+        },
+        {
+            "name": "canned tomatoes",
+            "image": "tomatoes-canned.png",
+            "price": 170.1,
+            "amount": {
+                "metric": {
+                    "value": 793.787,
+                    "unit": "g"
+                },
+                "us": {
+                    "value": 28.0,
+                    "unit": "ounce"
+                }
+            }
+        },
+        {
+            "name": "red dried lentils",
+            "image": "red-lentils.png",
+            "price": 154.29,
+            "amount": {
+                "metric": {
+                    "value": 360.0,
+                    "unit": "g"
+                },
+                "us": {
+                    "value": 2.0,
+                    "unit": "cups"
+                }
+            }
+        },
+        {
+            "name": "diced turnip",
+            "image": "turnips.png",
+            "price": 40.26,
+            "amount": {
+                "metric": {
+                    "value": 1.0,
+                    "unit": "large"
+                },
+                "us": {
+                    "value": 1.0,
+                    "unit": "large"
+                }
+            }
+        },
+        {
+            "name": "vegetable stock",
+            "image": "chicken-broth.png",
+            "price": 604.29,
+            "amount": {
+                "metric": {
+                    "value": 1.88,
+                    "unit": "l"
+                },
+                "us": {
+                    "value": 8.0,
+                    "unit": "cups"
+                }
+            }
+        },
+        {
+            "name": "yellow diced onion",
+            "image": "brown-onion.png",
+            "price": 24.2,
+            "amount": {
+                "metric": {
+                    "value": 1.0,
+                    "unit": "medium"
+                },
+                "us": {
+                    "value": 1.0,
+                    "unit": "medium"
+                }
+            }
+        }
+    ],
+    "totalCost": 2403.2,
+    "totalCostPerServing": 300.4
+}

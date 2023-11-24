@@ -1,0 +1,12 @@
+{
+    "equipment": [
+        {
+            "name": "dutch oven",
+            "image": "dutch-oven.jpg"
+        },
+        {
+            "name": "stove",
+            "image": "oven.jpg"
+        }
+    ]
+}
