@@ -5,6 +5,7 @@
     &__header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         text-align: left;
         font-weight: bold;
         padding: 0 0.75rem;
@@ -12,6 +13,41 @@
 
         @include tablet {
             @include body-text;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    &__units {
+        display: flex;
+        border-radius: 3.125rem;
+        background-color: $color-accent-tertiary;
+        @include small-text;
+    }
+
+    &__unit {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+
+        &--active-left {
+            padding: 0.5rem 1rem;
+            background-color: $color-quarternary;
+            color: $color-highlight;
+            border-top-left-radius: 3.125rem;
+            border-bottom-left-radius: 3.125rem;
+        }
+
+        &--active-right {
+            padding: 0.5rem 1rem;
+            background-color: $color-quarternary;
+            color: $color-highlight;
+            border-top-right-radius: 3.125rem;
+            border-bottom-right-radius: 3.125rem;
         }
     }
 

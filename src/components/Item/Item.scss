@@ -18,7 +18,7 @@
     }
 
     &__item {
-        @include body-text-small;
+        @include small-text;
         line-height: 1.25rem;
 
         @include tablet {
@@ -56,10 +56,10 @@
     }
 
     &__image {
-        width: 3.125rem;
+        max-width: 2.5rem;
 
         @include tablet {
-            width: 6.25rem;
+            max-width: 4.375rem;
         }
     }
 
