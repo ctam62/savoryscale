@@ -11,17 +11,17 @@ export const RecipeSubNav = ({ navItems, setActiveTab }) => {
     }, [tab]);
 
     return (
-        <nav className="recipe-nav">
-            <ul className="recipe-nav__list">
+        <nav className="recipe-subnav">
+            <ul className="recipe-subnav__list">
                 <li
-                    className={`recipe-nav__list-item ${tab === item1 ? "recipe-nav__list-item--active" : ""}`}
+                    className={`recipe-subnav__list-item ${tab === item1 ? "recipe-subnav__list-item--active" : ""}`}
                     id={item1}
                     onClick={() => setTab(item1)}
                 >
                     {item1.replace(item1[0], item1[0].toUpperCase())}
                 </li>
                 <li
-                    className={`recipe-nav__list-item ${tab === item2 ? "recipe-nav__list-item--active" : ""}`}
+                    className={`recipe-subnav__list-item ${tab === item2 ? "recipe-subnav__list-item--active" : ""}`}
                     id={item2}
                     onClick={() => setTab(item2)}
                 >
