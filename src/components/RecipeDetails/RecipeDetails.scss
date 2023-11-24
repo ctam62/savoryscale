@@ -32,6 +32,8 @@
 
     &__summary {
         margin-top: 1.5rem;
-        text-align: justify;
+        padding: 1rem 1.5rem;
+        text-align: left;
+        @include small-text;
     }
 }
