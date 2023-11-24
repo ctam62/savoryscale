@@ -78,7 +78,8 @@
     }
 
     &__details {
-        @include body-text-small;
+        @include card-label;
+        font-weight: 400;
         display: flex;
         align-items: center;
         padding: 0 1rem;
