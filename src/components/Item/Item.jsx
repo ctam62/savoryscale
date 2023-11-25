@@ -33,13 +33,12 @@ export const Item = ({
 
     const handleChecked = (event) => {
         // push grocerylist to state
-        console.log(event.target.value);
 
         if (!isChecked) {
-            activeCheckboxes.push(itemId);
+            activeCheckboxes.push(event.target.value);
             setIsChecked(true);
         } else {
-            removeId(activeCheckboxes, itemId);
+            removeId(activeCheckboxes, event.target.value);
             setIsChecked(false);
             setCheckAllClicked(false);
         }
@@ -47,7 +46,7 @@ export const Item = ({
 
     useEffect(() => {
         if (checkStatus === "Select all" && checkAllClicked) {
-            activeCheckboxes.push(itemId);
+            activeCheckboxes.push(item.name);
             setIsChecked(true);
         } else {
             removeId(activeCheckboxes, itemId);
