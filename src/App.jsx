@@ -4,9 +4,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header/Header';
 import { HomePage } from './pages/HomePage/HomePage';
 import { RecipePage } from './pages/RecipePage/RecipePage';
+import { ShoppingList } from './pages/ShoppingList/ShoppingList';
+
 
 function App() {
   const [recipeList, setRecipeList] = useState([]);
+  const [shopList, setShopList] = useState([]);
 
   const handleLikeButton = recipe => {
     const localStorageListRaw = localStorage.getItem("recipeList") || "[]";
@@ -34,9 +37,23 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path='/'
+          <Route
+            path='/'
             element={<HomePage recipeList={recipeList} handleLikeButton={handleLikeButton} />} />
-          <Route path='/recipe/:recipeId' element={<RecipePage recipeList={recipeList} handleLikeButton={handleLikeButton} />} />
+          <Route
+            path='/recipe/:recipeId'
+            element={
+              <RecipePage
+                recipeList={recipeList}
+                handleLikeButton={handleLikeButton}
+                shopList={shopList}
+                setShopList={setShopList}
+              />}
+          />
+          <Route
+            path='/shoppinglist'
+            element={<ShoppingList shopList={shopList} setShopList={setShopList} />}
+          />
         </Routes>
       </BrowserRouter>
     </>
