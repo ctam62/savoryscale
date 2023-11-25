@@ -4,7 +4,7 @@
 .steps {
     &__item {
         display: flex;
-        flex-direction: column;
+        align-items: start;
         gap: 1rem;
         padding: 1.5rem;
         border-radius: 0.5rem;
@@ -13,11 +13,21 @@
         margin-bottom: 1rem;
 
         &-number {
+            min-width: 1.5625rem;
+            max-height: 1.5625rem;
             font-weight: bold;
             @include body-text-small;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $color-highlight;
+            background-color: $color-tertiary;
+            padding: 0.25rem;
+            border-radius: 3.125rem;
         }
 
         &-description {
+            padding-top: 0.25rem;
             @include small-text;
         }
     }
