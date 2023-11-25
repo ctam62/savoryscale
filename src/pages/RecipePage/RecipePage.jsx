@@ -1,6 +1,6 @@
 import './RecipePage.scss';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Servings } from '../../components/Servings/Servings';
 import { RecipeHero } from '../../components/RecipeHero/RecipeHero';
@@ -16,11 +16,12 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 
 
-export const RecipePage = ({ recipeList, handleLikeButton }) => {
+export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList }) => {
     const { recipeId } = useParams();
     const navigate = useNavigate();
 
-    const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+    const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
 
     const recipe = recipeData.results.find(entry => entry.id === parseInt(recipeId));
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
@@ -31,24 +32,39 @@ export const RecipePage = ({ recipeList, handleLikeButton }) => {
 
     const [activeCheckboxes, setActiveCheckboxes] = useState([]);
 
-    // const handleLikeButton = recipe => {
-    //     const localStorageListRaw = localStorage.getItem("recipeList") || "[]";
-    //     const localStorageList = JSON.parse(localStorageListRaw);
+    const handleSave = () => {
+        // post request to scaled recipe database
+        try {
 
-    //     if (!localStorageList.map(entry => entry.id).includes(recipe.id)) {
-    //         localStorageList.push(recipe);
-    //         setRecipeList([...localStorageList]);
-    //         localStorage.setItem("recipeList", JSON.stringify(localStorageList));
-    //     } else {
-    //         const filteredList = localStorageList.filter(entry => entry.id !== recipe.id);
-    //         localStorage.setItem("recipeList", JSON.stringify(filteredList));
-    //         setRecipeList([...filteredList]);
-    //     }
-    // }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const handleAddToShoppingList = () => {
+        // create use post request
+        // save in local storage for now
+        activeCheckboxes.forEach(item => {
+            console.log(item);
+            if (ingredientData.ingredients.find(ingredient => ingredient.name === item)) {
+                shopList.push(ingredientData.ingredients.find(ingredient => ingredient.name === item));
+            } else {
+                shopList.push(equipmentData.equipment.find(equipment => equipment.image === item));
+            }
+        });
+
+        localStorage.setItem("shopList", JSON.stringify(shopList));
+        setShopList(JSON.parse(localStorage.getItem("shopList") || "[]"));
 
     }
+
+    useEffect(() => {
+        if (servings !== recipe.servings) {
+            setSaveButtonDisabled(false);
+        } else {
+            setSaveButtonDisabled(true);
+        }
+    }, [servings]);
 
     return (
         <main className="recipe">
@@ -62,10 +78,22 @@ export const RecipePage = ({ recipeList, handleLikeButton }) => {
                 />
             </nav>
 
-            <RecipeHero recipe={recipe} />
-            <Servings servings={servings} setServings={setServings} />
+            <RecipeHero recipe={recipe} servings={servings} />
+            <Servings
+                servings={servings}
+                setServings={setServings}
+                buttonDisabled={saveButtonDisabled}
+                setButtonDisabled={setSaveButtonDisabled}
+            />
 
-            <button>Save Scaled Recipe</button>
+            <button
+                className={`recipe__save-button ${saveButtonDisabled ? "" : "recipe__save-button--active"}`}
+                type="button"
+                onClick={handleSave}
+                disabled={saveButtonDisabled}
+            >
+                Save Scaled Recipe
+            </button>
 
             <RecipeSubNav navItems={["details", "ingredients"]} setActiveTab={setActiveTab} />
             {activeTab === "details" ? <RecipeDetails recipe={recipe} servings={servings} /> :
@@ -75,8 +103,8 @@ export const RecipePage = ({ recipeList, handleLikeButton }) => {
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
                     setActiveCheckboxes={setActiveCheckboxes}
-                    buttonDisabled={buttonDisabled}
-                    setButtonDisabled={setButtonDisabled}
+                    buttonDisabled={shopButtonDisabled}
+                    setButtonDisabled={setShopButtonDisabled}
                     listType="ingredients"
                 />
             }
@@ -89,18 +117,18 @@ export const RecipePage = ({ recipeList, handleLikeButton }) => {
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
                     setActiveCheckboxes={setActiveCheckboxes}
-                    buttonDisabled={buttonDisabled}
-                    setButtonDisabled={setButtonDisabled}
+                    buttonDisabled={shopButtonDisabled}
+                    setButtonDisabled={setShopButtonDisabled}
                     listType="equipment"
                 />
             }
 
             {activeTab === "ingredients" || activeTab2 === "tools" ?
                 <button
-                    className={`recipe__shop-button ${buttonDisabled ? "" : "recipe__shop-button--active"}`}
+                    className={`recipe__shop-button ${shopButtonDisabled ? "" : "recipe__shop-button--active"}`}
                     type="button"
                     onClick={handleAddToShoppingList}
-                    disabled={buttonDisabled}
+                    disabled={shopButtonDisabled}
                 >
                     Add to shopping list
                 </button> : ""

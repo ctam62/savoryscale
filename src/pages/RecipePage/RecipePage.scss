@@ -37,9 +37,11 @@
         }
     }
 
-    &__shop-button {
+    &__shop-button,
+    &__save-button {
         padding: 1rem 2rem;
         border-radius: 4rem;
+        color: $color-accent;
         background-color: $color-accent-tertiary;
         width: 100%;
         font-weight: 600;
