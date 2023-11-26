@@ -9,7 +9,6 @@ import { RecipeDetails } from '../../components/RecipeDetails/RecipeDetails';
 import { ItemList } from '../../components/ItemList/ItemList';
 import { Steps } from '../../components/Steps/Steps';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
-import recipeData from '../../data/spoonacular_recipes.json';
 import ingredientData from '../../data/ingredients.json';
 import equipmentData from '../../data/equipment.json';
 import backIcon from '../../assets/icons/back-arrow.svg';
@@ -17,9 +16,13 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 
 
-export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList }) => {
-    const { recipeId } = useParams();
+export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
+
     const navigate = useNavigate();
+
+    const { recipeId } = useParams();
+    // const [ingredientData, setIngredientData] = useState({});
+    // const [equipmentData, setEquipmentData] = useState({});
 
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
@@ -33,6 +36,33 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
 
     const [activeCheckboxes, setActiveCheckboxes] = useState([]);
     const [open, setOpen] = useState(false);
+
+
+    useEffect(() => {
+        const fetchIngredientAndToolsData = async () => {
+            try {
+                // const ingredients = await axios.get(`${apiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
+                // const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
+                // setIngredientData(ingredients.data);
+                // setEquipmentData(equipment.data);
+                console.log("ingredient api call");
+                console.log("equipment api call");
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchIngredientAndToolsData();
+    }, []);
+
+    useEffect(() => {
+        if (servings !== recipe.servings) {
+            setSaveButtonDisabled(false);
+        } else {
+            setSaveButtonDisabled(true);
+        }
+    }, [servings]);
 
     const handleSave = () => {
         // post request to scaled recipe database
@@ -52,7 +82,6 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
         let indexCounter = localStorageList.length;
 
         activeCheckboxes.forEach(item => {
-            console.log(item);
             const shopItem = ingredientData.ingredients.find(ingredient => ingredient.name === item);
             indexCounter += 1;
             shopItem.id = indexCounter;
@@ -71,14 +100,6 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
     const handleClose = () => {
         setOpen(false);
     };
-
-    useEffect(() => {
-        if (servings !== recipe.servings) {
-            setSaveButtonDisabled(false);
-        } else {
-            setSaveButtonDisabled(true);
-        }
-    }, [servings]);
 
     return (
         <main className="recipe">
@@ -115,7 +136,7 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
             {activeTab === "details" ? <RecipeDetails recipe={recipe} servings={servings} /> :
                 <ItemList
                     recipeItems={ingredientData.ingredients}
-                    recipe={recipe}
+                    recipeServings={recipe.servings}
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
                     setActiveCheckboxes={setActiveCheckboxes}
