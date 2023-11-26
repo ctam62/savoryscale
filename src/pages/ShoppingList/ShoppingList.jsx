@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 
 export const ShoppingList = ({ shopList, setShopList }) => {
 
+    const [totalPrice, setTotalPrice] = useState(0);
+
     const navigate = useNavigate();
     const list = JSON.parse(localStorage.getItem("shopList")) || [];
 
@@ -37,11 +39,41 @@ export const ShoppingList = ({ shopList, setShopList }) => {
         return acc;
     }, {}));
 
-    const sumPrice = (objArray) => {
-        return (objArray.map(item => item.price).reduce((a, b) => a + b, 0) / 100).toFixed(2);
-    }
+    const calculateTotal = () => {
+        const totalPrice = (shopList.map(ingredient => ingredient.price).reduce((total, item) => total + item, 0) / 100).toFixed(2);
+        setTotalPrice(totalPrice);
+    };
 
-    const [totalPrice, setTotalPrice] = useState(sumPrice(groupedList));
+    const scalePrice = (value, index) => {
+        const newList = [...shopList];
+        const scaleFactor = (newList[index].origPrice / newList[index].amount.metric.origValue);
+        newList[index].price = value * scaleFactor;
+        calculateTotal();
+        localStorage.setItem("shopList", JSON.stringify(newList));
+    };
+
+    const updatePrice = (sign, index) => {
+        const newList = [...shopList];
+
+        if (sign === "plus") {
+            newList[index].amount.metric.value++;
+            scalePrice(newList[index].amount.metric.value, index);
+            setShopList(newList);
+            calculateTotal();
+        } else {
+            newList[index].amount.metric.value--;
+            scalePrice(newList[index].amount.metric.value, index);
+            setShopList(newList);
+            calculateTotal();
+        }
+
+        localStorage.setItem("shopList", JSON.stringify(newList));
+    };
+
+
+    useEffect(() => {
+        calculateTotal();
+    }, [shopList]);
 
     return (
         <main className="shopping">
@@ -59,10 +91,12 @@ export const ShoppingList = ({ shopList, setShopList }) => {
                             <GroceryItem
                                 item={item}
                                 key={index}
+                                index={index}
                                 shopList={groupedList}
                                 setShopList={setShopList}
-                                setTotalPrice={setTotalPrice}
-                                sumPrice={sumPrice}
+                                scalePrice={scalePrice}
+                                updatePrice={updatePrice}
+                                calculateTotal={calculateTotal}
                             />
                         )
                     }
