@@ -5,16 +5,17 @@
     width: 100%;
     min-width: fit-content;
     margin: 0 auto;
-    padding: 0.75rem;
+    padding: 0.75rem 0.6rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: $color-highlight;
     border-radius: 1rem;
-    gap: 1rem;
+    gap: 0.6rem;
 
     @include tablet {
         padding: 1rem 1.5rem;
+        gap: 1rem;
     }
 
     &__item {
@@ -34,12 +35,7 @@
         }
 
         &:nth-child(2) {
-            flex: 1 1 35%;
-            padding-left: 0.25rem;
-
-            @include tablet {
-                padding-left: 3rem;
-            }
+            flex: 1 1 30%;
         }
 
         &:nth-child(3) {
@@ -47,11 +43,7 @@
         }
 
         &:nth-child(4) {
-            flex: 1 1 8%;
-
-            @include tablet {
-                flex: 1 1 10%;
-            }
+            flex: 1 1 10%;
         }
     }
 
@@ -66,6 +58,14 @@
     &__name,
     &__amount {
         text-align: left;
+    }
+
+    &__name {
+        padding-left: 0.5rem;
+
+        @include tablet {
+            padding-left: 3rem;
+        }
     }
 
     &__amount {
