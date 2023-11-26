@@ -1,5 +1,5 @@
 import './HomePage.scss';
-// import axios from 'axios';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { Filters } from '../../components/Filters/Filters';
@@ -11,11 +11,11 @@ export const HomePage = ({ recipeList, handleLikeButton }) => {
     const [popularRecipes, setPopularRecipes] = useState([]);
 
     useEffect(() => {
-        const fetchPopularRecipes = async () => {
+        const fetchRecommendedRecipes = async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_APP_API_URL}/api/recipes/popular`)
         };
 
-        // fetchPopularRecipes();
+        // fetchRecommendedRecipes();
     }, []);
 
     return (
