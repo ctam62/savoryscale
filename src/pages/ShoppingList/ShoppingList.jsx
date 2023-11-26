@@ -70,6 +70,11 @@ export const ShoppingList = ({ shopList, setShopList }) => {
         localStorage.setItem("shopList", JSON.stringify(newList));
     };
 
+    const emptyList = () => {
+        setShopList([]);
+        localStorage.setItem("shopList", JSON.stringify([]));
+    };
+
 
     useEffect(() => {
         calculateTotal();
@@ -77,12 +82,18 @@ export const ShoppingList = ({ shopList, setShopList }) => {
 
     return (
         <main className="shopping">
-            <nav className="recipe__nav">
+            <nav className="shopping__nav">
                 <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
             </nav>
 
             <section className="shopping__section">
-                <h2 className="shopping__header">My Shopping List</h2>
+                <div className="shopping__headings">
+                    <h2 className="shopping__header">My Shopping List</h2>
+                    <div className="shopping__info">
+                        <p className="shopping__subheader">{groupedList.length} items</p>
+                        <button className="shopping__empty" onClick={emptyList}>Empty List</button>
+                    </div>
+                </div>
 
                 <ul className="shopping__list">
                     {list.length === 0 ?

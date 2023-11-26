@@ -57,7 +57,7 @@ function App() {
           />
           <Route
             path='/collection'
-            element={<Collection recipeList={recipeList} handleLikeButton={handleLikeButton} />}
+            element={<Collection recipeList={recipeList} setRecipeList={setRecipeList} handleLikeButton={handleLikeButton} />}
           />
         </Routes>
       </BrowserRouter>

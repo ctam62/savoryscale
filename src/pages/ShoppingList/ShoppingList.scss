@@ -9,10 +9,40 @@
         max-width: 90%;
     }
 
+    &__nav {
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__headings {
+        margin: 1rem 0 2rem 0;
+        padding: 1rem;
+    }
+
     &__header {
-        @include subheading;
-        margin: 1rem 0;
+        @include heading;
         color: $color-accent;
+    }
+
+    &__subheader {
+        @include subheading;
+        margin-top: 1rem;
+    }
+
+    &__info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__empty {
+        @include nav-text;
+        color: $color-accent;
+        font-weight: 600;
+
+        &:hover {
+            color: $color-quarternary;
+        }
     }
 
     &__list {
