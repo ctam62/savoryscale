@@ -23,4 +23,9 @@
         align-items: center;
         gap: 1rem;
     }
+
+    &__icons {
+        @include icon-clickable;
+        max-width: 0.9375rem;
+    }
 }

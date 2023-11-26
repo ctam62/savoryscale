@@ -8,13 +8,13 @@ export const Servings = ({ servings, setServings }) => {
             <h3>Servings</h3>
             <div className="servings__controls">
                 <button className="recipe__button recipe__button--controls" onClick={() => setServings(servings - 1)}>
-                    <img className="recipe__icons" src={minusIcon} alt="minus icon" />
+                    <img className="servings__icons" src={minusIcon} alt="minus icon" />
                 </button>
 
                 {servings}
 
                 <button className="recipe__button recipe__button--controls" onClick={() => setServings(servings + 1)}>
-                    <img className="recipe__icons" src={plusIcon} alt="add icon" />
+                    <img className="servings__icons" src={plusIcon} alt="add icon" />
                 </button>
             </div>
         </article>
