@@ -1,0 +1,17 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.collection {
+    margin: 0 auto;
+    padding: $site-padding;
+
+    @include tablet {
+        max-width: 90%;
+    }
+
+    &__header {
+        @include subheading;
+        margin: 1rem 0 2rem 0;
+        color: $color-accent;
+    }
+}

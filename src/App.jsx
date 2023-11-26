@@ -5,6 +5,7 @@ import { Header } from './components/Header/Header';
 import { HomePage } from './pages/HomePage/HomePage';
 import { RecipePage } from './pages/RecipePage/RecipePage';
 import { ShoppingList } from './pages/ShoppingList/ShoppingList';
+import { Collection } from './pages/Collection/Collection';
 
 
 function App() {
@@ -21,8 +22,8 @@ function App() {
       localStorage.setItem("recipeList", JSON.stringify(localStorageList));
     } else {
       const filteredList = localStorageList.filter(entry => entry.id !== recipe.id);
-      localStorage.setItem("recipeList", JSON.stringify(filteredList));
       setRecipeList([...filteredList]);
+      localStorage.setItem("recipeList", JSON.stringify(filteredList));
     }
   }
 
@@ -53,6 +54,10 @@ function App() {
           <Route
             path='/shoppinglist'
             element={<ShoppingList shopList={shopList} setShopList={setShopList} />}
+          />
+          <Route
+            path='/collection'
+            element={<Collection recipeList={recipeList} handleLikeButton={handleLikeButton} />}
           />
         </Routes>
       </BrowserRouter>
