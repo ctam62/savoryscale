@@ -2,8 +2,14 @@
 @use './../../styles/variables.scss' as *;
 
 .recipe {
+    margin: 0 auto;
     padding: $site-padding;
     @include small-text;
+    display: intital;
+
+    @include tablet {
+        max-width: 90%;
+    }
 
     @include desktop {
         margin: 0 auto;
@@ -23,6 +29,7 @@
 
     &__button {
         @include icon-button;
+        padding: 1rem;
 
         &--controls {
             box-shadow: none;

@@ -2,20 +2,11 @@
 @use './../../styles/variables.scss' as *;
 
 .search {
-    display: flex;
     padding: 0.5rem;
+    display: flex;
     border-radius: 3.125rem;
     // border: 0.0625rem solid $color-accent;
     background-color: $color-highlight;
-
-    @include tablet {
-        max-width: 80%;
-        margin: 0 auto;
-    }
-
-    @include desktop {
-        max-width: 70%;
-    }
 
     &-icon {
         width: 1.2rem;

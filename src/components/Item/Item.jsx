@@ -70,16 +70,26 @@ export const Item = ({
 
     return (
         <li className="item">
-            <img className="item__image item__item" src={`https://spoonacular.com/cdn/${listType}_100x100/${item.image}`} alt={item.name} />
-            <h3 className="item__name item__item">{item.name}</h3>
-            {listType === "ingredients" ? <p className="item__amount item__item">{scale(item.amount[activeUnit].value)} {item.amount[activeUnit].unit}</p> : ""}
-            <input
-                className={`item__checkbox item__item ${isChecked ? "item__checkbox--checked" : ""}`}
-                type="checkbox"
-                name={item.name}
-                onChange={(event) => handleChecked(event)}
-                value={item.name}
+            <img
+                className="item__image item__item"
+                src={`https://spoonacular.com/cdn/${listType}_100x100/${item.image}`}
+                alt={item.name}
             />
+            <h3 className="item__name item__item">{item.name}</h3>
+            {listType === "ingredients" ?
+                <p className="item__amount item__item">
+                    {scale(item.amount[activeUnit].value)} {item.amount[activeUnit].unit}</p>
+                : ""
+            }
+            {listType === "ingredients" ?
+                <input
+                    className={`item__checkbox item__item ${isChecked ? "item__checkbox--checked" : ""}`}
+                    type="checkbox"
+                    name={item.name}
+                    onChange={(event) => handleChecked(event)}
+                    value={item.name}
+                /> : ""
+            }
         </li>
     );
 };

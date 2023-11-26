@@ -13,14 +13,18 @@ $desktop-breakpoint: 1280px;
     --text-body-size: 1.25rem;
     --text-nav-size: 1.25rem;
     --text-bodysmall-size: 1rem;
-    --text-small-size: 0.875rem;
+    --text-small-size: 0.75rem;
+
+    @media (max-width: $small-device-breakpoint) {
+        --text-small-size: 0.625rem;
+    }
 
     @media (min-width: $tablet-breakpoint) {
         --site-padding: 2rem;
         --letter-width: 50rem;
 
         --text-heading-size: 2.75rem;
-        --text-subheading-size: 2rem;
+        --text-subheading-size: 1.5rem;
         --text-card-label-size: 0.95rem;
         --text-search-size: 1rem;
         --text-body-size: 1.25rem;
@@ -45,4 +49,4 @@ $color-accent-secondary: #72C49E;
 $color-accent-tertiary: #EEE;
 $color-highlight: #FFF;
 $color-tertiary: #FBAE17;
-$color-quarternary: #f8ac9c;
+$color-quarternary: #F8AC9C;

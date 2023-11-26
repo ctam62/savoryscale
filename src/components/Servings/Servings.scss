@@ -2,6 +2,7 @@
 @use './../../styles/variables.scss' as *;
 
 .servings {
+    margin-bottom: 1.5rem;
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -21,5 +22,10 @@
         display: flex;
         align-items: center;
         gap: 1rem;
+    }
+
+    &__icons {
+        @include icon-clickable;
+        max-width: 0.9375rem;
     }
 }

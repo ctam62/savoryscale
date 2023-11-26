@@ -31,7 +31,7 @@ export const ItemList = ({ recipeItems, recipe, servings, activeCheckboxes, setA
                         className={`item-list__check-all ${activeCheckboxes.length > 0 ? "item-list__check-all--active" : ""}`}
                         onClick={handleCheckAll}
                     >
-                        {checkStatus}
+                        {listType === "ingredients" ? checkStatus : ""}
                     </p>
                 </div>
             </div>

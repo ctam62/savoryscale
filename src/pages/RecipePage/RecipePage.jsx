@@ -8,6 +8,7 @@ import { RecipeSubNav } from '../../components/RecipeSubNav/RecipeSubNav';
 import { RecipeDetails } from '../../components/RecipeDetails/RecipeDetails';
 import { ItemList } from '../../components/ItemList/ItemList';
 import { Steps } from '../../components/Steps/Steps';
+import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
 import recipeData from '../../data/spoonacular_recipes.json';
 import ingredientData from '../../data/ingredients.json';
 import equipmentData from '../../data/equipment.json';
@@ -31,6 +32,7 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
     const [activeTab2, setActiveTab2] = useState("steps");
 
     const [activeCheckboxes, setActiveCheckboxes] = useState([]);
+    const [open, setOpen] = useState(false);
 
     const handleSave = () => {
         // post request to scaled recipe database
@@ -39,24 +41,34 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     const handleAddToShoppingList = () => {
         // create use post request
         // save in local storage for now
+
+        const localStorageList = JSON.parse(localStorage.getItem("shopList") || "[]");
+
+        let indexCounter = localStorageList.length;
+
         activeCheckboxes.forEach(item => {
             console.log(item);
-            if (ingredientData.ingredients.find(ingredient => ingredient.name === item)) {
-                shopList.push(ingredientData.ingredients.find(ingredient => ingredient.name === item));
-            } else {
-                shopList.push(equipmentData.equipment.find(equipment => equipment.image === item));
-            }
+            const shopItem = ingredientData.ingredients.find(ingredient => ingredient.name === item);
+            indexCounter += 1;
+            shopItem.id = indexCounter;
+            shopItem.origPrice = shopItem.price;
+
+            localStorageList.push(shopItem);
+            setShopList([...shopList]);
+            localStorage.setItem("shopList", JSON.stringify(localStorageList));
         });
 
-        localStorage.setItem("shopList", JSON.stringify(shopList));
-        setShopList(JSON.parse(localStorage.getItem("shopList") || "[]"));
+        setOpen(true);
+    };
 
-    }
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         if (servings !== recipe.servings) {
@@ -68,6 +80,8 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
 
     return (
         <main className="recipe">
+            <ConfirmationAlert open={open} handleClose={handleClose} />
+
             <nav className="recipe__nav">
                 <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
                 <img
@@ -109,6 +123,17 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
                 />
             }
 
+            {activeTab === "ingredients" ?
+                <button
+                    className={`recipe__shop-button ${shopButtonDisabled ? "" : "recipe__shop-button--active"}`}
+                    type="button"
+                    onClick={handleAddToShoppingList}
+                    disabled={shopButtonDisabled}
+                >
+                    Add to shopping list
+                </button> : ""
+            }
+
             <RecipeSubNav navItems={["steps", "tools"]} setActiveTab={setActiveTab2} />
             {activeTab2 === "steps" ? <Steps steps={recipe.analyzedInstructions[0].steps} /> :
                 <ItemList
@@ -123,16 +148,6 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
                 />
             }
 
-            {activeTab === "ingredients" || activeTab2 === "tools" ?
-                <button
-                    className={`recipe__shop-button ${shopButtonDisabled ? "" : "recipe__shop-button--active"}`}
-                    type="button"
-                    onClick={handleAddToShoppingList}
-                    disabled={shopButtonDisabled}
-                >
-                    Add to shopping list
-                </button> : ""
-            }
         </main>
     );
 };

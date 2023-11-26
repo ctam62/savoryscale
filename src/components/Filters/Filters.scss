@@ -2,19 +2,10 @@
 @use './../../styles/variables.scss' as *;
 
 .filter {
-    margin: 1rem 0;
+    margin: 1rem auto;
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-
-    @include tablet {
-        margin: 1rem auto;
-        width: 80%;
-    }
-
-    @include desktop {
-        max-width: 70%;
-    }
 
     &__button {
         @include button;

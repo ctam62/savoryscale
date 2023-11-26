@@ -3,6 +3,12 @@
 
 .home {
     padding: $site-padding;
+    max-width: 90%;
+    margin: 0 auto;
+
+    @include tablet {
+        max-width: 80%;
+    }
 
     &__subheader {
         @include subheading;
