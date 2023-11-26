@@ -18,7 +18,8 @@
 
         @include tablet {
             grid-template-columns: repeat(3, 1fr);
-            max-width: calc($letter-width);
+            min-width: calc($letter-width / 1.25);
+            min-width: calc($letter-width / 1.25);
         }
 
         @include desktop {

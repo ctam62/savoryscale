@@ -7,6 +7,10 @@
     margin: 0 auto;
 
     @include tablet {
+        max-width: 95%;
+    }
+
+    @include desktop {
         max-width: 80%;
     }
 
