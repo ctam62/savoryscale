@@ -1,0 +1,28 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.confirm {
+    padding: 1rem 1.5rem;
+    position: sticky;
+    top: 0;
+    background-color: rgba($color-accent-secondary, 0.90);
+    border-radius: 0.25rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 80rem;
+    color: $color-highlight;
+
+    &__close {
+        @include icon-clickable;
+        width: 2.5rem;
+        filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(264deg) brightness(307%) contrast(105%);
+    }
+
+    &--close {
+        display: none;
+    }
+}
