@@ -57,6 +57,8 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
             indexCounter += 1;
             shopItem.id = indexCounter;
             shopItem.origPrice = shopItem.price;
+            shopItem.amount.metric.origValue = shopItem.amount.metric.value;
+            shopItem.amount.us.origValue = shopItem.amount.us.value;
 
             localStorageList.push(shopItem);
             setShopList([...shopList]);
