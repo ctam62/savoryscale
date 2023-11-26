@@ -24,6 +24,11 @@
             background-color: $color-tertiary;
             padding: 0.25rem;
             border-radius: 3.125rem;
+
+            @include tablet {
+                max-height: 1.875rem;
+                min-width: 1.875rem;
+            }
         }
 
         &-description {
