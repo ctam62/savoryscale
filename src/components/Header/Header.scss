@@ -1,0 +1,45 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.header {
+    padding: $site-padding $site-padding 0 $site-padding;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 90%;
+    margin: 0 auto;
+
+    @include tablet {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        @include heading;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        &-img {
+            max-width: 3.75rem;
+        }
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 1.5rem;
+        margin-top: 1rem;
+
+        @include tablet {
+            margin-top: 0;
+            gap: 1rem;
+        }
+
+        &-link {
+            max-width: 2.5rem;
+            cursor: pointer;
+        }
+    }
+}

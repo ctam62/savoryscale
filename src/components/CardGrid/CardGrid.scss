@@ -1,0 +1,53 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.grid {
+    width: 100%;
+    margin: 0 auto;
+
+    &__grid {
+        @include letter;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: $site-padding;
+
+        @include small-device {
+            grid-template-columns: 1fr;
+            max-width: calc($letter-width / 2);
+        }
+
+        @include tablet {
+            grid-template-columns: repeat(3, 1fr);
+            min-width: calc($letter-width / 1.25);
+            min-width: calc($letter-width / 1.25);
+        }
+
+        @include desktop {
+            grid-template-columns: repeat(4, 1fr);
+            max-width: calc($letter-width * 1.25);
+        }
+
+        &--single {
+            grid-template-columns: 1fr;
+            max-width: calc($letter-width / 2);
+
+            @include tablet {
+                max-width: calc($letter-width / 3);
+            }
+
+            @include desktop {
+                max-width: calc($letter-width / 4);
+            }
+        }
+    }
+
+    &__heading {
+        @include subheading;
+        @include letter;
+        padding-bottom: 3rem;
+    }
+
+    &__placeholder {
+        aspect-ratio: 3 / 4;
+    }
+}

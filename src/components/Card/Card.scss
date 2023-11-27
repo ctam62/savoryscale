@@ -1,0 +1,114 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+@keyframes animate-in {
+    from {
+        scale: 0.5;
+        transform: translateY(-10rem);
+        filter: opacity(0);
+    }
+
+    to {
+        scale: 1;
+        transform: translateY(0);
+        filter: opacity(1);
+    }
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 15rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 0.4375rem 1.8125rem 0 rgba(100, 100, 111, 0.2);
+    background-color: $color-highlight;
+    overflow: hidden;
+    cursor: pointer;
+    transition: filter 0.2s ease-out, transform 0.2s ease-out;
+    animation-name: animate-in;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
+
+    @include tablet {
+        height: fit-content;
+    }
+
+    @include tablet {
+        height: 16rem;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row-reverse;
+        right: 0;
+    }
+
+    &__button {
+        position: relative;
+        margin: 1rem;
+        @include icon-button;
+        padding: 1rem;
+    }
+
+    &__like {
+        @include icon-clickable;
+    }
+
+    &__image {
+        position: absolute;
+        top: -0.8125rem;
+        left: -0.625rem;
+        width: 109%;
+        height: 8rem;
+        margin: 0 auto;
+        border-top-left-radius: 1.5rem;
+        border-top-right-radius: 1.5rem;
+        aspect-ratio: 242/150;
+        z-index: 1;
+
+        @include tablet {
+            height: 9rem;
+        }
+    }
+
+    &__text {
+        position: relative;
+        top: -1rem;
+    }
+
+    &__title {
+        width: fit-content;
+        height: 2.75rem;
+        margin: 0 auto 0.5rem auto;
+        padding: 0 1rem;
+        @include card-label;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        @include tablet {
+            height: 3.14rem;
+            -webkit-line-clamp: 3;
+        }
+    }
+
+    &__details {
+        @include card-label;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    &__icons {
+        width: 1.25rem;
+        position: relative;
+        top: 0.25rem;
+        margin-right: 0.25rem;
+    }
+}

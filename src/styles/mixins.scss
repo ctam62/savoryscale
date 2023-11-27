@@ -1,0 +1,95 @@
+@use './variables' as *;
+
+@mixin small-device {
+    @media (max-width: $small-device-breakpoint ) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: $tablet-breakpoint) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: $desktop-breakpoint) {
+        @content;
+    }
+}
+
+@mixin letter {
+    max-width: $letter-width;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@mixin heading {
+    font-size: var(--text-heading-size);
+    font-weight: 400;
+    font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
+}
+
+@mixin subheading {
+    font-size: var(--text-subheading-size);
+    font-weight: bold;
+}
+
+@mixin card-label {
+    font-size: var(--text-card-label-size);
+    font-weight: 600;
+}
+
+@mixin search-text {
+    font-size: var(--text-search-size);
+    font-weight: 600;
+    color: $color-accent;
+    line-height: 1.5rem;
+}
+
+@mixin body-text {
+    font-size: var(--text-body-size);
+}
+
+@mixin body-text-small {
+    font-size: var(--text-bodysmall-size);
+}
+
+@mixin nav-text {
+    font-size: var(--text-nav-size);
+}
+
+@mixin small-text {
+    font-size: var(--text-small-size);
+}
+
+@mixin button {
+    background: $color-accent-tertiary;
+    border-radius: 1rem;
+    padding: 0.625rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+
+    &:hover {
+        background: $color-accent-secondary;
+        color: $color-highlight;
+    }
+}
+
+@mixin icon-button {
+    height: 1.25rem;
+    width: 1.25rem;
+    padding: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-highlight;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.4375rem 1.8125rem 0 rgba(100, 100, 111, 0.2);
+    z-index: 2;
+}
+
+@mixin icon-clickable {
+    width: 1.25rem;
+    cursor: pointer;
+}

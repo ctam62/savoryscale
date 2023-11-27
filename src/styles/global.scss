@@ -1,0 +1,14 @@
+// @use './fonts';
+@use './mixins' as *;
+@use './variables' as *;
+
+html {
+    font-size: 100%;
+}
+
+body {
+    @include body-text;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    color: $color-primary;
+    text-align: center;
+}

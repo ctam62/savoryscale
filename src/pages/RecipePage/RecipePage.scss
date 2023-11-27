@@ -1,0 +1,65 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.recipe {
+    margin: 0 auto;
+    padding: $site-padding;
+    @include small-text;
+    display: intital;
+
+    @include tablet {
+        max-width: 90%;
+    }
+
+    @include desktop {
+        margin: 0 auto;
+        max-width: 80rem;
+    }
+
+    &__nav {
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+
+        @include tablet {
+            margin: 0 auto;
+            max-width: 80rem;
+        }
+    }
+
+    &__button {
+        @include icon-button;
+        padding: 1rem;
+
+        &--controls {
+            box-shadow: none;
+        }
+    }
+
+    &__icons {
+        @include icon-clickable;
+
+        &--like {
+            width: 1.5rem;
+        }
+    }
+
+    &__shop-button,
+    &__save-button {
+        padding: 1rem 2rem;
+        border-radius: 4rem;
+        color: $color-accent;
+        background-color: $color-accent-tertiary;
+        width: 100%;
+        font-weight: 600;
+
+        @include tablet {
+            font-size: 1.25rem;
+        }
+
+        &--active {
+            background-color: $color-quarternary;
+            color: $color-highlight;
+        }
+    }
+}

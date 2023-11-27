@@ -1,0 +1,28 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.searchResults {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin: auto;
+
+    h1 {
+        font-size: var(--text-heading-size);
+        font-weight: 600;
+    }
+
+    &__search {
+        width: 100%;
+    }
+
+    &__subheader {
+        @include body-text;
+        font-weight: 600;
+    }
+}

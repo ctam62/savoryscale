@@ -1,0 +1,37 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.recipe-hero {
+    &__image {
+        width: 75%;
+        border-radius: 3rem;
+
+        @include tablet {
+            width: 25rem;
+            border-radius: 4rem;
+        }
+    }
+
+    &__subheader {
+        width: 70%;
+        padding: 1rem 0;
+        margin: 0 auto;
+        @include subheading;
+
+        @include tablet {
+            width: 21.875rem;
+        }
+    }
+
+    &__info {
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        font-weight: 600;
+
+        &-icons {
+            width: 2rem;
+        }
+    }
+}

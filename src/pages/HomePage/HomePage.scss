@@ -1,0 +1,22 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.home {
+    padding: $site-padding;
+    max-width: 90%;
+    margin: 0 auto;
+
+    @include tablet {
+        max-width: 95%;
+    }
+
+    @include desktop {
+        max-width: 80%;
+    }
+
+    &__subheader {
+        @include subheading;
+        margin: 1rem 0;
+        color: $color-accent;
+    }
+}

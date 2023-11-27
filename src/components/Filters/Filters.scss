@@ -1,0 +1,19 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.filter {
+    margin: 1rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    &__button {
+        @include button;
+        border-radius: 0.75rem;
+
+        &--active {
+            background: $color-accent-secondary;
+            color: $color-highlight;
+        }
+    }
+}

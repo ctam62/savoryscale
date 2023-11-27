@@ -1,0 +1,34 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.search {
+    padding: 0.5rem;
+    display: flex;
+    border-radius: 3.125rem;
+    // border: 0.0625rem solid $color-accent;
+    background-color: $color-highlight;
+
+    &-icon {
+        width: 1.2rem;
+        margin-right: 0.5rem;
+    }
+
+    &-input {
+        outline: none;
+        border: none;
+        width: 100%;
+        @include search-text;
+        background-color: $color-highlight;
+
+        &::placeholder {
+            color: $color-accent;
+            opacity: 1;
+            /* Firefox */
+        }
+
+        &::-ms-input-placeholder {
+            /* Edge 12 -18 */
+            color: $color-accent;
+        }
+    }
+}

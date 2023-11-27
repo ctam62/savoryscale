@@ -1,0 +1,39 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.steps {
+    &__item {
+        display: flex;
+        align-items: start;
+        gap: 1rem;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        background: $color-highlight;
+        text-align: left;
+        margin-bottom: 1rem;
+
+        &-number {
+            min-width: 1.5625rem;
+            max-height: 1.5625rem;
+            font-weight: bold;
+            @include body-text-small;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $color-highlight;
+            background-color: $color-tertiary;
+            padding: 0.25rem;
+            border-radius: 3.125rem;
+
+            @include tablet {
+                max-height: 1.875rem;
+                min-width: 1.875rem;
+            }
+        }
+
+        &-description {
+            padding-top: 0.25rem;
+            @include small-text;
+        }
+    }
+}
