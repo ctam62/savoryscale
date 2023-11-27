@@ -16,18 +16,19 @@
     }
 
     &__headings {
-        margin: 1rem 0 2rem 0;
+        margin: 0 0 2rem 0;
         padding: 1rem;
     }
 
     &__header {
         @include heading;
         color: $color-accent;
+        margin-bottom: 2rem;
     }
 
     &__subheader {
-        @include subheading;
-        margin-top: 1rem;
+        @include nav-text;
+        margin-top: 2rem;
     }
 
     &__info {
@@ -38,7 +39,6 @@
     &__clear {
         @include nav-text;
         color: $color-accent;
-        font-weight: 600;
 
         &:hover {
             color: $color-quarternary;

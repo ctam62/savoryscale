@@ -20,7 +20,7 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
         event.preventDefault();
 
         const offset = 0;
-        const resultsLimit = 10;
+        const resultsLimit = 20;
         const mealTypeParam = `&type=${selectedFilter.join(",")}`
         const recipeParams = `addRecipeInformation=true&addRecipeNutrition=true${mealTypeParam}`;
         const searchParams = `&number=${resultsLimit}&${recipeParams}&offset=${offset}`

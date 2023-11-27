@@ -35,8 +35,9 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
             <section className="collection__section">
                 <div className="collection__headings">
                     <h2 className="collection__header">My Collection</h2>
+                    <h3 className="collection__subheader">Favourite Recipes</h3>
                     <div className="collection__info">
-                        <p className="collection__subheader">{recipeList.length} recipes</p>
+                        <p className="collection__subheader">{recipeList.length || 0} recipes</p>
                         <button className="collection__clear" onClick={removeLikedRecipes}>Clear Collection</button>
                     </div>
                 </div>
@@ -54,7 +55,7 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
                 <div className="collection__headings">
                     <h3 className="collection__subheader">Scaled Recipes</h3>
                     <div className="collection__info">
-                        <p className="collection__subheader">{scaledRecipes.length} recipes</p>
+                        <p className="collection__subheader">{scaledRecipes.length || 0} recipes</p>
                         <button className="collection__clear" onClick={removeScaledRecipes}>Clear Collection</button>
                     </div>
                 </div>
