@@ -27,7 +27,7 @@ export const GroceryItem = ({ index, item, activeUnit, shopList, setShopList, up
                     />
                 </div>
                 <p className="item__value item__item">
-                    {item.amount[activeUnit].value.toFixed(2).replace(/\.00$/, '')}
+                    {item.amount[activeUnit].value?.toFixed(2).replace(/\.00$/, '')}
                     <span className="item__value-unit"> {item.amount[activeUnit].unit}</span>
                 </p>
                 <div className="shop__icons-container" onClick={() => updatePrice("plus", index)}>

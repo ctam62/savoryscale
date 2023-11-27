@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { SearchBar } from '../../components/SearchBar/SearchBar';
 import { Filters } from '../../components/Filters/Filters';
 import { SearchResults } from '../../components/SearchResults/SearchResults';
+import recipeJson from '../../data/spoonacular_recipes.json';
 
 
 export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipeData, recipeList, handleLikeButton }) => {
@@ -34,7 +35,9 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
                 localStorage.setItem("searchResults", JSON.stringify(data));
             }
 
-            searchRecipes();
+            // searchRecipes();
+            setRecipeData(recipeJson)
+            localStorage.setItem("searchResults", JSON.stringify(recipeJson));
         } catch (error) {
             console.error(error);
         }
