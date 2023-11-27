@@ -1,22 +1,35 @@
 import './Filters.scss';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { FilterButton } from '../FilterButton/FilterButton';
 
-export const Filters = () => {
-    const mealTypes = [
-        { id: 1, name: "Breakfast" },
-        { id: 2, name: "Snack" },
-        { id: 3, name: "Appetizer" },
-        { id: 4, name: "Main Course" },
-        { id: 5, name: "Dessert" }
-    ];
+export const Filters = ({ apiUrl, selectedFilter, setSelectedFilter }) => {
+
+    const [mealTypes, setMealTypes] = useState([]);
+
+    useEffect(() => {
+        const fetchSearchFilters = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/mealtypes`);
+                setMealTypes(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchSearchFilters();
+    }, []);
+
 
     return (
         <div className='filter'>
             {mealTypes.map((type) =>
-                <button
-                    className='filter__button'
-                    key={type.id}>
-                    {type.name}
-                </button>
+                <FilterButton
+                    type={type}
+                    key={type.id}
+                    selectedFilter={selectedFilter}
+                    setSelectedFilter={setSelectedFilter}
+                />
             )}
         </div>
     );
