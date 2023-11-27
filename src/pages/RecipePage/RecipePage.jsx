@@ -56,7 +56,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
         recipeData.results.find(entry => entry.id === parseInt(recipeId));
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
 
-    const [servings, setServings] = useState(recipe.servings);
+    const [servings, setServings] = useState(recipe?.servings);
     const [activeTab, setActiveTab] = useState("details");
     const [activeTab2, setActiveTab2] = useState("steps");
 
@@ -198,7 +198,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             }
 
             <RecipeSubNav navItems={["steps", "tools"]} setActiveTab={setActiveTab2} />
-            {activeTab2 === "steps" ? <Steps steps={recipe.analyzedInstructions[0].steps} /> :
+            {activeTab2 === "steps" ? <Steps steps={recipe?.analyzedInstructions[0].steps} /> :
                 <ItemList
                     recipeItems={equipmentData.equipment}
                     recipe={recipe}
