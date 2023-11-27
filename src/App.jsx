@@ -18,6 +18,7 @@ function App() {
   // const [recipeData, setRecipeData] = useState([]);
   const [recipeList, setRecipeList] = useState([]);
   const [shopList, setShopList] = useState([]);
+  const [scaledRecipe, setScaledRecipe] = useState([]);
 
   const handleLikeButton = recipe => {
     const localStorageListRaw = localStorage.getItem("recipeList") || "[]";
@@ -66,6 +67,20 @@ function App() {
                 apiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
                 recipeData={recipeData}
+                recipeList={recipeList}
+                handleLikeButton={handleLikeButton}
+                shopList={shopList}
+                setShopList={setShopList}
+              />
+            }
+          />
+          <Route
+            path='/recipe/:recipeId/scaled'
+            element={
+              <RecipePage
+                apiUrl={spoonacularApiUrl}
+                apiKey={spoonacularApiKey}
+                recipeData={scaledRecipe}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}

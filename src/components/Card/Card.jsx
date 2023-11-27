@@ -4,9 +4,17 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 import clockIcon from '../../assets/icons/clock.svg';
 
-export const Card = ({ id, title, image, cookTime, handleLikeButton, inCollection }) => {
+export const Card = ({ id, title, image, cookTime, handleLikeButton, inCollection, listSection }) => {
 
     const navigate = useNavigate();
+
+    const handleNavigate = () => {
+        if (listSection === "scaled") {
+            navigate(`/recipe/${id}/scaled`);
+        } else {
+            navigate(`/recipe/${id}`);
+        }
+    };
 
     return (
         <article className="card">
@@ -20,7 +28,7 @@ export const Card = ({ id, title, image, cookTime, handleLikeButton, inCollectio
                     />
                 </button>
             </div>
-            <div className="card__body" onClick={() => navigate(`/recipe/${id}`)}>
+            <div className="card__body" onClick={handleNavigate}>
                 <img className="card__image" src={image} alt={title} />
                 <div className="card__text">
                     <h3 className="card__title">{title}</h3>
