@@ -17,7 +17,7 @@ export const ItemList = ({ recipeItems, recipeServings, servings, activeCheckbox
     return (
         <section className="item-list">
             <div className="item-list__header">
-                <h2 className="item-list__heading">{recipeItems.length} items</h2>
+                <h2 className="item-list__heading">{recipeItems?.length || 0} items</h2>
                 <div className="item-list__actions">
                     {
                         listType === "ingredients" ? <UnitToggle activeUnit={activeUnit} setActiveUnit={setActiveUnit} /> : ""
@@ -32,7 +32,7 @@ export const ItemList = ({ recipeItems, recipeServings, servings, activeCheckbox
             </div>
 
             <ul className="item-list__list">
-                {recipeItems.map((item, index) =>
+                {recipeItems?.map((item, index) =>
                     <Item
                         item={item}
                         key={index}

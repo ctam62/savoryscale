@@ -25,6 +25,7 @@ export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, re
                     <Card
                         key={result.id}
                         id={result.id}
+                        result={result}
                         title={result[title]}
                         image={result[image]}
                         cookTime={result[cookTime]}
