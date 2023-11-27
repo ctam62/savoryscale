@@ -1,6 +1,20 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+@keyframes animate-in {
+    from {
+        scale: 0.5;
+        transform: translateY(-10rem);
+        filter: opacity(0);
+    }
+
+    to {
+        scale: 1;
+        transform: translateY(0);
+        filter: opacity(1);
+    }
+}
+
 .card {
     position: relative;
     display: flex;
@@ -11,7 +25,12 @@
     border-radius: 1.5rem;
     box-shadow: 0 0.4375rem 1.8125rem 0 rgba(100, 100, 111, 0.2);
     background-color: $color-highlight;
+    overflow: hidden;
     cursor: pointer;
+    transition: filter 0.2s ease-out, transform 0.2s ease-out;
+    animation-name: animate-in;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
 
     @include tablet {
         height: fit-content;
@@ -40,9 +59,9 @@
 
     &__image {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+        top: -0.8125rem;
+        left: -0.625rem;
+        width: 109%;
         height: 8rem;
         margin: 0 auto;
         border-top-left-radius: 1.5rem;
