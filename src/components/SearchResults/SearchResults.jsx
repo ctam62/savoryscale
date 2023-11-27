@@ -1,25 +1,10 @@
 import './SearchResults.scss';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { CardGrid } from '../CardGrid/CardGrid';
-import recipeData from '../../data/spoonacular_recipes.json';
 
-export const SearchResults = ({ query, recipeList, handleLikeButton }) => {
-    const [results, setResults] = useState([]);
-    const apiUrl = import.meta.env.SPOONACULAR_API_URL;
-    const apiKey = import.meta.env.SPOONACULAR_API_KEY;
-
-    useEffect(() => {
-        const searchRecipes = async () => {
-            const { data } = await axios.get(`${apiUrl}/api/recipes/complexSearch?query=${query}&apiKey=${apiKey}`);
-            setResults(data);
-        }
-        // searchRecipes();
-        setResults(recipeData.results);
-    }, [query]);
-
+export const SearchResults = ({ results, recipeList, handleLikeButton }) => {
     return (
         <section className="searchResults">
+            <h3 className="searchResults__subheader">{results.length} results</h3>
             <CardGrid
                 results={results}
                 title="title"
