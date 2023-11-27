@@ -47,8 +47,14 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
                 setIngredientData(ingredients.data);
                 setEquipmentData(equipment.data);
                 localStorage.setItem("ingredients", JSON.stringify(ingredients.data));
+                localStorage.setItem("equipment", JSON.stringify(equipment.data));
             } catch (error) {
                 console.error(error);
+
+                if (error.response.status === 402) {
+                    setIngredientData(JSON.parse(localStorage.getItem("ingredients")));
+                    setEquipmentData(JSON.parse(localStorage.getItem("equipment")));
+                }
             }
         }
 
@@ -222,7 +228,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             <RecipeSubNav navItems={["steps", "tools"]} setActiveTab={setActiveTab2} />
             {activeTab2 === "steps" ? <Steps steps={recipe?.analyzedInstructions[0]?.steps} /> :
                 <ItemList
-                    recipeItems={equipmentData.equipment}
+                    recipeItems={equipmentData?.equipment}
                     recipe={recipe}
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
