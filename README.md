@@ -122,7 +122,7 @@ This app includes a user login system to allow users to save their favourite rec
 ## Roadmap
 
 ### Sprint 1
-- Home Page, Recipe Page, Grocery List Page
+- Home Page, Recipe Page, Collections Page, Grocery List Page
 - Connect to Spoonacular API
 - Create SavoryScale API server and endpoints
   - recipes table 
@@ -131,7 +131,7 @@ This app includes a user login system to allow users to save their favourite rec
   - users table
 
 ### Sprint 2
-- User Login integration
+- User Login authentication and frontend integration
 - Save recipes per user
 - User recipe customization
 
