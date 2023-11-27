@@ -9,8 +9,8 @@ import { RecipeDetails } from '../../components/RecipeDetails/RecipeDetails';
 import { ItemList } from '../../components/ItemList/ItemList';
 import { Steps } from '../../components/Steps/Steps';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
-// import ingredientData from '../../data/ingredients.json';
-// import equipmentData from '../../data/equipment.json';
+import ingredientJson from '../../data/ingredients.json'; // remove for demo
+import equipmentJson from '../../data/equipment.json'; // remove for demo
 import backIcon from '../../assets/icons/back-arrow.svg';
 import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
@@ -34,15 +34,16 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
                 const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
                 setIngredientData(ingredients.data);
                 setEquipmentData(equipment.data);
-                // console.log("ingredient api call");
-                // console.log("equipment api call");
-
             } catch (error) {
                 console.error(error);
             }
         }
 
-        fetchIngredientAndToolsData();
+        // fetchIngredientAndToolsData(); // uncomment out for demo
+        setIngredientData(ingredientJson); //remove for demo
+        setEquipmentData(equipmentJson); // remove for demo
+        sessionStorage.setItem("ingredients", JSON.stringify(ingredientJson));
+        sessionStorage.setItem("recipeDetails", JSON.stringify(recipe));
     }, []);
 
     const recipe = recipeData.results.find(entry => entry.id === parseInt(recipeId));
@@ -54,6 +55,9 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
 
     const [activeCheckboxes, setActiveCheckboxes] = useState([]);
     const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("");
+    const [buttonText, setButtonText] = useState("");
+    const [redirectPath, setRedirectPath] = useState("");
 
 
     useEffect(() => {
@@ -65,18 +69,27 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
     }, [servings]);
 
     const handleSave = () => {
-        // post request to scaled recipe database
-        try {
+        const localStorageList = JSON.parse(localStorage.getItem("scaledRecipes")) || [];
+        const scaledRecipe = JSON.parse(sessionStorage.getItem("recipeDetails"));
 
-        } catch (error) {
-            console.error(error);
-        }
+        const localStorageIngredients = JSON.parse(localStorage.getItem("scaledIngredients")) || [];
+        const scaledIngredients = JSON.parse(sessionStorage.getItem("ingredients")).ingredients;
+
+        localStorageList.push(scaledRecipe);
+        localStorage.setItem("scaledRecipes", JSON.stringify(localStorageList));
+
+        scaledIngredients.recipeId = scaledRecipe.id;
+
+        localStorageIngredients.push(scaledIngredients);
+        localStorage.setItem("scaledIngredients", scaledIngredients);
+
+        setMessage("Your scaled recipe has been sucessfully added to your collection");
+        setButtonText("View My Collection");
+        setRedirectPath("/collection");
+        setOpen(true);
     };
 
     const handleAddToShoppingList = () => {
-        // create use post request
-        // save in local storage for now
-
         const localStorageList = JSON.parse(localStorage.getItem("shopList") || "[]");
 
         let indexCounter = localStorageList.length;
@@ -94,7 +107,11 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             localStorage.setItem("shopList", JSON.stringify(localStorageList));
         });
 
+        setMessage("Your ingredients have been sucessfully added to your shopping list");
+        setButtonText("View Shopping List");
+        setRedirectPath("/shoppinglist");
         setOpen(true);
+
     };
 
     const handleClose = () => {
@@ -103,7 +120,13 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
 
     return (
         <main className="recipe">
-            <ConfirmationAlert open={open} handleClose={handleClose} />
+            <ConfirmationAlert
+                open={open}
+                handleClose={handleClose}
+                message={message}
+                buttonText={buttonText}
+                redirectPath={redirectPath}
+            />
 
             <nav className="recipe__nav">
                 <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />

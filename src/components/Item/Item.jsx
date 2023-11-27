@@ -19,7 +19,7 @@ export const Item = ({
 
     const scale = (origValue) => {
         const scaleFactor = (origValue / recipeServings);
-        return formatQuantity((servings * scaleFactor).toFixed(2).replace(/\.00$/, ''));
+        return formatQuantity((servings * scaleFactor).toFixed(2).replace(/\.00$/, '')) || 0;
     }
 
     const [isChecked, setIsChecked] = useState(false);
@@ -32,8 +32,6 @@ export const Item = ({
     };
 
     const handleChecked = (event) => {
-        // push grocerylist to state
-
         if (!isChecked) {
             activeCheckboxes.push(event.target.value);
             setIsChecked(true);
@@ -43,6 +41,19 @@ export const Item = ({
             setCheckAllClicked(false);
         }
     };
+
+    const handleServingChange = () => {
+        const storedData = JSON.parse(sessionStorage.getItem("ingredients"));
+        if (Object.keys(storedData).length !== 0) {
+            storedData.ingredients[itemId].amount[activeUnit].origValue = item.amount[activeUnit].value;
+            storedData.ingredients[itemId].amount[activeUnit].value = scale(item.amount[activeUnit].value);
+            sessionStorage.setItem("ingredients", JSON.stringify(storedData));
+        }
+    };
+
+    useEffect(() => {
+        handleServingChange();
+    }, [servings]);
 
     useEffect(() => {
         if (checkStatus === "Select all" && checkAllClicked) {
