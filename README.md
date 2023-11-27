@@ -47,6 +47,7 @@ This app currently includes the following list of features:
 
 <img src="./public/images/wireframes1.png" alt="app wireframes"/>
 <img src="./public/images/wireframes2.png" alt="app wireframes"/>
+<img src="./public/images/wireframes3.png" alt="app wireframes"/>
 
 
 ### Data
@@ -85,7 +86,7 @@ This app's API server has the following list of endpoints:
       /api/mealtypes
       ```
 
-- POST endpoints
+- POST endpoints *(sprint 2)*
     - Create a user
       ```
       /api/users
@@ -95,7 +96,7 @@ This app's API server has the following list of endpoints:
       /api/users/:id/recipes
       ```
       
-- PUT/PATCH, DELETE endpoints
+- PUT/PATCH, DELETE endpoints *(sprint 2)*
   - Update user info or delete a user
     ```
     /api/users/:id
@@ -122,7 +123,7 @@ This app includes a user login system to allow users to save their favourite rec
 ## Roadmap
 
 ### Sprint 1
-- Home Page, Recipe Page, Collections Page, Grocery List Page
+- Home Page, Recipe Page, User/Collections Page, Grocery List Page
 - Connect to Spoonacular API
 - Create SavoryScale API server and endpoints
   - recipes table 
