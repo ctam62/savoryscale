@@ -9,8 +9,8 @@ import { RecipeDetails } from '../../components/RecipeDetails/RecipeDetails';
 import { ItemList } from '../../components/ItemList/ItemList';
 import { Steps } from '../../components/Steps/Steps';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
-import ingredientData from '../../data/ingredients.json';
-import equipmentData from '../../data/equipment.json';
+// import ingredientData from '../../data/ingredients.json';
+// import equipmentData from '../../data/equipment.json';
 import backIcon from '../../assets/icons/back-arrow.svg';
 import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
@@ -21,11 +21,29 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
     const navigate = useNavigate();
 
     const { recipeId } = useParams();
-    // const [ingredientData, setIngredientData] = useState({});
-    // const [equipmentData, setEquipmentData] = useState({});
+    const [ingredientData, setIngredientData] = useState({});
+    const [equipmentData, setEquipmentData] = useState({});
 
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
+
+    useEffect(() => {
+        const fetchIngredientAndToolsData = async () => {
+            try {
+                const ingredients = await axios.get(`${apiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
+                const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
+                setIngredientData(ingredients.data);
+                setEquipmentData(equipment.data);
+                // console.log("ingredient api call");
+                // console.log("equipment api call");
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        fetchIngredientAndToolsData();
+    }, []);
 
     const recipe = recipeData.results.find(entry => entry.id === parseInt(recipeId));
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
@@ -37,24 +55,6 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
     const [activeCheckboxes, setActiveCheckboxes] = useState([]);
     const [open, setOpen] = useState(false);
 
-
-    useEffect(() => {
-        const fetchIngredientAndToolsData = async () => {
-            try {
-                // const ingredients = await axios.get(`${apiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
-                // const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
-                // setIngredientData(ingredients.data);
-                // setEquipmentData(equipment.data);
-                console.log("ingredient api call");
-                console.log("equipment api call");
-
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        fetchIngredientAndToolsData();
-    }, []);
 
     useEffect(() => {
         if (servings !== recipe.servings) {

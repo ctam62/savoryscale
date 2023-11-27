@@ -5,7 +5,7 @@ import { formatQuantity } from 'format-quantity';
 export const Item = ({
     item,
     itemId,
-    recipe,
+    recipeServings,
     servings,
     activeUnit,
     listType,
@@ -18,7 +18,7 @@ export const Item = ({
     setButtonDisabled }) => {
 
     const scale = (origValue) => {
-        const scaleFactor = (origValue / recipe.servings);
+        const scaleFactor = (origValue / recipeServings);
         return formatQuantity((servings * scaleFactor).toFixed(2).replace(/\.00$/, ''));
     }
 

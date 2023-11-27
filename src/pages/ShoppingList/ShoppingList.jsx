@@ -1,12 +1,14 @@
 import './ShoppingList.scss';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GroceryItem } from '../../components/GroceryItem/GroceryItem';
+import { UnitToggle } from '../../components/UnitToggle/UnitToggle';
 import backIcon from '../../assets/icons/back-arrow.svg';
-import { useEffect, useState } from 'react';
 
 
 export const ShoppingList = ({ shopList, setShopList }) => {
 
+    const [activeUnit, setActiveUnit] = useState("metric");
     const [totalPrice, setTotalPrice] = useState(0);
 
     const navigate = useNavigate();
@@ -95,6 +97,8 @@ export const ShoppingList = ({ shopList, setShopList }) => {
                     </div>
                 </div>
 
+                <UnitToggle activeUnit={activeUnit} setActiveUnit={setActiveUnit} />
+
                 <ul className="shopping__list">
                     {list.length === 0 ?
                         <p className="shopping__status">There are no items in your shopping list</p> :
@@ -103,6 +107,7 @@ export const ShoppingList = ({ shopList, setShopList }) => {
                                 item={item}
                                 key={index}
                                 index={index}
+                                activeUnit={activeUnit}
                                 shopList={groupedList}
                                 setShopList={setShopList}
                                 scalePrice={scalePrice}
