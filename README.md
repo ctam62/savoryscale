@@ -12,7 +12,7 @@ Meal planning can be a challenging task when you have to scale a recipe up or do
 
 ### User Profile
 
-The app is designed for home cooks to simplify the meal planning process. Whether it’s planning for a week’s worth of meals or spicing things up by trying new recipes, the app helps users create a comprehensive grocery list. Users can write in and save their favourite recipes or search for new savouring and adventurous recipes to try.
+The app is designed for home cooks to simplify the meal planning process. Whether it’s planning for a week’s worth of meals or spicing things up by trying new recipes, the app helps users create a comprehensive grocery list. Users can save their favourite recipes or search for new savouring and adventurous recipes to try.
 
 
 ### Features
@@ -25,8 +25,6 @@ This app currently includes the following list of features:
 
 - **Recipe budgeting:** Providing an estimated cost of ingredients to help users budget for their meals more effectively.
 
--	**Cost-effective planning:** Suggest alternative ingredients to help users make budget-friendly choices without compromising nutrition.
-
 - **Smart shopping:** Generate a complete grocery list from a user's scaled recipes to assist them in purchasing the right quantities of ingredients.
 
 <br>
@@ -37,16 +35,8 @@ This app currently includes the following list of features:
 
 - Vite, ReactJS, ExpressJS, NodeJS, mySQL
 
-#### Libraries
-- react-google-maps/api
-
-### APIs
-
+### External APIs
 - Spoonacular API
-- Open Food Facts API
-- Presidents Choice API
-- Walmart API
-- Google Maps API / Mapbox API
 
 ### Sitemap
 <div style="text-align: centre">
@@ -70,7 +60,6 @@ This app's API server has the following list of endpoints:
 **HTTP methods:**
 
   - GET endpoints
-
     - Retrieve a single user
       ```
       /api/users/:id
@@ -91,25 +80,9 @@ This app's API server has the following list of endpoints:
       ```
       /api/recipes/:id
       ```
-    - Retrieve list of stores
+    - Retrieve list of meal type filters
       ```
-      /api/stores
-      ```
-    - Retrieve a single store
-      ```
-      /api/stores/:id
-      ```
-    - Retrieve a list of item categories for a specific store i.e., meat, produce
-      ```
-      /api/stores/:id/:category
-      ```
-    - Retrieve list of item types by category i.e., chicken, beef
-      ```
-      /api/stores/:id/:category/:type
-      ```
-    - Retrieve a single ingredient item
-      ```
-      /api/stores/:id/:category/:itemtype/:id
+      /api/mealtypes
       ```
 
 - POST endpoints
@@ -121,6 +94,7 @@ This app's API server has the following list of endpoints:
       ```
       /api/users/:id/recipes
       ```
+      
 - PUT/PATCH, DELETE endpoints
   - Update user info or delete a user
     ```
@@ -142,8 +116,6 @@ This app's API server has the following list of endpoints:
 ### Auth
 
 This app includes a user login system to allow users to save their favourite recipes and scaling inputs.
-  * Users have the option to create an account through the app or use their existing gmail account.
-  * OAuth 2.0 will be implemented.
 
 <br>
 
@@ -155,6 +127,8 @@ This app includes a user login system to allow users to save their favourite rec
 - Create SavoryScale API server and endpoints
   - recipes table 
   - scaled recipes table
+  - meal types table
+  - users table
 
 ### Sprint 2
 - User Login integration
@@ -171,7 +145,9 @@ This app includes a user login system to allow users to save their favourite rec
 <br>
 
 ## Nice-to-haves
-
+- User will have the option to sign up with their gmail account
+  - OAuth 2.0 implementation
+-	Suggest alternative ingredients to help users make budget-friendly choices without compromising nutrition.
 - Store price comparisons
 - Store price by brand within range
 - Provide tailored recommended recipes based on a snapshot of a user's pantry
