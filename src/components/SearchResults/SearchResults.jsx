@@ -5,7 +5,7 @@ import { CardGrid } from '../CardGrid/CardGrid';
 export const SearchResults = ({ results, recipeList, handleLikeButton }) => {
     return (
         <section className="searchResults">
-            <h3 className="searchResults__subheader">{results?.length} results</h3>
+            <h3 className="searchResults__subheader">{results?.length || 0} results</h3>
             <CardGrid
                 results={results}
                 title="title"

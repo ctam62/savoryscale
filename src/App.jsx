@@ -17,6 +17,7 @@ function App() {
   const [recipeList, setRecipeList] = useState([]);
   const [shopList, setShopList] = useState([]);
 
+
   const handleLikeButton = recipe => {
     const localStorageListRaw = localStorage.getItem("recipeList") || "[]";
     const localStorageList = JSON.parse(localStorageListRaw);
