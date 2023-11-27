@@ -24,6 +24,12 @@
     margin-right: auto;
 }
 
+@mixin logo {
+    font-size: var(--text-logo-size);
+    font-weight: 400;
+    font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
+}
+
 @mixin heading {
     font-size: var(--text-heading-size);
     font-weight: 400;
@@ -57,6 +63,7 @@
 
 @mixin nav-text {
     font-size: var(--text-nav-size);
+    font-weight: 600;
 }
 
 @mixin small-text {

@@ -15,7 +15,7 @@
     }
 
     &__logo {
-        @include heading;
+        @include logo;
         cursor: pointer;
         display: flex;
         align-items: center;

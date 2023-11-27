@@ -16,7 +16,7 @@
     }
 
     &__headings {
-        margin: 1rem 0 2rem 0;
+        margin: 0 0 2rem 0;
         padding: 1rem;
     }
 
@@ -26,7 +26,7 @@
     }
 
     &__subheader {
-        @include subheading;
+        @include nav-text;
         margin-top: 1rem;
     }
 
