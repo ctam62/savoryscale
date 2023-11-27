@@ -8,7 +8,7 @@ export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, re
 
     useEffect(() => {
         const addToQuantityShowing = (duration) => {
-            if (quantityToShow < results.length) {
+            if (quantityToShow < results?.length) {
                 setTimeout(() => {
                     setQuantityToShow(prev => prev + 1);
                     addToQuantityShowing(duration * 0.95);
@@ -21,7 +21,7 @@ export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, re
     return (
         <section className="grid">
             <div className="grid__grid">
-                {results.map(result =>
+                {results?.map(result =>
                     <Card
                         key={result.id}
                         id={result.id}
@@ -33,7 +33,7 @@ export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, re
                         listSection={listSection}
                     />
                 ).slice(0, quantityToShow)}
-                {quantityToShow < results.length && [...Array(results.length - quantityToShow).keys()]
+                {quantityToShow < results?.length && [...Array(results?.length - quantityToShow).keys()]
                     .map(i => <div key={i} className="grid__placeholder"></div>)}
             </div>
         </section>
