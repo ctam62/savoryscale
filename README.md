@@ -116,7 +116,7 @@ This app's API server has the following list of endpoints:
 
 ### Auth
 
-This app includes a user login system to allow users to save their favourite recipes and scaling inputs.
+This app will include a user login system in the next sprint update to allow users to better customize their saved favourite recipes and scaling inputs.
 
 <br>
 
