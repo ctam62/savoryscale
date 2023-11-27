@@ -18,9 +18,14 @@ export const Item = ({
     setActiveCheckboxes,
     setButtonDisabled }) => {
 
-    const scale = (origValue) => {
+    const scaleWithFormater = (origValue) => {
         const scaleFactor = (origValue / recipeServings);
         return formatQuantity((servings * scaleFactor).toFixed(2).replace(/\.00$/, '')) || 0;
+    }
+
+    const scale = (origValue) => {
+        const scaleFactor = (origValue / recipeServings);
+        return servings * scaleFactor;
     }
 
     const [isChecked, setIsChecked] = useState(false);
@@ -45,11 +50,11 @@ export const Item = ({
 
     const handleServingChange = () => {
         if (listType === "ingredients") {
-            const storedData = JSON.parse(sessionStorage.getItem("ingredients"));
+            const storedData = JSON.parse(localStorage.getItem("ingredients"));
             if (Object.keys(storedData).length !== 0) {
-                storedData.ingredients[itemId].amount[activeUnit].value = Number(scale(item.amount[activeUnit].value));
+                storedData.ingredients[itemId].amount[activeUnit].value = scale(item.amount[activeUnit].value);
                 storedData.ingredients[itemId].price = scale(item.price);
-                sessionStorage.setItem("ingredients", JSON.stringify(storedData));
+                localStorage.setItem("ingredients", JSON.stringify(storedData));
             }
         }
     };
@@ -92,7 +97,7 @@ export const Item = ({
             <h3 className="item__name item__item">{item.name}</h3>
             {listType === "ingredients" ?
                 <p className="item__amount item__item">
-                    {scale(item.amount[activeUnit].value)} {item.amount[activeUnit].unit}</p>
+                    {scaleWithFormater(item.amount[activeUnit].value)} {item.amount[activeUnit].unit}</p>
                 : ""
             }
             {listType === "ingredients" ?

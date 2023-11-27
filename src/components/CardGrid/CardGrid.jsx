@@ -12,10 +12,10 @@ export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, re
                 setTimeout(() => {
                     setQuantityToShow(prev => prev + 1);
                     addToQuantityShowing(duration * 0.95);
-                }, Math.max(duration, 50));
+                }, Math.max(duration, 100));
             }
         }
-        addToQuantityShowing(100);
+        addToQuantityShowing(50);
     }, [results]);
 
     return (
