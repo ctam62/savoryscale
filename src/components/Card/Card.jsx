@@ -4,6 +4,7 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 import clockIcon from '../../assets/icons/clock.svg';
 
+
 export const Card = ({ id, title, image, cookTime, handleLikeButton, inCollection, listSection }) => {
 
     const navigate = useNavigate();

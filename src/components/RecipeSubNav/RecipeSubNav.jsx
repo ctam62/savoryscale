@@ -1,6 +1,7 @@
 import './RecipeSubNav.scss';
 import { useState, useEffect } from 'react';
 
+
 export const RecipeSubNav = ({ navItems, setActiveTab }) => {
 
     const [item1, item2] = navItems;

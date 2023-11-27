@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardGrid } from '../../components/CardGrid/CardGrid';
 import backIcon from '../../assets/icons/back-arrow.svg';
 
+
 export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
     const navigate = useNavigate();
 

@@ -1,6 +1,7 @@
 import './SearchBar.scss';
 import searchIcon from '../../assets/icons/search.svg';
 
+
 export const SearchBar = ({ query, setQuery }) => {
     return (
         <div className='search'>

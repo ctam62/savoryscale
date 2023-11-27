@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FilterButton } from '../FilterButton/FilterButton';
 
+
 export const Filters = ({ apiUrl, selectedFilter, setSelectedFilter }) => {
 
     const [mealTypes, setMealTypes] = useState([]);

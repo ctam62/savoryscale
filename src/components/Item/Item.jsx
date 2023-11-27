@@ -2,6 +2,7 @@ import './Item.scss';
 import { useEffect, useState } from 'react';
 import { formatQuantity } from 'format-quantity';
 
+
 export const Item = ({
     item,
     itemId,

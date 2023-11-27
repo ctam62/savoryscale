@@ -2,6 +2,7 @@ import './CardGrid.scss';
 import { useEffect, useState } from 'react';
 import { Card } from '../Card/Card';
 
+
 export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, recipeList, listSection }) => {
     const [quantityToShow, setQuantityToShow] = useState(1);
 

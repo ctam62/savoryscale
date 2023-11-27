@@ -1,6 +1,7 @@
 import './SearchResults.scss';
 import { CardGrid } from '../CardGrid/CardGrid';
 
+
 export const SearchResults = ({ results, recipeList, handleLikeButton }) => {
     return (
         <section className="searchResults">

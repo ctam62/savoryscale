@@ -1,10 +1,11 @@
 import './UnitToggle.scss';
 
+
 export const UnitToggle = ({ activeUnit, setActiveUnit }) => {
 
     const handelUnit = (unit) => {
         setActiveUnit(unit);
-    }
+    };
 
     return (
         <div className="toggle__units">

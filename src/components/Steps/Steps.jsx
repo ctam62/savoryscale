@@ -1,5 +1,6 @@
 import './Steps.scss';
 
+
 export const Steps = ({ steps }) => {
     return (
         <section className="steps">

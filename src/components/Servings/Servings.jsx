@@ -2,6 +2,7 @@ import './Servings.scss';
 import minusIcon from '../../assets/icons/minus.svg';
 import plusIcon from '../../assets/icons/plus.svg';
 
+
 export const Servings = ({ servings, setServings }) => {
     return (
         <article className="servings">
