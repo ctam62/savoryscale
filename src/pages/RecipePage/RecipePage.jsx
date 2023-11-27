@@ -30,9 +30,12 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
 
-    const recipe = location.pathname === `/recipe/${recipeId}/scaled` ?
+    let recipe = location.pathname === `/recipe/${recipeId}/scaled` ?
         scaledRecipe.find(entry => entry.id === parseInt(recipeId)) :
         recipeData.results?.find(entry => entry.id === parseInt(recipeId));
+
+    recipe = !recipe ? JSON.parse(localStorage.getItem("recipeDetails")) : recipe;
+
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
 
 
@@ -50,7 +53,6 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
         }
 
         fetchIngredientAndToolsData();
-        localStorage.setItem("recipeDetails", JSON.stringify(recipe));
     }, []);
 
 

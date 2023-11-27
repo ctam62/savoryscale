@@ -5,7 +5,7 @@ import likeActiveIcon from '../../assets/icons/like-active.svg';
 import clockIcon from '../../assets/icons/clock.svg';
 
 
-export const Card = ({ id, title, image, cookTime, handleLikeButton, inCollection, listSection }) => {
+export const Card = ({ id, result, title, image, cookTime, handleLikeButton, inCollection, listSection }) => {
 
     const navigate = useNavigate();
 
@@ -15,6 +15,8 @@ export const Card = ({ id, title, image, cookTime, handleLikeButton, inCollectio
         } else {
             navigate(`/recipe/${id}`);
         }
+
+        localStorage.setItem("recipeDetails", JSON.stringify(result));
     };
 
     return (
