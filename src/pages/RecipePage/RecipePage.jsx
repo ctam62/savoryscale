@@ -12,8 +12,6 @@ import { ConfirmationAlert } from '../../components/ConfirmationAlert/Confirmati
 import backIcon from '../../assets/icons/back-arrow.svg';
 import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
-import ingredientJson from '../../data/ingredients.json';
-import equipmentJson from '../../data/equipment.json';
 
 
 export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
@@ -51,10 +49,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             }
         }
 
-        // fetchIngredientAndToolsData();
-        setIngredientData(ingredientJson);
-        setEquipmentData(equipmentJson);
-        localStorage.setItem("ingredients", JSON.stringify(ingredientJson));
+        fetchIngredientAndToolsData();
         localStorage.setItem("recipeDetails", JSON.stringify(recipe));
     }, []);
 
