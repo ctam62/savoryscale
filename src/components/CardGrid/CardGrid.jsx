@@ -14,7 +14,7 @@ export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, re
                 }, Math.max(duration, 50));
             }
         }
-        addToQuantityShowing(20);
+        addToQuantityShowing(100);
     }, [results]);
 
     return (

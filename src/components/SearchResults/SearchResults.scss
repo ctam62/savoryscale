@@ -20,4 +20,9 @@
     &__search {
         width: 100%;
     }
+
+    &__subheader {
+        @include body-text;
+        font-weight: 600;
+    }
 }

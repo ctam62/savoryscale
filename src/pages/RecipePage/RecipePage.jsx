@@ -9,20 +9,42 @@ import { RecipeDetails } from '../../components/RecipeDetails/RecipeDetails';
 import { ItemList } from '../../components/ItemList/ItemList';
 import { Steps } from '../../components/Steps/Steps';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
-import recipeData from '../../data/spoonacular_recipes.json';
-import ingredientData from '../../data/ingredients.json';
-import equipmentData from '../../data/equipment.json';
+import ingredientJson from '../../data/ingredients.json'; // remove for demo
+import equipmentJson from '../../data/equipment.json'; // remove for demo
 import backIcon from '../../assets/icons/back-arrow.svg';
 import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 
 
-export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList }) => {
-    const { recipeId } = useParams();
+export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
+
     const navigate = useNavigate();
+
+    const { recipeId } = useParams();
+    const [ingredientData, setIngredientData] = useState({});
+    const [equipmentData, setEquipmentData] = useState({});
 
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
+
+    useEffect(() => {
+        const fetchIngredientAndToolsData = async () => {
+            try {
+                const ingredients = await axios.get(`${apiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
+                const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
+                setIngredientData(ingredients.data);
+                setEquipmentData(equipment.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // fetchIngredientAndToolsData(); // uncomment out for demo
+        setIngredientData(ingredientJson); //remove for demo
+        setEquipmentData(equipmentJson); // remove for demo
+        sessionStorage.setItem("ingredients", JSON.stringify(ingredientJson));
+        sessionStorage.setItem("recipeDetails", JSON.stringify(recipe));
+    }, []);
 
     const recipe = recipeData.results.find(entry => entry.id === parseInt(recipeId));
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
@@ -33,26 +55,46 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
 
     const [activeCheckboxes, setActiveCheckboxes] = useState([]);
     const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("");
+    const [buttonText, setButtonText] = useState("");
+    const [redirectPath, setRedirectPath] = useState("");
+
+
+    useEffect(() => {
+        if (servings !== recipe.servings) {
+            setSaveButtonDisabled(false);
+        } else {
+            setSaveButtonDisabled(true);
+        }
+    }, [servings]);
 
     const handleSave = () => {
-        // post request to scaled recipe database
-        try {
+        const localStorageList = JSON.parse(localStorage.getItem("scaledRecipes")) || [];
+        const scaledRecipe = JSON.parse(sessionStorage.getItem("recipeDetails"));
 
-        } catch (error) {
-            console.error(error);
-        }
+        const localStorageIngredients = JSON.parse(localStorage.getItem("scaledIngredients")) || [];
+        const scaledIngredients = JSON.parse(sessionStorage.getItem("ingredients")).ingredients;
+
+        localStorageList.push(scaledRecipe);
+        localStorage.setItem("scaledRecipes", JSON.stringify(localStorageList));
+
+        scaledIngredients.recipeId = scaledRecipe.id;
+
+        localStorageIngredients.push(scaledIngredients);
+        localStorage.setItem("scaledIngredients", scaledIngredients);
+
+        setMessage("Your scaled recipe has been sucessfully added to your collection");
+        setButtonText("View My Collection");
+        setRedirectPath("/collection");
+        setOpen(true);
     };
 
     const handleAddToShoppingList = () => {
-        // create use post request
-        // save in local storage for now
-
         const localStorageList = JSON.parse(localStorage.getItem("shopList") || "[]");
 
         let indexCounter = localStorageList.length;
 
         activeCheckboxes.forEach(item => {
-            console.log(item);
             const shopItem = ingredientData.ingredients.find(ingredient => ingredient.name === item);
             indexCounter += 1;
             shopItem.id = indexCounter;
@@ -65,24 +107,26 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
             localStorage.setItem("shopList", JSON.stringify(localStorageList));
         });
 
+        setMessage("Your ingredients have been sucessfully added to your shopping list");
+        setButtonText("View Shopping List");
+        setRedirectPath("/shoppinglist");
         setOpen(true);
+
     };
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    useEffect(() => {
-        if (servings !== recipe.servings) {
-            setSaveButtonDisabled(false);
-        } else {
-            setSaveButtonDisabled(true);
-        }
-    }, [servings]);
-
     return (
         <main className="recipe">
-            <ConfirmationAlert open={open} handleClose={handleClose} />
+            <ConfirmationAlert
+                open={open}
+                handleClose={handleClose}
+                message={message}
+                buttonText={buttonText}
+                redirectPath={redirectPath}
+            />
 
             <nav className="recipe__nav">
                 <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
@@ -115,7 +159,7 @@ export const RecipePage = ({ recipeList, handleLikeButton, shopList, setShopList
             {activeTab === "details" ? <RecipeDetails recipe={recipe} servings={servings} /> :
                 <ItemList
                     recipeItems={ingredientData.ingredients}
-                    recipe={recipe}
+                    recipeServings={recipe.servings}
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
                     setActiveCheckboxes={setActiveCheckboxes}

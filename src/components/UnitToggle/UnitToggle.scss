@@ -1,0 +1,45 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.toggle {
+    &__units {
+        display: flex;
+        border-radius: 3.125rem;
+        background-color: $color-accent-tertiary;
+        @include small-text;
+        max-width: fit-content;
+    }
+
+    &__unit {
+        padding: 0.25rem 0.5rem;
+        cursor: pointer;
+
+        @include tablet {
+            padding: 0.5rem 1rem;
+        }
+
+        &--active-left {
+            padding: 0.25rem 0.5rem;
+            background-color: $color-tertiary;
+            color: $color-highlight;
+            border-top-left-radius: 3.125rem;
+            border-bottom-left-radius: 3.125rem;
+
+            @include tablet {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        &--active-right {
+            padding: 0.25rem 0.5rem;
+            background-color: $color-tertiary;
+            color: $color-highlight;
+            border-top-right-radius: 3.125rem;
+            border-bottom-right-radius: 3.125rem;
+
+            @include tablet {
+                padding: 0.5rem 1rem;
+            }
+        }
+    }
+}

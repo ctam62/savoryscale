@@ -1,12 +1,14 @@
 import './ShoppingList.scss';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GroceryItem } from '../../components/GroceryItem/GroceryItem';
+import { UnitToggle } from '../../components/UnitToggle/UnitToggle';
 import backIcon from '../../assets/icons/back-arrow.svg';
-import { useEffect, useState } from 'react';
 
 
 export const ShoppingList = ({ shopList, setShopList }) => {
 
+    const [activeUnit, setActiveUnit] = useState("metric");
     const [totalPrice, setTotalPrice] = useState(0);
 
     const navigate = useNavigate();
@@ -70,6 +72,11 @@ export const ShoppingList = ({ shopList, setShopList }) => {
         localStorage.setItem("shopList", JSON.stringify(newList));
     };
 
+    const emptyList = () => {
+        setShopList([]);
+        localStorage.setItem("shopList", JSON.stringify([]));
+    };
+
 
     useEffect(() => {
         calculateTotal();
@@ -77,12 +84,20 @@ export const ShoppingList = ({ shopList, setShopList }) => {
 
     return (
         <main className="shopping">
-            <nav className="recipe__nav">
+            <nav className="shopping__nav">
                 <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
             </nav>
 
             <section className="shopping__section">
-                <h2 className="shopping__header">My Shopping List</h2>
+                <div className="shopping__headings">
+                    <h2 className="shopping__header">My Shopping List</h2>
+                    <div className="shopping__info">
+                        <p className="shopping__subheader">{groupedList.length} items</p>
+                        <button className="shopping__empty" onClick={emptyList}>Empty List</button>
+                    </div>
+                </div>
+
+                <UnitToggle activeUnit={activeUnit} setActiveUnit={setActiveUnit} />
 
                 <ul className="shopping__list">
                     {list.length === 0 ?
@@ -92,6 +107,7 @@ export const ShoppingList = ({ shopList, setShopList }) => {
                                 item={item}
                                 key={index}
                                 index={index}
+                                activeUnit={activeUnit}
                                 shopList={groupedList}
                                 setShopList={setShopList}
                                 scalePrice={scalePrice}

@@ -1,5 +1,7 @@
 import './RecipeDetails.scss';
 import parseHTML from 'html-react-parser';
+import { useEffect } from 'react';
+
 
 export const RecipeDetails = ({ recipe, servings }) => {
 
@@ -11,12 +13,28 @@ export const RecipeDetails = ({ recipe, servings }) => {
     const protein = scale(recipe.nutrition.nutrients.find(item => item.name === "Protein").amount);
     const carbs = scale(recipe.nutrition.nutrients.find(item => item.name === "Carbohydrates").amount);
     const fat = scale(recipe.nutrition.nutrients.find(item => item.name === "Fat").amount);
+    const weight = recipe.nutrition.weightPerServing.amount;
+
+    const handleServingChange = () => {
+        const storedDetails = JSON.parse(sessionStorage.getItem("recipeDetails"));
+        if (Object.keys(storedDetails).length !== 0) {
+            storedDetails.nutrition.nutrients.find(item => item.name === "Protein").amount = protein;
+            storedDetails.nutrition.nutrients.find(item => item.name === "Carbohydrates").amount = carbs;
+            storedDetails.nutrition.nutrients.find(item => item.name === "Fat").amount = fat;
+            storedDetails.nutrition.weightPerServing.amount = Math.floor(weight * servings);
+            sessionStorage.setItem("recipeDetails", JSON.stringify(storedDetails));
+        }
+    };
+
+    useEffect(() => {
+        handleServingChange();
+    }, [servings]);
 
     return (
         <section className="recipe-details">
             <article className="recipe-details__nutrition">
                 <div className="recipe-details__item">
-                    <p>{Math.floor(recipe.nutrition.weightPerServing.amount * servings)} g
+                    <p>{Math.floor(weight * servings)} g
                     </p>
                     <p className="recipe-details__text">Weight</p>
                 </div>

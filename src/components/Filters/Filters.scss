@@ -10,5 +10,10 @@
     &__button {
         @include button;
         border-radius: 0.75rem;
+
+        &--active {
+            background: $color-accent-secondary;
+            color: $color-highlight;
+        }
     }
 }
