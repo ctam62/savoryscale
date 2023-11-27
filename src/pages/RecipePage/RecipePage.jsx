@@ -9,8 +9,6 @@ import { RecipeDetails } from '../../components/RecipeDetails/RecipeDetails';
 import { ItemList } from '../../components/ItemList/ItemList';
 import { Steps } from '../../components/Steps/Steps';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
-import ingredientJson from '../../data/ingredients.json'; // remove for demo
-import equipmentJson from '../../data/equipment.json'; // remove for demo
 import backIcon from '../../assets/icons/back-arrow.svg';
 import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
@@ -32,6 +30,12 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
 
+    const recipe = location.pathname === `/recipe/${recipeId}/scaled` ?
+        scaledRecipe.find(entry => entry.id === parseInt(recipeId)) :
+        recipeData.results.find(entry => entry.id === parseInt(recipeId));
+    const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
+
+
     useEffect(() => {
         const fetchIngredientAndToolsData = async () => {
             try {
@@ -39,22 +43,16 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
                 const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
                 setIngredientData(ingredients.data);
                 setEquipmentData(equipment.data);
+                sessionStorage.setItem("ingredients", JSON.stringify(ingredients.data));
             } catch (error) {
                 console.error(error);
             }
         }
 
-        // fetchIngredientAndToolsData(); // uncomment out for demo
-        setIngredientData(ingredientJson); //remove for demo
-        setEquipmentData(equipmentJson); // remove for demo
-        sessionStorage.setItem("ingredients", JSON.stringify(ingredientJson));
+        fetchIngredientAndToolsData();
         sessionStorage.setItem("recipeDetails", JSON.stringify(recipe));
     }, []);
 
-    const recipe = location.pathname === `/recipe/${recipeId}/scaled` ?
-        scaledRecipe.find(entry => entry.id === parseInt(recipeId)) :
-        recipeData.results.find(entry => entry.id === parseInt(recipeId));
-    const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
 
     const [servings, setServings] = useState(recipe?.servings);
     const [activeTab, setActiveTab] = useState("details");

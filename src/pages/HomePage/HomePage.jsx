@@ -19,7 +19,7 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const offset = 0; // for page numbers
+        const offset = 0;
         const resultsLimit = 10;
         const mealTypeParam = `&type=${selectedFilter.join(",")}`
         const recipeParams = `addRecipeInformation=true&addRecipeNutrition=true${mealTypeParam}`;
@@ -34,8 +34,7 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
                 localStorage.setItem("searchResults", JSON.stringify(data));
             }
 
-            // searchRecipes();
-            setRecipeData(recipeData);
+            searchRecipes();
         } catch (error) {
             console.error(error);
         }

@@ -6,7 +6,6 @@ import { HomePage } from './pages/HomePage/HomePage';
 import { RecipePage } from './pages/RecipePage/RecipePage';
 import { ShoppingList } from './pages/ShoppingList/ShoppingList';
 import { Collection } from './pages/Collection/Collection';
-import recipeJson from './data/spoonacular_recipes.json'; // remove for demo
 
 
 function App() {
@@ -14,11 +13,9 @@ function App() {
   const spoonacularApiUrl = import.meta.env.VITE_APP_SPOONACULAR_API_URL;
   const spoonacularApiKey = import.meta.env.VITE_APP_SPOONACULAR_API_KEY;
 
-  const [recipeData, setRecipeData] = useState(recipeJson); // remove for demo
-  // const [recipeData, setRecipeData] = useState([]);
+  const [recipeData, setRecipeData] = useState([]);
   const [recipeList, setRecipeList] = useState([]);
   const [shopList, setShopList] = useState([]);
-  const [scaledRecipe, setScaledRecipe] = useState([]);
 
   const handleLikeButton = recipe => {
     const localStorageListRaw = localStorage.getItem("recipeList") || "[]";
@@ -80,7 +77,7 @@ function App() {
               <RecipePage
                 apiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
-                recipeData={scaledRecipe}
+                recipeData={recipeData}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}
