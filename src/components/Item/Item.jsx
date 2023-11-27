@@ -43,11 +43,13 @@ export const Item = ({
     };
 
     const handleServingChange = () => {
-        const storedData = JSON.parse(sessionStorage.getItem("ingredients"));
-        if (Object.keys(storedData).length !== 0) {
-            storedData.ingredients[itemId].amount[activeUnit].origValue = item.amount[activeUnit].value;
-            storedData.ingredients[itemId].amount[activeUnit].value = scale(item.amount[activeUnit].value);
-            sessionStorage.setItem("ingredients", JSON.stringify(storedData));
+        if (listType === "ingredients") {
+            const storedData = JSON.parse(sessionStorage.getItem("ingredients"));
+            if (Object.keys(storedData).length !== 0) {
+                storedData.ingredients[itemId].amount[activeUnit].value = Number(scale(item.amount[activeUnit].value));
+                storedData.ingredients[itemId].price = scale(item.price);
+                sessionStorage.setItem("ingredients", JSON.stringify(storedData));
+            }
         }
     };
 

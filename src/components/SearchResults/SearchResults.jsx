@@ -12,6 +12,7 @@ export const SearchResults = ({ results, recipeList, handleLikeButton }) => {
                 cookTime="readyInMinutes"
                 handleLikeButton={handleLikeButton}
                 recipeList={recipeList}
+                listSection="liked"
             />
         </section>
     );

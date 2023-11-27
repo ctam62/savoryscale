@@ -1,7 +1,7 @@
 import './RecipePage.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Servings } from '../../components/Servings/Servings';
 import { RecipeHero } from '../../components/RecipeHero/RecipeHero';
 import { RecipeSubNav } from '../../components/RecipeSubNav/RecipeSubNav';
@@ -19,6 +19,11 @@ import likeActiveIcon from '../../assets/icons/like-active.svg';
 export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const scaledRecipe = JSON.parse(localStorage.getItem("scaledRecipes")) || [];
+    const scaledIngredients = JSON.parse(localStorage.getItem("scaledIngredients")) || [];
+    const sessionIngredients = JSON.parse(sessionStorage.getItem("ingredients")).ingredients || [];
 
     const { recipeId } = useParams();
     const [ingredientData, setIngredientData] = useState({});
@@ -46,7 +51,9 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
         sessionStorage.setItem("recipeDetails", JSON.stringify(recipe));
     }, []);
 
-    const recipe = recipeData.results.find(entry => entry.id === parseInt(recipeId));
+    const recipe = location.pathname === `/recipe/${recipeId}/scaled` ?
+        scaledRecipe.find(entry => entry.id === parseInt(recipeId)) :
+        recipeData.results.find(entry => entry.id === parseInt(recipeId));
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
 
     const [servings, setServings] = useState(recipe.servings);
@@ -75,13 +82,15 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
         const localStorageIngredients = JSON.parse(localStorage.getItem("scaledIngredients")) || [];
         const scaledIngredients = JSON.parse(sessionStorage.getItem("ingredients")).ingredients;
 
+        console.log(scaledIngredients);
+
         localStorageList.push(scaledRecipe);
         localStorage.setItem("scaledRecipes", JSON.stringify(localStorageList));
 
         scaledIngredients.recipeId = scaledRecipe.id;
 
         localStorageIngredients.push(scaledIngredients);
-        localStorage.setItem("scaledIngredients", scaledIngredients);
+        localStorage.setItem("scaledIngredients", JSON.stringify(scaledIngredients));
 
         setMessage("Your scaled recipe has been sucessfully added to your collection");
         setButtonText("View My Collection");
@@ -94,8 +103,16 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
 
         let indexCounter = localStorageList.length;
 
+        let data = [];
+
+        if (location.pathname === `/recipe/${recipeId}/scaled`) {
+            data = servings !== recipe.servings ? sessionIngredients : scaledIngredients;
+        } else {
+            data = servings !== recipe.servings ? sessionIngredients : ingredientData.ingredients;
+        }
+
         activeCheckboxes.forEach(item => {
-            const shopItem = ingredientData.ingredients.find(ingredient => ingredient.name === item);
+            const shopItem = data.find(ingredient => ingredient.name === item);
             indexCounter += 1;
             shopItem.id = indexCounter;
             shopItem.origPrice = shopItem.price;
@@ -158,7 +175,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             <RecipeSubNav navItems={["details", "ingredients"]} setActiveTab={setActiveTab} />
             {activeTab === "details" ? <RecipeDetails recipe={recipe} servings={servings} /> :
                 <ItemList
-                    recipeItems={ingredientData.ingredients}
+                    recipeItems={location.pathname === `/recipe/${recipeId}/scaled` ? scaledIngredients : ingredientData.ingredients}
                     recipeServings={recipe.servings}
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}

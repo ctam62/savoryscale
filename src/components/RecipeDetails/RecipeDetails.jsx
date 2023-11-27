@@ -18,6 +18,7 @@ export const RecipeDetails = ({ recipe, servings }) => {
     const handleServingChange = () => {
         const storedDetails = JSON.parse(sessionStorage.getItem("recipeDetails"));
         if (Object.keys(storedDetails).length !== 0) {
+            storedDetails.servings = servings;
             storedDetails.nutrition.nutrients.find(item => item.name === "Protein").amount = protein;
             storedDetails.nutrition.nutrients.find(item => item.name === "Carbohydrates").amount = carbs;
             storedDetails.nutrition.nutrients.find(item => item.name === "Fat").amount = fat;
