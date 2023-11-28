@@ -15,6 +15,7 @@
     width: 100%;
     max-width: 80rem;
     color: $color-highlight;
+    z-index: 3;
 
     &__close {
         @include icon-clickable;

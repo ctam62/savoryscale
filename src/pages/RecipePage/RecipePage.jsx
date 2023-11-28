@@ -32,9 +32,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
 
     let recipe = location.pathname === `/recipe/${recipeId}/scaled` ?
         scaledRecipe.find(entry => entry.id === parseInt(recipeId)) :
-        recipeData.results?.find(entry => entry.id === parseInt(recipeId));
-
-    recipe = !recipe ? JSON.parse(localStorage.getItem("recipeDetails")) : recipe;
+        JSON.parse(localStorage.getItem("recipeDetails"));
 
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
 
@@ -44,8 +42,10 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
             try {
                 const ingredients = await axios.get(`${apiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
                 const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
-                setIngredientData(ingredients.data || JSON.parse(localStorage.getItem("ingredients")));
-                setEquipmentData(equipment.data || JSON.parse(localStorage.getItem("equipment")));
+                ingredients.data.recipeId = parseInt(recipeId);
+                equipment.data.recipeId = parseInt(recipeId);
+                setIngredientData(ingredients.data);
+                setEquipmentData(equipment.data);
                 localStorage.setItem("ingredients", JSON.stringify(ingredients.data));
                 localStorage.setItem("equipment", JSON.stringify(equipment.data));
             } catch (error) {
@@ -57,6 +57,9 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
                 }
             }
         }
+
+        // const storedIngredients = JSON.parse(localStorage.getItem("ingredients"));
+        // const storedEquiment = JSON.parse(localStorage.getItem("equipment"));
 
         fetchIngredientAndToolsData();
         setRecipeData(JSON.parse(localStorage.getItem("searchResults")) || recipeData);
@@ -75,7 +78,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
 
 
     useEffect(() => {
-        if (servings !== recipe?.origServings) {
+        if (recipe?.servings !== recipe?.origServings) {
             setSaveButtonDisabled(false);
         } else {
             setSaveButtonDisabled(true);
@@ -196,7 +199,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
             {activeTab === "details" ? <RecipeDetails recipe={recipe} servings={servings} /> :
                 <ItemList
                     recipeItems={location.pathname === `/recipe/${recipeId}/scaled` ? scaledIngredients : ingredientData.ingredients}
-                    recipeServings={recipe.origServings}
+                    recipeServings={recipe?.origServings}
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
                     setActiveCheckboxes={setActiveCheckboxes}
