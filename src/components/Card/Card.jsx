@@ -16,6 +16,7 @@ export const Card = ({ id, result, title, image, cookTime, handleLikeButton, inC
             navigate(`/recipe/${id}`);
         }
 
+        result.origServings = result.servings;
         localStorage.setItem("recipeDetails", JSON.stringify(result));
     };
 
