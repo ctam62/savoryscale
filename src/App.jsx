@@ -65,6 +65,7 @@ function App() {
                 apiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
                 recipeData={recipeData}
+                setRecipeData={setRecipeData}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}
@@ -79,6 +80,7 @@ function App() {
                 apiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
                 recipeData={recipeData}
+                setRecipeData={setRecipeData}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}

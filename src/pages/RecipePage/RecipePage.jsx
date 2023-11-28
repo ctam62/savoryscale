@@ -14,7 +14,7 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 
 
-export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
+export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -44,8 +44,8 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             try {
                 const ingredients = await axios.get(`${apiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
                 const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
-                setIngredientData(ingredients.data);
-                setEquipmentData(equipment.data);
+                setIngredientData(ingredients.data || JSON.parse(localStorage.getItem("ingredients")));
+                setEquipmentData(equipment.data || JSON.parse(localStorage.getItem("equipment")));
                 localStorage.setItem("ingredients", JSON.stringify(ingredients.data));
                 localStorage.setItem("equipment", JSON.stringify(equipment.data));
             } catch (error) {
@@ -59,6 +59,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
         }
 
         fetchIngredientAndToolsData();
+        setRecipeData(JSON.parse(localStorage.getItem("searchResults")) || recipeData);
     }, []);
 
 
@@ -74,7 +75,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
 
 
     useEffect(() => {
-        if (servings !== recipe?.servings) {
+        if (servings !== recipe?.origServings) {
             setSaveButtonDisabled(false);
         } else {
             setSaveButtonDisabled(true);
@@ -107,16 +108,8 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
 
         let indexCounter = localStorageList.length;
 
-        let data = [];
-
-        if (location.pathname === `/recipe/${recipeId}/scaled`) {
-            data = servings !== recipe.servings ? localIngredients : scaledIngredients;
-        } else {
-            data = servings !== recipe.servings ? localIngredients : ingredientData.ingredients;
-        }
-
         activeCheckboxes.forEach(item => {
-            const shopItem = data.find(ingredient => ingredient.name === item);
+            const shopItem = localIngredients.find(ingredient => ingredient.name === item);
             indexCounter += 1;
             shopItem.id = indexCounter;
             shopItem.origPrice = shopItem.price;
@@ -157,7 +150,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             storedDetails.nutrition.nutrients.find(item => item.name === "Protein").amount = protein;
             storedDetails.nutrition.nutrients.find(item => item.name === "Carbohydrates").amount = carbs;
             storedDetails.nutrition.nutrients.find(item => item.name === "Fat").amount = fat;
-            storedDetails.nutrition.weightPerServing.amount = Math.floor(weight * servings);
+            storedDetails.nutrition.weightPerServing.amount = weight;
             localStorage.setItem("recipeDetails", JSON.stringify(storedDetails));
         }
     };
@@ -187,7 +180,6 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
                 servings={servings}
                 setServings={setServings}
                 buttonDisabled={saveButtonDisabled}
-                setButtonDisabled={setSaveButtonDisabled}
                 handleServingChange={handleServingChange}
             />
 
@@ -204,7 +196,7 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, recipeList, handleLikeB
             {activeTab === "details" ? <RecipeDetails recipe={recipe} servings={servings} /> :
                 <ItemList
                     recipeItems={location.pathname === `/recipe/${recipeId}/scaled` ? scaledIngredients : ingredientData.ingredients}
-                    recipeServings={recipe.servings}
+                    recipeServings={recipe.origServings}
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
                     setActiveCheckboxes={setActiveCheckboxes}
