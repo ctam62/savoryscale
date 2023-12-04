@@ -14,14 +14,10 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 
 
-export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
+export const RecipePage = ({ apiUrl, spoonacularApiUrl, apiKey, recipeData, setRecipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
 
     const navigate = useNavigate();
     const location = useLocation();
-
-    const scaledRecipe = JSON.parse(localStorage.getItem("scaledRecipes")) || [];
-    const scaledIngredients = JSON.parse(localStorage.getItem("scaledIngredients")) || [];
-    const localIngredients = JSON.parse(localStorage.getItem("ingredients"))?.ingredients || [];
 
     const { recipeId } = useParams();
     const [ingredientData, setIngredientData] = useState({});
@@ -30,9 +26,8 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
 
-    let recipe = location.pathname === `/recipe/${recipeId}/scaled` ?
-        scaledRecipe.find(entry => entry.id === parseInt(recipeId)) :
-        JSON.parse(localStorage.getItem("recipeDetails"));
+    const recipe = JSON.parse(localStorage.getItem("recipeDetails"));
+    const localIngredients = JSON.parse(localStorage.getItem("ingredients"))?.ingredients || [];
 
     const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
 
@@ -40,10 +35,8 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
     useEffect(() => {
         const fetchIngredientAndToolsData = async () => {
             try {
-                const ingredients = await axios.get(`${apiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
-                const equipment = await axios.get(`${apiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
-                ingredients.data.recipeId = parseInt(recipeId);
-                equipment.data.recipeId = parseInt(recipeId);
+                const ingredients = await axios.get(`${spoonacularApiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
+                const equipment = await axios.get(`${spoonacularApiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
                 setIngredientData(ingredients.data);
                 setEquipmentData(equipment.data);
                 localStorage.setItem("ingredients", JSON.stringify(ingredients.data));
@@ -52,21 +45,34 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
                 console.error(error);
 
                 if (error.response.status === 402) {
-                    setIngredientData(JSON.parse(localStorage.getItem("ingredients")));
-                    setEquipmentData(JSON.parse(localStorage.getItem("equipment")));
+                    // message for too many requests
                 }
             }
         }
 
-        // const storedIngredients = JSON.parse(localStorage.getItem("ingredients"));
-        // const storedEquiment = JSON.parse(localStorage.getItem("equipment"));
+        const fetchScaledRecipe = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/scaled-recipes/${recipeId}`);
+                setIngredientData(data);
+                setEquipmentData(data);
+                localStorage.setItem("ingredients", JSON.stringify({ ingredients: data.ingredients }));
+                localStorage.setItem("equipment", JSON.stringify({ equipment: data.equipment }));
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
-        fetchIngredientAndToolsData();
+        if (location.pathname === `/recipe/${recipeId}/scaled`) {
+            fetchScaledRecipe();
+        } else {
+            fetchIngredientAndToolsData();
+        }
+
         setRecipeData(JSON.parse(localStorage.getItem("searchResults")) || recipeData);
     }, []);
 
 
-    const [servings, setServings] = useState(recipe?.servings);
+    const [servings, setServings] = useState(recipe.servings);
     const [activeTab, setActiveTab] = useState("details");
     const [activeTab2, setActiveTab2] = useState("steps");
 
@@ -86,24 +92,28 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
     }, [servings]);
 
     const handleSave = () => {
-        const localStorageList = JSON.parse(localStorage.getItem("scaledRecipes")) || [];
         const scaledRecipe = JSON.parse(localStorage.getItem("recipeDetails"));
+        const scaledIngredients = JSON.parse(localStorage.getItem("ingredients"));
+        const equipment = JSON.parse(localStorage.getItem("equipment")).equipment;
 
-        const localStorageIngredients = JSON.parse(localStorage.getItem("scaledIngredients")) || [];
-        const scaledIngredients = JSON.parse(localStorage.getItem("ingredients")).ingredients;
-
-        localStorageList.push(scaledRecipe);
-        localStorage.setItem("scaledRecipes", JSON.stringify(localStorageList));
-
-        scaledIngredients.recipeId = scaledRecipe.id;
-
-        localStorageIngredients.push(scaledIngredients);
-        localStorage.setItem("scaledIngredients", JSON.stringify(scaledIngredients));
+        scaledRecipe.ingredients = scaledIngredients.ingredients;
+        scaledRecipe.totalCost = scaledIngredients.totalCost;
+        scaledRecipe.equipment = equipment;
 
         setMessage("Your scaled recipe has been sucessfully added to your collection");
         setButtonText("View My Collection");
         setRedirectPath("/collection");
         setOpen(true);
+
+        const postScaledRecipe = async () => {
+            try {
+                await axios.post(`${apiUrl}/api/scaled-recipes`, scaledRecipe);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        postScaledRecipe();
     };
 
     const handleAddToShoppingList = () => {
@@ -136,12 +146,12 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
 
     const handleServingChange = (servings) => {
         const scale = (origValue) => {
-            const scaleFactor = parseInt(origValue / recipe?.servings);
-            return Math.floor(servings * scaleFactor);
+            const scaleFactor = parseFloat(origValue / recipe?.servings);
+            return servings * scaleFactor;
         }
 
         const storedDetails = JSON.parse(localStorage.getItem("recipeDetails"));
-        const cals = Math.floor(recipe?.nutrition.nutrients.find(item => item.name === "Calories").amount / recipe?.servings * servings);
+        const cals = recipe?.nutrition.nutrients.find(item => item.name === "Calories").amount / recipe?.servings * servings;
         const protein = scale(recipe?.nutrition.nutrients.find(item => item.name === "Protein").amount);
         const carbs = scale(recipe?.nutrition.nutrients.find(item => item.name === "Carbohydrates").amount);
         const fat = scale(recipe?.nutrition.nutrients.find(item => item.name === "Fat").amount);
@@ -198,8 +208,8 @@ export const RecipePage = ({ apiUrl, apiKey, recipeData, setRecipeData, recipeLi
             <RecipeSubNav navItems={["details", "ingredients"]} setActiveTab={setActiveTab} />
             {activeTab === "details" ? <RecipeDetails recipe={recipe} servings={servings} /> :
                 <ItemList
-                    recipeItems={location.pathname === `/recipe/${recipeId}/scaled` ? scaledIngredients : ingredientData.ingredients}
-                    recipeServings={recipe?.origServings}
+                    recipeItems={ingredientData.ingredients}
+                    recipeServings={recipe.origServings}
                     servings={servings}
                     activeCheckboxes={activeCheckboxes}
                     setActiveCheckboxes={setActiveCheckboxes}

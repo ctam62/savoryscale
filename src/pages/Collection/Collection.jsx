@@ -1,11 +1,12 @@
 import './Collection.scss';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CardGrid } from '../../components/CardGrid/CardGrid';
 import backIcon from '../../assets/icons/back-arrow.svg';
 
 
-export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
+export const Collection = ({ apiUrl, recipeList, setRecipeList, handleLikeButton }) => {
     const navigate = useNavigate();
 
     const [scaledRecipes, setScaledRecipes] = useState([]);
@@ -17,12 +18,43 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
 
     const removeScaledRecipes = () => {
         setScaledRecipes([]);
-        localStorage.setItem("scaledRecipes", JSON.stringify([]));
-        localStorage.setItem("scaledIngredients", JSON.stringify([]));
+
+        const deleteScaledRecipes = async () => {
+            try {
+                await axios.delete(`${apiUrl}/api/scaled-recipes`);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        deleteScaledRecipes();
+    };
+
+    const handleRemoveButton = (recipeId) => {
+        const deleteRecipe = async () => {
+            try {
+                await axios.delete(`${apiUrl}/api/scaled-recipes/${recipeId}`);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        setScaledRecipes(scaledRecipes.filter(recipe => recipe.id !== recipeId));
+        deleteRecipe();
     };
 
     useEffect(() => {
-        setScaledRecipes(JSON.parse(localStorage.getItem("scaledRecipes")) || []);
+        const fetchScaledRecipes = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/scaled-recipes`);
+                setScaledRecipes(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchScaledRecipes();
+
     }, []);
 
     return (
@@ -48,6 +80,7 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
                     image="image"
                     cookTime="readyInMinutes"
                     handleLikeButton={handleLikeButton}
+                    handleRemoveButton={handleRemoveButton}
                     recipeList={recipeList}
                     listSection="liked"
                 />
@@ -65,6 +98,7 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
                     image="image"
                     cookTime="readyInMinutes"
                     handleLikeButton={handleLikeButton}
+                    handleRemoveButton={handleRemoveButton}
                     recipeList={recipeList}
                     listSection="scaled"
                 />

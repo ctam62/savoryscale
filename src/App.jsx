@@ -62,7 +62,8 @@ function App() {
             path='/recipe/:recipeId'
             element={
               <RecipePage
-                apiUrl={spoonacularApiUrl}
+                apiUrl={apiUrl}
+                spoonacularApiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
                 recipeData={recipeData}
                 setRecipeData={setRecipeData}
@@ -77,7 +78,8 @@ function App() {
             path='/recipe/:recipeId/scaled'
             element={
               <RecipePage
-                apiUrl={spoonacularApiUrl}
+                apiUrl={apiUrl}
+                spoonacularApiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
                 recipeData={recipeData}
                 setRecipeData={setRecipeData}
