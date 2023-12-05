@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CardGrid } from '../../components/CardGrid/CardGrid';
+import { CardPagination } from '../../components/CardPagination/CardPagination';
 import backIcon from '../../assets/icons/back-arrow.svg';
 
 
@@ -74,16 +75,15 @@ export const Collection = ({ apiUrl, recipeList, setRecipeList, handleLikeButton
                     </div>
                 </div>
 
-                <CardGrid
-                    results={recipeList}
-                    title="title"
-                    image="image"
-                    cookTime="readyInMinutes"
-                    handleLikeButton={handleLikeButton}
-                    handleRemoveButton={handleRemoveButton}
-                    recipeList={recipeList}
-                    listSection="liked"
-                />
+                <div className="collection__group">
+                    <CardPagination
+                        results={recipeList}
+                        recipeList={recipeList}
+                        handleLikeButton={handleLikeButton}
+                        handleRemoveButton={handleRemoveButton}
+                        listSection="liked"
+                    />
+                </div>
 
                 <div className="collection__headings">
                     <h3 className="collection__subheader">Scaled Recipes</h3>
@@ -92,16 +92,16 @@ export const Collection = ({ apiUrl, recipeList, setRecipeList, handleLikeButton
                         <button className="collection__clear" onClick={removeScaledRecipes}>Clear Collection</button>
                     </div>
                 </div>
-                <CardGrid
-                    results={scaledRecipes}
-                    title="title"
-                    image="image"
-                    cookTime="readyInMinutes"
-                    handleLikeButton={handleLikeButton}
-                    handleRemoveButton={handleRemoveButton}
-                    recipeList={recipeList}
-                    listSection="scaled"
-                />
+
+                <div className="collection__group">
+                    <CardPagination
+                        results={scaledRecipes}
+                        recipeList={recipeList}
+                        handleLikeButton={handleLikeButton}
+                        handleRemoveButton={handleRemoveButton}
+                        listSection="scaled"
+                    />
+                </div>
             </section>
 
         </main>
