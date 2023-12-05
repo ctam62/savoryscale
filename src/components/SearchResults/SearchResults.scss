@@ -20,6 +20,7 @@
     }
 
     &__subheader {
+        margin-top: 2rem;
         @include body-text;
         font-weight: 600;
     }
