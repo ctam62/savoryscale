@@ -13,7 +13,6 @@ function App() {
   const spoonacularApiUrl = import.meta.env.VITE_APP_SPOONACULAR_API_URL;
   const spoonacularApiKey = import.meta.env.VITE_APP_SPOONACULAR_API_KEY;
 
-  const [recipeData, setRecipeData] = useState([]);
   const [recipeList, setRecipeList] = useState([]);
   const [shopList, setShopList] = useState([]);
 
@@ -51,8 +50,6 @@ function App() {
                 apiUrl={apiUrl}
                 externalApiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
-                recipeData={recipeData}
-                setRecipeData={setRecipeData}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
               />
@@ -65,8 +62,6 @@ function App() {
                 apiUrl={apiUrl}
                 spoonacularApiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
-                recipeData={recipeData}
-                setRecipeData={setRecipeData}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}
@@ -81,8 +76,6 @@ function App() {
                 apiUrl={apiUrl}
                 spoonacularApiUrl={spoonacularApiUrl}
                 apiKey={spoonacularApiKey}
-                recipeData={recipeData}
-                setRecipeData={setRecipeData}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}
