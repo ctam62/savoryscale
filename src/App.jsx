@@ -1,6 +1,7 @@
 import './App.scss';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 import { Header } from './components/Header/Header';
 import { HomePage } from './pages/HomePage/HomePage';
 import { RecipePage } from './pages/RecipePage/RecipePage';
@@ -13,9 +14,34 @@ function App() {
   const spoonacularApiUrl = import.meta.env.VITE_APP_SPOONACULAR_API_URL;
   const spoonacularApiKey = import.meta.env.VITE_APP_SPOONACULAR_API_KEY;
 
+  const usageLimit = 150.0;
+
+  const [cookies, setCookie] = useCookies(["user_usage"]);
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [usage, setUsage] = useState(cookies.user_usage || 0);
   const [recipeList, setRecipeList] = useState([]);
   const [shopList, setShopList] = useState([]);
 
+  const calculateEndpointUsage = (numEndpoints, numResults) => {
+    const endpointCost = 1;
+    const resultCost = 0.06;
+    let pointsUsed = 0;
+
+    if (numResults !== null || numResults !== undefined) {
+      pointsUsed += (numResults * resultCost);
+    }
+    pointsUsed += (endpointCost * numEndpoints);
+    setUsage(usage + pointsUsed);
+    setCookie('user_usage', usage + pointsUsed, { expires: tomorrow });
+  };
+
+  const handleUsageLimit = () => {
+
+  };
 
   const handleLikeButton = recipe => {
     const localStorageListRaw = localStorage.getItem("recipeList") || "[]";
@@ -30,11 +56,15 @@ function App() {
       setRecipeList([...filteredList]);
       localStorage.setItem("recipeList", JSON.stringify(filteredList));
     }
-  }
+  };
 
   useEffect(() => {
     const localStorageListRaw = localStorage.getItem("recipeList");
     localStorageListRaw && setRecipeList(JSON.parse(localStorageListRaw));
+
+    if (cookies === usageLimit) {
+      handleUsageLimit();
+    }
   }, []);
 
 
@@ -52,6 +82,7 @@ function App() {
                 apiKey={spoonacularApiKey}
                 recipeList={recipeList}
                 handleLikeButton={handleLikeButton}
+                calculateEndpointUsage={calculateEndpointUsage}
               />
             }
           />
@@ -66,6 +97,8 @@ function App() {
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}
                 setShopList={setShopList}
+                calculateEndpointUsage={calculateEndpointUsage}
+                handleUsageLimit={handleUsageLimit}
               />
             }
           />
@@ -80,6 +113,8 @@ function App() {
                 handleLikeButton={handleLikeButton}
                 shopList={shopList}
                 setShopList={setShopList}
+                calculateEndpointUsage={calculateEndpointUsage}
+                handleUsageLimit={handleUsageLimit}
               />
             }
           />

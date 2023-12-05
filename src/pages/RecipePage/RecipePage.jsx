@@ -14,7 +14,17 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 
 
-export const RecipePage = ({ apiUrl, spoonacularApiUrl, apiKey, recipeList, handleLikeButton, shopList, setShopList }) => {
+export const RecipePage = ({
+    apiUrl,
+    spoonacularApiUrl,
+    apiKey,
+    recipeList,
+    handleLikeButton,
+    shopList,
+    setShopList,
+    calculateEndpointUsage,
+    handleUsageLimit
+}) => {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -42,12 +52,14 @@ export const RecipePage = ({ apiUrl, spoonacularApiUrl, apiKey, recipeList, hand
                 localStorage.setItem("ingredients", JSON.stringify(ingredients.data));
                 localStorage.setItem("equipment", JSON.stringify(equipment.data));
 
+                calculateEndpointUsage(2, null);
             } catch (error) {
-                console.error(error);
 
                 if (error.response.status === 402) {
-                    // message for too many requests
+                    handleUsageLimit();
                 }
+
+                console.error(error);
             }
         }
 

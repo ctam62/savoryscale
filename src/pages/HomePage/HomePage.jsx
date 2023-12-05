@@ -6,7 +6,15 @@ import { Filters } from '../../components/Filters/Filters';
 import { SearchResults } from '../../components/SearchResults/SearchResults';
 
 
-export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeList, handleLikeButton }) => {
+export const HomePage = ({
+    apiUrl,
+    externalApiUrl,
+    apiKey,
+    recipeList,
+    handleLikeButton,
+    calculateEndpointUsage,
+    handleUsageLimit
+}) => {
 
     const [recipeData, setRecipeData] = useState(null);
 
@@ -16,7 +24,7 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeList, handleLik
 
     const handleFilterSelect = (filterId) => {
         setActiveFilterId(filterId);
-    }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -24,7 +32,7 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeList, handleLik
         const offset = 0;
         const resultsLimit = 50;
         const mealTypeParam = `&type=${selectedFilter.join(",")}`
-        const recipeParams = `addRecipeInformation=true&addRecipeNutrition=true${mealTypeParam}`;
+        const recipeParams = `addRecipeNutrition=true${mealTypeParam}`;
         const searchParams = `&number=${resultsLimit}&${recipeParams}&offset=${offset}`
 
         try {
@@ -32,15 +40,22 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeList, handleLik
                 const { data } = await axios.get(
                     `${externalApiUrl}/recipes/complexSearch?query=${query}${searchParams}&apiKey=${apiKey}`
                 );
+
                 setRecipeData(data);
                 localStorage.setItem("searchResults", JSON.stringify(data));
+                calculateEndpointUsage(1, data.results.length);
             }
 
             searchRecipes();
         } catch (error) {
+
+            if (error.response.status === 402) {
+                handleUsageLimit();
+            }
+
             console.error(error);
         }
-    }
+    };
 
     useEffect(() => {
         setRecipeData(JSON.parse(localStorage.getItem("searchResults")));
