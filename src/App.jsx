@@ -1,7 +1,7 @@
 import './App.scss';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useCookies } from "react-cookie";
+import Cookies from 'universal-cookie';
 import { Header } from './components/Header/Header';
 import { HomePage } from './pages/HomePage/HomePage';
 import { RecipePage } from './pages/RecipePage/RecipePage';
@@ -10,21 +10,34 @@ import { Collection } from './pages/Collection/Collection';
 
 
 function App() {
+
   const apiUrl = import.meta.env.VITE_APP_API_URL;
   const spoonacularApiUrl = import.meta.env.VITE_APP_SPOONACULAR_API_URL;
   const spoonacularApiKey = import.meta.env.VITE_APP_SPOONACULAR_API_KEY;
 
   const usageLimit = 150.0;
 
-  const [cookies, setCookie] = useCookies(["user_usage"]);
-  const today = new Date();
-  const tomorrow = new Date(today);
+  const date = new Date();
+  const now_utc = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+
+  const tomorrow = new Date(now_utc);
   tomorrow.setDate(tomorrow.getDate() + 1);
 
+  const cookies = new Cookies("user_usage", { expires: tomorrow });
+
+
   const [isLoading, setIsLoading] = useState(false);
-  const [usage, setUsage] = useState(cookies.user_usage || 0);
+  const [usage, setUsage] = useState(cookies.get("user_usge") || 0);
   const [recipeList, setRecipeList] = useState([]);
   const [shopList, setShopList] = useState([]);
+
 
   const calculateEndpointUsage = (numEndpoints, numResults) => {
     const endpointCost = 1;
@@ -34,9 +47,11 @@ function App() {
     if (numResults !== null || numResults !== undefined) {
       pointsUsed += (numResults * resultCost);
     }
+
     pointsUsed += (endpointCost * numEndpoints);
+
     setUsage(usage + pointsUsed);
-    setCookie('user_usage', usage + pointsUsed, { expires: tomorrow });
+    cookies.set('user_usage', usage + pointsUsed);
   };
 
   const handleUsageLimit = () => {
