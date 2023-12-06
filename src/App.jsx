@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { Header } from './components/Header/Header';
+import { Footer } from './components/Footer/Footer';
+import { WelcomePage } from './pages/WelcomePage/WelcomePage';
+import { SignUpPage } from './pages/SignUpPage/SignUpPage';
+import { LoginPage } from './pages/LoginPage/LoginPage';
 import { HomePage } from './pages/HomePage/HomePage';
 import { RecipePage } from './pages/RecipePage/RecipePage';
 import { ShoppingList } from './pages/ShoppingList/ShoppingList';
@@ -73,6 +77,7 @@ function App() {
     }
   };
 
+
   useEffect(() => {
     const localStorageListRaw = localStorage.getItem("recipeList");
     localStorageListRaw && setRecipeList(JSON.parse(localStorageListRaw));
@@ -89,7 +94,7 @@ function App() {
         <Header />
         <Routes>
           <Route
-            path='/'
+            exact path='/'
             element={
               <HomePage
                 apiUrl={apiUrl}
@@ -102,7 +107,19 @@ function App() {
             }
           />
           <Route
-            path='/recipe/:recipeId'
+            exact path='/welcome'
+            element={<WelcomePage />}
+          />
+          <Route
+            exact path='/login'
+            element={<LoginPage apiUrl={apiUrl} />}
+          />
+          <Route
+            exact path='/signup'
+            element={<SignUpPage />}
+          />
+          <Route
+            exact path='/recipe/:recipeId'
             element={
               <RecipePage
                 apiUrl={apiUrl}
@@ -118,7 +135,7 @@ function App() {
             }
           />
           <Route
-            path='/recipe/:recipeId/scaled'
+            exact path='/recipe/:recipeId/scaled'
             element={
               <RecipePage
                 apiUrl={apiUrl}
@@ -134,7 +151,7 @@ function App() {
             }
           />
           <Route
-            path='/shoppinglist'
+            exact path='/shoppinglist'
             element={
               <ShoppingList
                 apiUrl={apiUrl}
@@ -144,7 +161,7 @@ function App() {
             }
           />
           <Route
-            path='/collection'
+            exact path='/collection'
             element={
               <Collection
                 apiUrl={apiUrl}
@@ -155,6 +172,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );

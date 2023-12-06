@@ -1,12 +1,17 @@
 import './Header.scss';
-import { useNavigate } from 'react-router-dom';
-import shopIcon from '../../assets/icons/shopping-bag.svg';
+import { useNavigate, useLocation } from 'react-router-dom';
+import shopIcon from '../../assets/icons/shopping-cart.svg';
 import bookIcon from '../../assets/icons/book.svg';
 import logo from '../../assets/logos/justice-scale1.svg';
 
 
 export const Header = () => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+
+    if (pathname === "/welcome" || pathname === "/login" || pathname === '/signup') {
+        return (null);
+    }
 
     return (
         <header className="header">

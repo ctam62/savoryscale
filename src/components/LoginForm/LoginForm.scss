@@ -1,0 +1,15 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.login-form {
+    @include form;
+
+    &__input {
+        @include input;
+    }
+
+    &__button {
+        @include button;
+        @include form-button;
+    }
+}
