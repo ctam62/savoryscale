@@ -1,2 +1,63 @@
 @use './../../styles/mixins.scss' as *;
 @use './../../styles/variables.scss' as *;
+
+.modal {
+    width: 24rem;
+    max-width: 90%;
+    margin: 20vh auto 0 auto;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    background: $primary-bg;
+    text-align: left;
+    z-index: 10;
+
+    &--close {
+        display: none;
+    }
+
+    &--valid {
+        color: $valid;
+    }
+
+    &--invalid {
+        color: $invalid;
+    }
+
+    &__overlay {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background-color: rgba(0, 0, 0, 0.25);
+        z-index: 10;
+    }
+
+    &__header {
+        font-size: 1.25rem;
+    }
+
+    &__body {
+        padding: 1rem 0;
+        color: $secondary-text;
+    }
+
+    &__footer {
+        padding-top: 1rem;
+        display: flex;
+        justify-content: flex-end;
+        font-weight: 600;
+    }
+
+    &__confirm {
+        font-size: 0.75rem;
+        color: $secondary-text;
+        cursor: pointer;
+
+        &:hover {
+            color: $primary-text;
+        }
+    }
+}
