@@ -27,13 +27,13 @@
 @mixin logo {
     font-size: var(--text-logo-size);
     font-weight: 400;
-    font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
+    font-family: $title-font;
 }
 
 @mixin heading {
     font-size: var(--text-heading-size);
     font-weight: 400;
-    font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
+    font-family: $title-font;
 }
 
 @mixin subheading {

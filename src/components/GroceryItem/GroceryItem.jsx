@@ -16,7 +16,11 @@ export const GroceryItem = ({ index, item, activeUnit, shopList, setShopList, up
 
     return (
         <li className="shop__item item">
-            <img className="shop__image item__item" src={`https://spoonacular.com/cdn/ingredients_100x100/${item.image}`} alt={item.name} />
+            <img
+                className="shop__image item__item"
+                src={`https://spoonacular.com/cdn/ingredients_100x100/${item.image}`}
+                alt={item.name}
+            />
             <h3 className="item__name item__item">{item.name}</h3>
 
             <div className="item__quantity">

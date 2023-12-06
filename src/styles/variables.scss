@@ -41,6 +41,9 @@ $desktop-breakpoint: 1280px;
     }
 }
 
+$title-font: 'Agbalumo', Helvetica, Arial, sans-serif;
+$body-font: 'Roboto', Helvetica, Arial, sans-serif;
+
 $site-padding: var(--site-padding);
 $letter-width: var(--letter-width);
 
@@ -52,3 +55,6 @@ $color-accent-tertiary: #EEE;
 $color-highlight: #FFF;
 $color-tertiary: #FBAE17;
 $color-quarternary: #F8AC9C;
+
+$valid: $color-accent-secondary;
+$invalid: $color-quarternary;

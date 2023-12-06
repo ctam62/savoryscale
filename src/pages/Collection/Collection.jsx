@@ -2,7 +2,6 @@ import './Collection.scss';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CardGrid } from '../../components/CardGrid/CardGrid';
 import { CardPagination } from '../../components/CardPagination/CardPagination';
 import backIcon from '../../assets/icons/back-arrow.svg';
 
