@@ -18,13 +18,7 @@ const theme = createTheme({
 });
 
 
-export const CardPagination = ({
-    results,
-    recipeList,
-    handleLikeButton,
-    handleRemoveButton,
-    listSection
-}) => {
+export const CardPagination = ({ results, recipeList, handleLikeButton, handleRemoveButton, listSection }) => {
 
     const itemsPerPage = 8;
 
