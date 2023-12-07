@@ -20,7 +20,7 @@ const theme = createTheme({
 
 export const CardPagination = ({ results, recipeList, handleLikeButton, handleRemoveButton, listSection }) => {
 
-    const itemsPerPage = 8;
+    const itemsPerPage = 20;
 
     const [page, setPage] = useState(1);
     const numOfPages = useMemo(() => Math.ceil(results?.length / itemsPerPage));
@@ -40,7 +40,7 @@ export const CardPagination = ({ results, recipeList, handleLikeButton, handleRe
                 page={page}
             />
             <ThemeProvider theme={theme}>
-                {numOfPages === 1 ? null :
+                {numOfPages <= 1 ? null :
                     <Pagination
                         count={numOfPages}
                         variant="outlined"
