@@ -8,21 +8,44 @@
     align-items: center;
     max-width: 90%;
     margin: 0 auto;
+    width: 100%;
 
     @include tablet {
+        // height: 9.7vh;
         flex-direction: row;
+        align-items: center;
+        gap: 1rem;
         justify-content: space-between;
     }
 
     &__logo {
-        @include logo;
         cursor: pointer;
         display: flex;
         align-items: center;
         gap: 1rem;
+        min-width: fit-content;
+
+        @include small-device {
+            margin: 0 auto;
+            gap: 0.0625rem;
+            flex-wrap: wrap;
+        }
+
+        &-text {
+            @include logo;
+
+            @include small-device {
+                margin: 0 auto;
+            }
+        }
 
         &-img {
+            display: flex;
             max-width: 3.75rem;
+
+            @include small-device {
+                display: none;
+            }
         }
     }
 

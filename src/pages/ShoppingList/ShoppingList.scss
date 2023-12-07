@@ -4,6 +4,8 @@
 .shopping {
     margin: 0 auto;
     padding: $site-padding;
+    flex-grow: 1;
+    width: 100%;
 
     @include tablet {
         max-width: 90%;
@@ -33,9 +35,12 @@
     &__info {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
     }
 
     &__empty {
+        margin-top: 1rem;
         @include nav-text;
         color: $color-accent;
         font-weight: 600;
@@ -53,6 +58,7 @@
     }
 
     &__status {
+        padding: 2rem 1rem;
         @include body-text;
         font-weight: 600;
     }
