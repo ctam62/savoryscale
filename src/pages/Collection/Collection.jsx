@@ -1,11 +1,22 @@
 import './Collection.scss';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CardGrid } from '../../components/CardGrid/CardGrid';
+import { CardPagination } from '../../components/CardPagination/CardPagination';
 import backIcon from '../../assets/icons/back-arrow.svg';
 
 
-export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
+export const Collection = ({
+    apiUrl,
+    user,
+    setUser,
+    failedAuth,
+    setFailedAuth,
+    recipeList,
+    setRecipeList,
+    handleLikeButton
+}) => {
+
     const navigate = useNavigate();
 
     const [scaledRecipes, setScaledRecipes] = useState([]);
@@ -17,13 +28,86 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
 
     const removeScaledRecipes = () => {
         setScaledRecipes([]);
-        localStorage.setItem("scaledRecipes", JSON.stringify([]));
-        localStorage.setItem("scaledIngredients", JSON.stringify([]));
+
+        const deleteScaledRecipes = async () => {
+            try {
+                await axios.delete(`${apiUrl}/api/scaled-recipes`);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        deleteScaledRecipes();
+    };
+
+    const handleRemoveButton = (recipeId) => {
+        const deleteRecipe = async () => {
+            try {
+                await axios.delete(`${apiUrl}/api/scaled-recipes/${recipeId}`);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        setScaledRecipes(scaledRecipes.filter(recipe => recipe.id !== recipeId));
+        deleteRecipe();
     };
 
     useEffect(() => {
-        setScaledRecipes(JSON.parse(localStorage.getItem("scaledRecipes")) || []);
+        const token = sessionStorage.getItem("token");
+
+        if (!token) {
+            return setFailedAuth(true);
+        }
+
+        axios
+            .get(`${apiUrl}/api/users/current`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                setUser(response.data);
+            })
+            .catch((error) => {
+                setFailedAuth(true);
+            });
+
+        const fetchScaledRecipes = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/scaled-recipes`);
+                setScaledRecipes(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        fetchScaledRecipes();
     }, []);
+
+    if (failedAuth) {
+        return (
+            <main className="collection">
+                <section className="home__message">
+                    <p>You must be logged in to see this page.</p>
+                    <button
+                        className="login-form__button"
+                        type="button"
+                        onClick={() => navigate("/login")}>
+                        Login
+                    </button>
+                </section>
+            </main>
+        );
+    }
+
+    if (user === null) {
+        return (
+            <main className="collection">
+                <p>Loading...</p>
+            </main>
+        );
+    }
 
     return (
         <main className="collection">
@@ -42,15 +126,15 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
                     </div>
                 </div>
 
-                <CardGrid
-                    results={recipeList}
-                    title="title"
-                    image="image"
-                    cookTime="readyInMinutes"
-                    handleLikeButton={handleLikeButton}
-                    recipeList={recipeList}
-                    listSection="liked"
-                />
+                <div className="collection__group">
+                    <CardPagination
+                        results={recipeList}
+                        recipeList={recipeList}
+                        handleLikeButton={handleLikeButton}
+                        handleRemoveButton={handleRemoveButton}
+                        listSection="liked"
+                    />
+                </div>
 
                 <div className="collection__headings">
                     <h3 className="collection__subheader">Scaled Recipes</h3>
@@ -59,15 +143,16 @@ export const Collection = ({ recipeList, setRecipeList, handleLikeButton }) => {
                         <button className="collection__clear" onClick={removeScaledRecipes}>Clear Collection</button>
                     </div>
                 </div>
-                <CardGrid
-                    results={scaledRecipes}
-                    title="title"
-                    image="image"
-                    cookTime="readyInMinutes"
-                    handleLikeButton={handleLikeButton}
-                    recipeList={recipeList}
-                    listSection="scaled"
-                />
+
+                <div className="collection__group">
+                    <CardPagination
+                        results={scaledRecipes}
+                        recipeList={recipeList}
+                        handleLikeButton={handleLikeButton}
+                        handleRemoveButton={handleRemoveButton}
+                        listSection="scaled"
+                    />
+                </div>
             </section>
 
         </main>

@@ -27,13 +27,13 @@
 @mixin logo {
     font-size: var(--text-logo-size);
     font-weight: 400;
-    font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
+    font-family: $title-font;
 }
 
 @mixin heading {
     font-size: var(--text-heading-size);
     font-weight: 400;
-    font-family: 'Agbalumo', Helvetica, Arial, sans-serif;
+    font-family: $title-font;
 }
 
 @mixin subheading {
@@ -99,4 +99,49 @@
 @mixin icon-clickable {
     width: 1.25rem;
     cursor: pointer;
+}
+
+@mixin form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+@mixin input {
+    width: 12.5rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    background-color: transparent;
+    border: 0.0625rem solid $color-accent;
+    border-radius: 3.125rem;
+    font-size: 1rem;
+    font-family: $body-font;
+
+    @include tablet {
+        width: 15.625rem;
+        font-size: 1.125rem;
+    }
+}
+
+@mixin form-button {
+    width: 12.5rem;
+    margin-top: 1rem;
+    font-family: $body-font;
+
+    @include tablet {
+        width: 15.625rem;
+        font-size: 1.25rem;
+    }
+}
+
+@mixin usage-terms {
+    padding: 1rem 0;
+    @include small-text;
+    max-width: 80%;
+
+    @include tablet {
+        max-width: 60%;
+    }
 }

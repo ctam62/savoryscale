@@ -1,0 +1,108 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.welcome {
+    padding: $site-padding $site-padding 0 $site-padding;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    margin: 0 auto;
+
+    &__header {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    &__logo {
+        @include logo;
+
+        &-img {
+            max-width: 3.75rem;
+        }
+    }
+
+    &__content {
+        margin: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__subheader {
+        @include heading;
+        margin-bottom: 1.5rem;
+    }
+
+    &__subsubheader {
+        @include body-text;
+        color: $color-accent;
+        max-width: 80%;
+
+        @include tablet {
+            max-width: 60%;
+        }
+    }
+
+    &__nav {
+        padding: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+
+        &-button {
+            max-width: 15.625rem;
+            min-width: 9.375rem;
+            @include button;
+            color: $color-accent-secondary;
+            background-color: transparent;
+            border: 0.0625rem solid $color-accent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+
+            @include tablet {
+                font-size: 1.25rem;
+                width: 15.625rem;
+            }
+
+            &-icon {
+                width: 1.2rem;
+                filter: brightness(0) saturate(100%) invert(70%) sepia(49%) saturate(382%) hue-rotate(319deg) brightness(101%) contrast(95%);
+            }
+
+            &:hover {
+                border: 0.0625rem solid $color-accent-secondary;
+
+                .welcome__nav-button-icon {
+                    filter: brightness(0) saturate(100%) invert(99%) sepia(5%) saturate(1130%) hue-rotate(176deg) brightness(119%) contrast(100%);
+                }
+            }
+
+            &--google {
+                color: $color-quarternary;
+
+                &:hover {
+                    background-color: $color-quarternary;
+                    border: 0.0625rem solid $color-quarternary;
+                }
+            }
+        }
+
+        &-link {
+            color: $color-accent-secondary;
+        }
+    }
+
+    &__terms {
+        @include usage-terms;
+    }
+}

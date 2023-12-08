@@ -33,7 +33,7 @@ This app currently includes the following list of features:
 
 ### Tech Stack
 
-- Vite, ReactJS, ExpressJS, NodeJS, mySQL
+- Vite, React.js, Express.js, Node.js, PostgreSQL
 
 ### External APIs
 - Spoonacular API
@@ -153,8 +153,9 @@ This app will include a user login system in the next sprint update to allow use
 - User recipe customization
 
 ### Sprint 3
-- Walmart API/Superstore API integration
-- Ingredient costs from grocery store
+- Instacart API integration
+- Ingredient costs from local grocery stores
+- In app ordering
 
 ### Sprint 4
 - Google Maps / Mapbox API integration to find local grocery stores
@@ -174,3 +175,5 @@ This app will include a user login system in the next sprint update to allow use
 - Detailed nutritional information for each scaled recipe, facilitating better dietary planning.
 - Recipe Customization
   - Allow users with specific dietary needs or restrictions to customize recipes while maintaining accurate nutritional data.
+  - Allow users to add/create their own recipes
+- Voice assistance to dictate recipe steps or voice command options

@@ -3,7 +3,18 @@ import { useEffect, useState } from 'react';
 import { Card } from '../Card/Card';
 
 
-export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, recipeList, listSection }) => {
+export const CardGrid = ({
+    results,
+    title,
+    image,
+    cookTime,
+    handleLikeButton,
+    handleRemoveButton,
+    recipeList,
+    listSection,
+    itemsPerPage,
+    page
+}) => {
     const [quantityToShow, setQuantityToShow] = useState(1);
 
     useEffect(() => {
@@ -21,21 +32,23 @@ export const CardGrid = ({ results, title, image, cookTime, handleLikeButton, re
     return (
         <section className="grid">
             <div className="grid__grid">
-                {results?.map(result =>
-                    <Card
-                        key={result.id}
-                        id={result.id}
-                        result={result}
-                        title={result[title]}
-                        image={result[image]}
-                        cookTime={result[cookTime]}
-                        handleLikeButton={() => handleLikeButton(result)}
-                        inCollection={recipeList.map(recipe => recipe.id).includes(result.id)}
-                        listSection={listSection}
-                    />
-                ).slice(0, quantityToShow)}
+                {results?.slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                    .map(result =>
+                        <Card
+                            key={result.id}
+                            id={result.id}
+                            result={result}
+                            title={result[title]}
+                            image={result[image]}
+                            cookTime={result[cookTime]}
+                            handleLikeButton={() => handleLikeButton(result)}
+                            handleRemoveButton={() => handleRemoveButton(result.id)}
+                            inCollection={recipeList.map(recipe => recipe.id).includes(result.id)}
+                            listSection={listSection}
+                        />
+                    ).slice(0, quantityToShow)}
                 {quantityToShow < results?.length && [...Array(results?.length - quantityToShow).keys()]
-                    .map(i => <div key={i} className="grid__placeholder"></div>)}
+                    .map(index => <div key={index} className="grid__placeholder"></div>)}
             </div>
         </section>
     );

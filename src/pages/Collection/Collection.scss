@@ -4,6 +4,8 @@
 .collection {
     margin: 0 auto;
     padding: $site-padding;
+    width: 100%;
+    flex-grow: 1;
 
     @include tablet {
         max-width: 90%;
@@ -15,8 +17,14 @@
         justify-content: space-between;
     }
 
+    &__group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
     &__headings {
-        margin: 0 0 2rem 0;
         padding: 1rem;
     }
 
@@ -34,9 +42,11 @@
     &__info {
         display: flex;
         justify-content: space-between;
+        gap: 1rem;
     }
 
     &__clear {
+        margin-top: 2rem;
         @include nav-text;
         color: $color-accent;
 

@@ -1,18 +1,17 @@
 import './SearchResults.scss';
-import { CardGrid } from '../CardGrid/CardGrid';
+import { CardPagination } from '../CardPagination/CardPagination';
 
 
-export const SearchResults = ({ results, recipeList, handleLikeButton }) => {
+export const SearchResults = ({ results, recipeList, handleLikeButton, handleRemoveButton }) => {
     return (
         <section className="searchResults">
-            <h3 className="searchResults__subheader">Top {results?.length || 0} results</h3>
-            <CardGrid
+            <h3 className="searchResults__subheader">{results?.length || 0} results</h3>
+
+            <CardPagination
                 results={results}
-                title="title"
-                image="image"
-                cookTime="readyInMinutes"
-                handleLikeButton={handleLikeButton}
                 recipeList={recipeList}
+                handleLikeButton={handleLikeButton}
+                handleRemoveButton={handleRemoveButton}
                 listSection="liked"
             />
         </section>

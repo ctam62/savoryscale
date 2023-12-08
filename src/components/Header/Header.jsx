@@ -1,31 +1,64 @@
 import './Header.scss';
-import { useNavigate } from 'react-router-dom';
-import shopIcon from '../../assets/icons/shopping-bag.svg';
-import bookIcon from '../../assets/icons/book.svg';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../../assets/logos/justice-scale1.svg';
+import bookIcon from '../../assets/icons/book.svg';
+import shopIcon from '../../assets/icons/shopping-cart.svg';
+import logoutIcon from '../../assets/icons/logout.svg';
+import loginIcon from '../../assets/icons/login.svg';
 
 
-export const Header = () => {
+export const Header = ({ user, setUser, setFailedAuth, setOpen }) => {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+
+    if (pathname === "/welcome" || pathname === "/login" || pathname === '/signup') {
+        return (null);
+    }
+
+    const handleLogout = () => {
+        sessionStorage.removeItem("token");
+        setUser(null);
+        setFailedAuth(true);
+        setOpen(false);
+        navigate('/welcome');
+    };
+
+    const handleNavigate = (path) => {
+        navigate(path)
+        setOpen(false);
+    };
 
     return (
         <header className="header">
-            <div className="header__logo" onClick={() => navigate('/')}>
+            <div className="header__logo" onClick={() => handleNavigate('/')}>
                 <img src={logo} alt="savory scale logo" className="header__logo-img" />
-                SavoryScale
+                <p className="header__logo-text">SavoryScale</p>
             </div>
             <nav className="header__nav">
+                {user ?
+                    <img
+                        className="header__nav-link"
+                        src={logoutIcon}
+                        alt="logout"
+                        onClick={handleLogout}
+                    /> :
+                    <img
+                        className="header__nav-link"
+                        src={loginIcon}
+                        alt="login"
+                        onClick={() => handleNavigate('/login')}
+                    />}
                 <img
                     className="header__nav-link"
                     src={shopIcon}
                     alt="shopping bag"
-                    onClick={() => navigate('/shoppinglist')}
+                    onClick={() => handleNavigate('/shoppinglist')}
                 />
                 <img
                     className="header__nav-link"
                     src={bookIcon}
                     alt="saved recipe book"
-                    onClick={() => navigate('/collection')}
+                    onClick={() => handleNavigate('/collection')}
                 />
             </nav>
         </header>
