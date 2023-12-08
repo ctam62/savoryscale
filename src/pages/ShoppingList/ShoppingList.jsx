@@ -1,4 +1,5 @@
 import './ShoppingList.scss';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GroceryItem } from '../../components/GroceryItem/GroceryItem';
@@ -6,17 +7,21 @@ import { UnitToggle } from '../../components/UnitToggle/UnitToggle';
 import backIcon from '../../assets/icons/back-arrow.svg';
 
 
-export const ShoppingList = ({ shopList, setShopList }) => {
+export const ShoppingList = ({
+    apiUrl,
+    user,
+    setUser,
+    failedAuth,
+    setFailedAuth,
+    shopList,
+    setShopList
+}) => {
 
     const [activeUnit, setActiveUnit] = useState("metric");
     const [totalPrice, setTotalPrice] = useState(0);
 
     const navigate = useNavigate();
     const list = JSON.parse(localStorage.getItem("shopList")) || [];
-
-    useEffect(() => {
-        setShopList([...list]);
-    }, []);
 
     const groupedList = Object.values(list.reduce((acc, curr) => {
         const { name, ...rest } = curr;
@@ -77,6 +82,53 @@ export const ShoppingList = ({ shopList, setShopList }) => {
         localStorage.setItem("shopList", JSON.stringify([]));
     };
 
+    useEffect(() => {
+        const token = sessionStorage.getItem("token");
+
+        if (!token) {
+            return setFailedAuth(true);
+        }
+
+        axios
+            .get(`${apiUrl}/api/users/current`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                setUser(response.data);
+            })
+            .catch((error) => {
+                setFailedAuth(true);
+                console.log(error);
+            });
+
+        setShopList([...list]);
+    }, []);
+
+    if (failedAuth) {
+        return (
+            <main className="shopping">
+                <section className="home__message">
+                    <p>You must be logged in to see this page.</p>
+                    <button
+                        className="login-form__button"
+                        type="button"
+                        onClick={() => navigate("/login")}>
+                        Login
+                    </button>
+                </section>
+            </main>
+        );
+    }
+
+    if (user === null) {
+        return (
+            <main className="shopping">
+                <p>Loading...</p>
+            </main>
+        );
+    }
 
     useEffect(() => {
         calculateTotal();

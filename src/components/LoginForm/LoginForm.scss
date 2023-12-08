@@ -11,5 +11,25 @@
     &__button {
         @include button;
         @include form-button;
+        color: $color-accent-secondary;
+        background-color: transparent;
+        border: 0.0625rem solid $color-accent;
+
+        &:hover {
+            border: 0.0625rem solid $color-accent-secondary;
+        }
+    }
+
+    &__message {
+        padding: 0.75rem;
+        margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: $color-quarternary;
+
+        &-error {
+            width: 2rem;
+        }
     }
 }

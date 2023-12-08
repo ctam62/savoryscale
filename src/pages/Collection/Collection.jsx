@@ -6,7 +6,17 @@ import { CardPagination } from '../../components/CardPagination/CardPagination';
 import backIcon from '../../assets/icons/back-arrow.svg';
 
 
-export const Collection = ({ apiUrl, recipeList, setRecipeList, handleLikeButton }) => {
+export const Collection = ({
+    apiUrl,
+    user,
+    setUser,
+    failedAuth,
+    setFailedAuth,
+    recipeList,
+    setRecipeList,
+    handleLikeButton
+}) => {
+
     const navigate = useNavigate();
 
     const [scaledRecipes, setScaledRecipes] = useState([]);
@@ -44,6 +54,25 @@ export const Collection = ({ apiUrl, recipeList, setRecipeList, handleLikeButton
     };
 
     useEffect(() => {
+        const token = sessionStorage.getItem("token");
+
+        if (!token) {
+            return setFailedAuth(true);
+        }
+
+        axios
+            .get(`${apiUrl}/api/users/current`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                setUser(response.data);
+            })
+            .catch((error) => {
+                setFailedAuth(true);
+            });
+
         const fetchScaledRecipes = async () => {
             try {
                 const { data } = await axios.get(`${apiUrl}/api/scaled-recipes`);
@@ -54,8 +83,31 @@ export const Collection = ({ apiUrl, recipeList, setRecipeList, handleLikeButton
         }
 
         fetchScaledRecipes();
-
     }, []);
+
+    if (failedAuth) {
+        return (
+            <main className="collection">
+                <section className="home__message">
+                    <p>You must be logged in to see this page.</p>
+                    <button
+                        className="login-form__button"
+                        type="button"
+                        onClick={() => navigate("/login")}>
+                        Login
+                    </button>
+                </section>
+            </main>
+        );
+    }
+
+    if (user === null) {
+        return (
+            <main className="collection">
+                <p>Loading...</p>
+            </main>
+        );
+    }
 
     return (
         <main className="collection">

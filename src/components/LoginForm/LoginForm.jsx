@@ -1,11 +1,13 @@
 import './LoginForm.scss';
 
-export const LoginForm = () => {
+
+export const LoginForm = ({ handleSubmit }) => {
     return (
-        <form className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
             <input
                 className="login-form__input"
-                type="email"
+                type="text"
+                id="email"
                 name="email"
                 placeholder="email"
                 autoComplete="off"
@@ -13,11 +15,12 @@ export const LoginForm = () => {
             <input
                 className="login-form__input"
                 type="password"
+                id="password"
                 name="password"
                 placeholder="password"
                 autoComplete="confirm-password"
             />
-            <button className="login-form__button" type="submit">Login</button>
+            <button className="login-form__button" type="submit">Sign In</button>
         </form>
     );
 };

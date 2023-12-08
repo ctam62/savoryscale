@@ -1,6 +1,7 @@
 import './WelcomePage.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../assets/logos/justice-scale1.svg';
+import googleIcon from '../../assets/icons/google.svg';
 
 
 export const WelcomePage = () => {
@@ -16,12 +17,21 @@ export const WelcomePage = () => {
 
             <section className="welcome__content">
                 <h2 className="welcome__subheader">Welcome!</h2>
-                <h3 className="welcome__subsubheader">Create an account or welcome</h3>
+                <h3 className="welcome__subsubheader">Create an account or login</h3>
 
                 <nav className="welcome__nav">
-                    <button className="welcome__nav-button welcome__nav-button--signup" onClick={() => navigate('/signup')}>Sign up</button>
+                    <button
+                        className="welcome__nav-button welcome__nav-button--signup"
+                        onClick={() => navigate('/signup')}>
+                        Sign up
+                    </button>
                     <button className="welcome__nav-button" onClick={() => navigate('/login')}>Login</button>
-                    <button className="welcome__nav-button welcome__nav-button--google" onClick={() => navigate('/')}>Login with Google</button>
+                    <button
+                        className="welcome__nav-button welcome__nav-button--google"
+                        onClick={() => navigate('/')}>
+                        <img className="welcome__nav-button-icon" src={googleIcon} alt="google icon" />
+                        Login with Google
+                    </button>
 
                     <p className="welcome__terms">By signing up, you are agreeing to our
                         <Link to="/" className="welcome__nav-link"> User Agreement</Link> and

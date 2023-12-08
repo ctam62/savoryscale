@@ -64,14 +64,27 @@
             color: $color-accent-secondary;
             background-color: transparent;
             border: 0.0625rem solid $color-accent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
 
             @include tablet {
                 font-size: 1.25rem;
                 width: 15.625rem;
             }
 
+            &-icon {
+                width: 1.2rem;
+                filter: brightness(0) saturate(100%) invert(70%) sepia(49%) saturate(382%) hue-rotate(319deg) brightness(101%) contrast(95%);
+            }
+
             &:hover {
                 border: 0.0625rem solid $color-accent-secondary;
+
+                .welcome__nav-button-icon {
+                    filter: brightness(0) saturate(100%) invert(99%) sepia(5%) saturate(1130%) hue-rotate(176deg) brightness(119%) contrast(100%);
+                }
             }
 
             &--google {
