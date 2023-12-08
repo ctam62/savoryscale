@@ -1,0 +1,20 @@
+@use './../../styles/mixins.scss' as *;
+@use './../../styles/variables.scss' as *;
+
+.signup-form {
+    @include form;
+
+    // &__group {
+    //     display: flex;
+    //     gap: 2rem;
+    // }
+
+    &__input {
+        @include input;
+    }
+
+    &__button {
+        @include button;
+        @include form-button;
+    }
+}

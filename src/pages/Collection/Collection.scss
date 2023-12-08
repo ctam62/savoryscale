@@ -4,6 +4,8 @@
 .collection {
     margin: 0 auto;
     padding: $site-padding;
+    width: 100%;
+    flex-grow: 1;
 
     @include tablet {
         max-width: 90%;
@@ -40,9 +42,11 @@
     &__info {
         display: flex;
         justify-content: space-between;
+        gap: 1rem;
     }
 
     &__clear {
+        margin-top: 2rem;
         @include nav-text;
         color: $color-accent;
 

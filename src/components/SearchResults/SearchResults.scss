@@ -10,16 +10,12 @@
     gap: 2rem;
     margin: auto;
 
-    h1 {
-        font-size: var(--text-heading-size);
-        font-weight: 600;
-    }
-
     &__search {
         width: 100%;
     }
 
     &__subheader {
+        margin-top: 2rem;
         @include body-text;
         font-weight: 600;
     }
