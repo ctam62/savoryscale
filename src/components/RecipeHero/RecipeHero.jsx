@@ -5,7 +5,7 @@ import moneyIcon from '../../assets/icons/price.svg';
 
 
 export const RecipeHero = ({ recipe, servings }) => {
-    const cals = Math.floor(recipe?.nutrition.nutrients.find(item => item.name === "Calories").amount / recipe?.servings * servings);
+    const cals = Math.floor(recipe?.nutrition?.nutrients.find(item => item.name === "Calories").amount / recipe?.servings * servings);
     const cost = ((recipe?.pricePerServing / 100) * servings).toFixed(2);
 
 

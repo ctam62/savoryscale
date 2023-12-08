@@ -5,8 +5,8 @@ import parseHTML from 'html-react-parser';
 export const RecipeDetails = ({ recipe, servings }) => {
 
     const scale = (origValue) => {
-        const scaleFactor = parseInt(origValue / recipe?.servings);
-        return Math.floor(servings * scaleFactor);
+        const scaleFactor = parseFloat(origValue / recipe?.servings);
+        return servings * scaleFactor;
     }
 
     const protein = scale(recipe?.nutrition.nutrients.find(item => item.name === "Protein").amount);
@@ -24,19 +24,19 @@ export const RecipeDetails = ({ recipe, servings }) => {
                 </div>
                 <div className="recipe-details__item">
                     <p className="recipe-details__value">
-                        {protein} g
+                        {Math.ceil(protein)} g
                     </p>
                     <p className="recipe-details__text">Protein</p>
                 </div>
                 <div className="recipe-details__item">
                     <p className="recipe-details__value">
-                        {carbs} g
+                        {Math.ceil(carbs)} g
                     </p>
                     <p className="recipe-details__text">Carbs</p>
                 </div>
                 <div className="recipe-details__item">
                     <p className="recipe-details__value">
-                        {fat} g
+                        {Math.ceil(fat)} g
                     </p>
                     <p className="recipe-details__text">Fat</p>
                 </div>

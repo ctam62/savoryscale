@@ -95,6 +95,14 @@ This app's API server has the following list of endpoints:
       ```
       /api/users/:id/recipes
       ```
+    - Create a recipe
+    ```
+    /api/recipes/
+    ```
+    - Save a scaled recipe
+    ```
+    /api/scaled-recipes/
+    ```
       
 - PUT/PATCH, DELETE endpoints *(sprint 2)*
   - Update user info or delete a user
@@ -105,6 +113,14 @@ This app's API server has the following list of endpoints:
     ```
     /api/users/:id/recipes/:id
     ```
+  - Update a recipe
+  ```
+  /api/recipes/:id
+  ```
+  - Update a scaled recipe
+  ```
+  /api/scaled-recipes/:id
+  ```
 
 - RESPONSES: 
   - 200 success for all GET and PUT/PATCH requests
