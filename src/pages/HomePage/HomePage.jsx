@@ -20,7 +20,7 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
         event.preventDefault();
 
         const offset = 0;
-        const resultsLimit = 20;
+        const resultsLimit = 50;
         const mealTypeParam = `&type=${selectedFilter.join(",")}`
         const recipeParams = `addRecipeInformation=true&addRecipeNutrition=true${mealTypeParam}`;
         const searchParams = `&number=${resultsLimit}&${recipeParams}&offset=${offset}`
@@ -41,13 +41,19 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
     }
 
     useEffect(() => {
-        setRecipeData(JSON.parse(localStorage.getItem("searchResults")) || recipeData);
+        setRecipeData(JSON.parse(localStorage.getItem("searchResults")));
     }, []);
+
+    if (!recipeData) {
+        return null;
+    }
 
     return (
         <main className="home">
             <h3 className="home__subheader">Find a recipe and scale it</h3>
-            <form className="home__search" onSubmit={handleSubmit}><SearchBar defaultValue={query} query={query} setQuery={setQuery} /></form>
+            <form className="home__search" onSubmit={handleSubmit}>
+                <SearchBar defaultValue={query} query={query} setQuery={setQuery} />
+            </form>
             <Filters
                 apiUrl={apiUrl}
                 handleFilterSelect={handleFilterSelect}
