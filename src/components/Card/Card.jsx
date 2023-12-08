@@ -4,9 +4,20 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 import clockIcon from '../../assets/icons/clock.svg';
 import removeIcon from '../../assets/icons/delete.svg';
+import servingIcon from '../../assets/icons/servings.svg';
 
 
-export const Card = ({ id, result, title, image, cookTime, handleLikeButton, handleRemoveButton, inCollection, listSection }) => {
+export const Card = ({
+    id,
+    result,
+    title,
+    image,
+    cookTime,
+    handleLikeButton,
+    handleRemoveButton,
+    inCollection,
+    listSection,
+}) => {
 
     const navigate = useNavigate();
 
@@ -47,6 +58,7 @@ export const Card = ({ id, result, title, image, cookTime, handleLikeButton, han
                     <h3 className="card__title">{title}</h3>
                     <div className="card__details">
                         <p><img className="card__icons" src={clockIcon} />{cookTime} min</p>
+                        <p><img className="card__icons" src={servingIcon} />{result.servings}</p>
                     </div>
                 </div>
             </div>
