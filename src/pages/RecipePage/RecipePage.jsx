@@ -14,7 +14,7 @@ import likeIcon from '../../assets/icons/like.svg';
 import likeActiveIcon from '../../assets/icons/like-active.svg';
 
 
-export const RecipePage = ({ apiUrl, spoonacularApiUrl, apiKey, recipeData, setRecipeData, recipeList, handleLikeButton, shopList, setShopList }) => {
+export const RecipePage = ({ apiUrl, spoonacularApiUrl, apiKey, recipeList, handleLikeButton, shopList, setShopList }) => {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -41,6 +41,7 @@ export const RecipePage = ({ apiUrl, spoonacularApiUrl, apiKey, recipeData, setR
                 setEquipmentData(equipment.data);
                 localStorage.setItem("ingredients", JSON.stringify(ingredients.data));
                 localStorage.setItem("equipment", JSON.stringify(equipment.data));
+
             } catch (error) {
                 console.error(error);
 
@@ -67,8 +68,6 @@ export const RecipePage = ({ apiUrl, spoonacularApiUrl, apiKey, recipeData, setR
         } else {
             fetchIngredientAndToolsData();
         }
-
-        setRecipeData(JSON.parse(localStorage.getItem("searchResults")) || recipeData);
     }, []);
 
 

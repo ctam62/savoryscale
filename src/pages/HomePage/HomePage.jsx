@@ -6,7 +6,9 @@ import { Filters } from '../../components/Filters/Filters';
 import { SearchResults } from '../../components/SearchResults/SearchResults';
 
 
-export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipeData, recipeList, handleLikeButton }) => {
+export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeList, handleLikeButton }) => {
+
+    const [recipeData, setRecipeData] = useState(null);
 
     const [activeFilterId, setActiveFilterId] = useState(null);
     const [query, setQuery] = useState("");
@@ -51,9 +53,11 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
     return (
         <main className="home">
             <h3 className="home__subheader">Find a recipe and scale it</h3>
+
             <form className="home__search" onSubmit={handleSubmit}>
                 <SearchBar defaultValue={query} query={query} setQuery={setQuery} />
             </form>
+
             <Filters
                 apiUrl={apiUrl}
                 handleFilterSelect={handleFilterSelect}
@@ -61,6 +65,7 @@ export const HomePage = ({ apiUrl, externalApiUrl, apiKey, recipeData, setRecipe
                 selectedFilter={selectedFilter}
                 setSelectedFilter={setSelectedFilter}
             />
+
             <SearchResults
                 results={recipeData.results}
                 recipeList={recipeList}
