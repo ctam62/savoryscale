@@ -20,6 +20,11 @@ export const RecipePage = ({
     apiKey,
     recipeList,
     handleLikeButton,
+    open,
+    setOpen,
+    handleClose,
+    redirectPath,
+    setRedirectPath,
     shopList,
     setShopList,
     calculateEndpointUsage,
@@ -88,10 +93,8 @@ export const RecipePage = ({
     const [activeTab2, setActiveTab2] = useState("steps");
 
     const [activeCheckboxes, setActiveCheckboxes] = useState([]);
-    const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [buttonText, setButtonText] = useState("");
-    const [redirectPath, setRedirectPath] = useState("");
 
 
     useEffect(() => {
@@ -151,10 +154,6 @@ export const RecipePage = ({
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     const handleServingChange = (servings) => {
         const scale = (origValue) => {
             const scaleFactor = parseFloat(origValue / recipe?.servings);
@@ -186,6 +185,8 @@ export const RecipePage = ({
                 handleClose={handleClose}
                 message={message}
                 buttonText={buttonText}
+                error={false}
+                redirect={true}
                 redirectPath={redirectPath}
             />
 
@@ -230,7 +231,7 @@ export const RecipePage = ({
                 />
             }
 
-            {activeTab === "ingredients" ?
+            {activeTab === "ingredients" &&
                 <button
                     className={`recipe__shop-button ${shopButtonDisabled ? "" : "recipe__shop-button--active"}`}
                     type="button"
@@ -238,7 +239,7 @@ export const RecipePage = ({
                     disabled={shopButtonDisabled}
                 >
                     Add to shopping list
-                </button> : ""
+                </button>
             }
 
             <RecipeSubNav navItems={["steps", "tools"]} setActiveTab={setActiveTab2} />

@@ -11,14 +11,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
     width: 100%;
     max-width: 80rem;
     color: $color-highlight;
     z-index: 3;
 
+    @include small-device {
+        padding: 1rem;
+        gap: 0.5rem;
+    }
+
+    &--error {
+        background-color: rgba($color-quarternary, 0.95);
+    }
+
     &__close {
         @include icon-clickable;
+        padding: 0;
         width: 2.5rem;
         filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(264deg) brightness(307%) contrast(105%);
     }
@@ -36,5 +45,47 @@
             background-color: $color-highlight;
             color: $color-accent-secondary;
         }
+
+        &--error {
+            color: $color-quarternary;
+        }
+    }
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+
+        @include small-device {
+            gap: 0.5rem;
+        }
+
+        &--left {
+            display: flex;
+            gap: 1rem;
+
+            @include small-device {
+                gap: 0.5rem;
+            }
+        }
+    }
+
+    &__message {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        @include body-text-small;
+
+        @include small-device {
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+    }
+
+    &__icon {
+        width: 2rem;
     }
 }

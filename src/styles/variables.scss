@@ -17,7 +17,7 @@ $desktop-breakpoint: 1280px;
     --text-small-size: 0.75rem;
 
     @media (max-width: $small-device-breakpoint) {
-        --text-small-size: 0.625rem;
+        --text-small-size: 0.6875rem;
     }
 
     @media (min-width: $tablet-breakpoint) {
