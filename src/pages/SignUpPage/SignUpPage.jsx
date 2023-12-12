@@ -16,7 +16,7 @@ export const SignUpPage = ({ apiUrl, open, setOpen, handleClose }) => {
         event.preventDefault();
 
         axios
-            .post(`${apiUrl}/api/users/register`, {
+            .post(`${apiUrl}/api/user/register`, {
                 username: event.target.username.value,
                 email: event.target.email.value,
                 password: event.target.password.value,
@@ -67,7 +67,6 @@ export const SignUpPage = ({ apiUrl, open, setOpen, handleClose }) => {
                 />
 
                 <div className="login__links">
-                    <Link to="/" className="login__nav-link">Forgot password?</Link>
                     <Link to="/login" className="login__nav-link">Already have an account? Login!</Link>
                 </div>
 

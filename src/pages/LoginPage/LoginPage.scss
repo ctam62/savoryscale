@@ -48,6 +48,10 @@
         justify-content: center;
         gap: 0.5rem;
 
+        @include tablet {
+            width: 15.625rem;
+        }
+
         &-icon {
             width: 1.2rem;
             filter: brightness(0) saturate(100%) invert(70%) sepia(49%) saturate(382%) hue-rotate(319deg) brightness(101%) contrast(95%);

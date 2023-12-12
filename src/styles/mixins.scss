@@ -131,7 +131,7 @@
     font-family: $body-font;
 
     @include tablet {
-        width: 15.625rem;
+        width: 100%;
         font-size: 1.25rem;
     }
 }

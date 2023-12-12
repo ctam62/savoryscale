@@ -9,7 +9,7 @@ export const LoginForm = ({ handleSubmit }) => {
                 type="text"
                 id="email"
                 name="email"
-                placeholder="email"
+                placeholder="email*"
                 autoComplete="off"
             />
             <input
@@ -17,7 +17,7 @@ export const LoginForm = ({ handleSubmit }) => {
                 type="password"
                 id="password"
                 name="password"
-                placeholder="password"
+                placeholder="password*"
                 autoComplete="confirm-password"
             />
             <button className="login-form__button" type="submit">Sign In</button>
