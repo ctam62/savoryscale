@@ -16,7 +16,7 @@ export const Header = ({ user, setUser, setFailedAuth, setOpen }) => {
     }
 
     const handleLogout = () => {
-        sessionStorage.removeItem("token");
+        sessionStorage.clear();
         setUser(null);
         setFailedAuth(true);
         setOpen(false);
