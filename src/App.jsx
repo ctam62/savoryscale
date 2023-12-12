@@ -12,7 +12,8 @@ import { HomePage } from './pages/HomePage/HomePage';
 import { RecipePage } from './pages/RecipePage/RecipePage';
 import { ShoppingList } from './pages/ShoppingList/ShoppingList';
 import { Collection } from './pages/Collection/Collection';
-
+import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
+import { ResetPassword } from './pages/ResetPassword/ResetPassword';
 
 function App() {
     const apiUrl = import.meta.env.VITE_APP_API_URL;
@@ -281,6 +282,30 @@ function App() {
                                 setSavedRecipes={setSavedRecipes}
                                 handleLikeButton={handleLikeButton}
                                 handleBackNagivation={handleBackNagivation}
+                            />
+                        }
+                    />
+                    <Route
+                        exact path='/forgot-password'
+                        element={
+                            <ForgotPassword
+                                apiUrl={apiUrl}
+                                open={open}
+                                setOpen={setOpen}
+                                handleClose={handleClose}
+                                setFailedAuth={setFailedAuth}
+                            />
+                        }
+                    />
+                    <Route
+                        exact path='/reset-password'
+                        element={
+                            <ResetPassword
+                                apiUrl={apiUrl}
+                                open={open}
+                                setOpen={setOpen}
+                                handleClose={handleClose}
+                                setFailedAuth={setFailedAuth}
                             />
                         }
                     />

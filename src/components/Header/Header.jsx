@@ -11,7 +11,7 @@ export const Header = ({ user, setUser, setFailedAuth, setOpen }) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    if (pathname === "/welcome" || pathname === "/login" || pathname === '/signup') {
+    if (pathname === "/welcome" || pathname === "/login" || pathname === '/signup' || pathname.includes('password')) {
         return (null);
     }
 
