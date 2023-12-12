@@ -24,12 +24,14 @@ export const Card = ({
     const handleNavigate = () => {
         if (listSection === "scaled") {
             navigate(`/recipe/${id}/scaled`);
+        } else if (listSection === "liked") {
+            navigate(`/recipe/${id}/saved`);
         } else {
             navigate(`/recipe/${id}`);
         }
 
         result.origServings = result.servings;
-        localStorage.setItem("recipeDetails", JSON.stringify(result));
+        sessionStorage.setItem("recipeDetails", JSON.stringify(result));
     };
 
     return (

@@ -8,30 +8,43 @@ import backIcon from '../../assets/icons/back-arrow.svg';
 
 export const Collection = ({
     apiUrl,
+    token,
     user,
     setUser,
     failedAuth,
     setFailedAuth,
-    recipeList,
-    setRecipeList,
-    handleLikeButton
+    savedRecipes,
+    setSavedRecipes,
+    handleLikeButton,
+    handleBackNagivation
 }) => {
-
     const navigate = useNavigate();
 
-    const [scaledRecipes, setScaledRecipes] = useState([]);
+    const sessionScaledRecipes = JSON.parse(sessionStorage.getItem("scaledRecipes")) || [];
+    const [scaledRecipes, setScaledRecipes] = useState(sessionScaledRecipes);
 
-    const removeLikedRecipes = () => {
-        setRecipeList([]);
-        localStorage.setItem("recipeList", JSON.stringify([]));
+    const removeSavedRecipes = () => {
+        setSavedRecipes([]);
+        sessionStorage.setItem("savedRecipes", JSON.stringify([]));
+
+        const deleteSavedRecipes = async () => {
+            try {
+                await axios.delete(`${apiUrl}/api/user/${user.id}/saved_recipe`);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        deleteSavedRecipes();
     };
 
     const removeScaledRecipes = () => {
         setScaledRecipes([]);
+        sessionStorage.setItem("scaledRecipes", JSON.stringify([]));
 
         const deleteScaledRecipes = async () => {
             try {
-                await axios.delete(`${apiUrl}/api/scaled-recipes`);
+                await axios.delete(`${apiUrl}/api/user/${user.id}/scaled_recipe`);
             } catch (error) {
                 console.error(error);
             }
@@ -43,25 +56,25 @@ export const Collection = ({
     const handleRemoveButton = (recipeId) => {
         const deleteRecipe = async () => {
             try {
-                await axios.delete(`${apiUrl}/api/scaled-recipes/${recipeId}`);
+                await axios.delete(`${apiUrl}/api/user/${user.id}/scaled_recipe/${recipeId}`);
             } catch (error) {
                 console.error(error);
             }
         }
 
-        setScaledRecipes(scaledRecipes.filter(recipe => recipe.id !== recipeId));
+        const filteredRecipes = scaledRecipes.filter(recipe => recipe.id !== recipeId)
+        sessionStorage.setItem("scaledRecipes", JSON.stringify(filteredRecipes));
+        setScaledRecipes([...filteredRecipes]);
         deleteRecipe();
     };
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
-
         if (!token) {
             return setFailedAuth(true);
         }
 
         axios
-            .get(`${apiUrl}/api/users/current`, {
+            .get(`${apiUrl}/api/user/current`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -70,19 +83,33 @@ export const Collection = ({
                 setUser(response.data);
             })
             .catch((error) => {
+                console.error(error);
                 setFailedAuth(true);
             });
 
+        const fetchSavedRecipes = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/saved_recipe`);
+                setSavedRecipes(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
         const fetchScaledRecipes = async () => {
             try {
-                const { data } = await axios.get(`${apiUrl}/api/scaled-recipes`);
+                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/scaled_recipe`);
                 setScaledRecipes(data);
+                sessionStorage.setItem("scaledRecipes", JSON.stringify(data));
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
-        }
+        };
 
-        fetchScaledRecipes();
+        if (user) {
+            fetchSavedRecipes();
+            fetchScaledRecipes();
+        }
     }, []);
 
     if (failedAuth) {
@@ -113,7 +140,7 @@ export const Collection = ({
         <main className="collection">
 
             <nav className="collection__nav">
-                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
+                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => handleBackNagivation(navigate)} />
             </nav>
 
             <section className="collection__section">
@@ -121,15 +148,15 @@ export const Collection = ({
                     <h2 className="collection__header">My Collection</h2>
                     <h3 className="collection__subheader">Favourite Recipes</h3>
                     <div className="collection__info">
-                        <p className="collection__subheader">{recipeList.length || 0} recipes</p>
-                        <button className="collection__clear" onClick={removeLikedRecipes}>Clear Collection</button>
+                        <p className="collection__subheader">{savedRecipes.length || 0} recipes</p>
+                        <button className="collection__clear" onClick={removeSavedRecipes}>Clear Collection</button>
                     </div>
                 </div>
 
                 <div className="collection__group">
                     <CardPagination
-                        results={recipeList}
-                        recipeList={recipeList}
+                        results={savedRecipes}
+                        savedRecipes={savedRecipes}
                         handleLikeButton={handleLikeButton}
                         handleRemoveButton={handleRemoveButton}
                         listSection="liked"
@@ -147,7 +174,7 @@ export const Collection = ({
                 <div className="collection__group">
                     <CardPagination
                         results={scaledRecipes}
-                        recipeList={recipeList}
+                        savedRecipes={savedRecipes}
                         handleLikeButton={handleLikeButton}
                         handleRemoveButton={handleRemoveButton}
                         listSection="scaled"

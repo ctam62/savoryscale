@@ -9,21 +9,22 @@ import backIcon from '../../assets/icons/back-arrow.svg';
 
 export const ShoppingList = ({
     apiUrl,
+    token,
     user,
     setUser,
     failedAuth,
     setFailedAuth,
     shopList,
-    setShopList
-}) => {
+    setShopList,
+    handleBackNagivation
 
+}) => {
     const [activeUnit, setActiveUnit] = useState("metric");
     const [totalPrice, setTotalPrice] = useState(0);
 
     const navigate = useNavigate();
-    const list = JSON.parse(localStorage.getItem("shopList")) || [];
 
-    const groupedList = Object.values(list.reduce((acc, curr) => {
+    const groupedList = Object.values(shopList.reduce((acc, curr) => {
         const { name, ...rest } = curr;
         if (acc[name]) {
             acc[name] = {
@@ -51,12 +52,21 @@ export const ShoppingList = ({
         setTotalPrice(totalPrice);
     };
 
+    const updateItem = async (itemData) => {
+        try {
+            const { data } = await axios.patch(`${apiUrl}/api/user/shopping`, itemData);
+            setShopList(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const scalePrice = (value, index) => {
         const newList = [...shopList];
         const scaleFactor = (newList[index].origPrice / newList[index].amount.metric.origValue);
         newList[index].price = value * scaleFactor;
         calculateTotal();
-        localStorage.setItem("shopList", JSON.stringify(newList));
+        sessionStorage.setItem("shopList", JSON.stringify(newList));
     };
 
     const updatePrice = (sign, index) => {
@@ -74,23 +84,21 @@ export const ShoppingList = ({
             calculateTotal();
         }
 
-        localStorage.setItem("shopList", JSON.stringify(newList));
+        sessionStorage.setItem("shopList", JSON.stringify(newList));
     };
 
     const emptyList = () => {
         setShopList([]);
-        localStorage.setItem("shopList", JSON.stringify([]));
+        sessionStorage.setItem("shopList", JSON.stringify([]));
     };
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
-
         if (!token) {
             return setFailedAuth(true);
         }
 
         axios
-            .get(`${apiUrl}/api/users/current`, {
+            .get(`${apiUrl}/api/user/current`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -100,11 +108,26 @@ export const ShoppingList = ({
             })
             .catch((error) => {
                 setFailedAuth(true);
-                console.log(error);
             });
 
-        setShopList([...list]);
-    }, []);
+        const fetchShoppingList = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/shopping`);
+                setShopList([...data]);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        if (user) {
+            fetchShoppingList();
+        }
+
+    }, [token]);
+
+    useEffect(() => {
+        calculateTotal();
+    }, [shopList]);
 
     if (failedAuth) {
         return (
@@ -130,14 +153,10 @@ export const ShoppingList = ({
         );
     }
 
-    useEffect(() => {
-        calculateTotal();
-    }, [shopList]);
-
     return (
         <main className="shopping">
             <nav className="shopping__nav">
-                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
+                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => handleBackNagivation(navigate)} />
             </nav>
 
             <section className="shopping__section">
@@ -152,7 +171,7 @@ export const ShoppingList = ({
                 <UnitToggle activeUnit={activeUnit} setActiveUnit={setActiveUnit} />
 
                 <ul className="shopping__list">
-                    {list.length === 0 ?
+                    {shopList.length === 0 ?
                         <p className="shopping__status">There are no items in your shopping list</p> :
                         groupedList.map((item, index) =>
                             <GroceryItem

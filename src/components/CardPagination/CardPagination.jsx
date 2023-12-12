@@ -18,7 +18,7 @@ const theme = createTheme({
 });
 
 
-export const CardPagination = ({ results, recipeList, handleLikeButton, handleRemoveButton, listSection }) => {
+export const CardPagination = ({ results, savedRecipes, handleLikeButton, handleRemoveButton, listSection }) => {
 
     const itemsPerPage = 20;
 
@@ -34,13 +34,13 @@ export const CardPagination = ({ results, recipeList, handleLikeButton, handleRe
                 cookTime="readyInMinutes"
                 handleLikeButton={handleLikeButton}
                 handleRemoveButton={handleRemoveButton}
-                recipeList={recipeList}
+                savedRecipes={savedRecipes}
                 listSection={listSection}
                 itemsPerPage={itemsPerPage}
                 page={page}
             />
             <ThemeProvider theme={theme}>
-                {numOfPages <= 1 ? null :
+                {numOfPages <= 1 || !numOfPages ? null :
                     <Pagination
                         count={numOfPages}
                         variant="outlined"
