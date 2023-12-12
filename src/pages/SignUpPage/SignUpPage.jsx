@@ -1,4 +1,4 @@
-
+import '../../styles/form-page.scss';
 import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -35,7 +35,7 @@ export const SignUpPage = ({ apiUrl, open, setOpen, handleClose }) => {
     };
 
     return (
-        <main className="login">
+        <main className="form-page">
 
             {success && <ConfirmationAlert
                 open={open}
@@ -57,8 +57,8 @@ export const SignUpPage = ({ apiUrl, open, setOpen, handleClose }) => {
 
             <LogoHeader />
 
-            <section className="login__content">
-                <h2 className="login__subheader">Register</h2>
+            <section className="form-page__content">
+                <h2 className="form-page__subheader">Register</h2>
 
                 <SignUpForm
                     handleSubmit={handleSubmit}
@@ -66,13 +66,13 @@ export const SignUpPage = ({ apiUrl, open, setOpen, handleClose }) => {
                     error={error}
                 />
 
-                <div className="login__links">
-                    <Link to="/login" className="login__nav-link">Already have an account? Login!</Link>
+                <div className="form-page__links">
+                    <Link to="/login" className="form-page__nav-link">Already have an account? Login!</Link>
                 </div>
 
-                <p className="login__terms">By signing up, you are agreeing to our
-                    <Link to="/" className="login__nav-link"> User Agreement</Link> and
-                    <Link to="/" className="login__nav-link"> Privacy Policy</Link>
+                <p className="form-page__terms">By signing up, you are agreeing to our
+                    <Link to="/" className="form-page__nav-link"> User Agreement</Link> and
+                    <Link to="/" className="form-page__nav-link"> Privacy Policy</Link>
                 </p>
             </section>
         </main>
