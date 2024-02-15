@@ -5,7 +5,7 @@ export const Footer = () => {
 
     const { pathname } = useLocation();
 
-    if (pathname === "/welcome" || pathname === "/login" || pathname === '/signup' || pathname.includes('password')) {
+    if (pathname === "/" || pathname === "/login" || pathname === '/signup' || pathname.includes('password')) {
         return (null);
     }
 

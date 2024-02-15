@@ -2,7 +2,7 @@
 @use './../../styles/variables.scss' as *;
 
 .welcome {
-    padding: $site-padding $site-padding 0 $site-padding;
+    padding: $site-padding;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,8 +58,7 @@
         gap: 1rem;
 
         &-button {
-            max-width: 15.625rem;
-            min-width: 9.375rem;
+            width: 15.625rem;
             @include button;
             color: $color-accent-secondary;
             background-color: transparent;

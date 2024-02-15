@@ -24,7 +24,7 @@ export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth })
                 sessionStorage.setItem("token", response.data.token);
                 setFailedAuth(false);
                 setOpen(true);
-                navigate('/');
+                navigate('/home');
             })
             .catch((error) => {
                 setOpen(true);
@@ -58,7 +58,6 @@ export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth })
                 </button>
 
                 <div className="form-page__links">
-                    <Link to="/forgot-password" className="form-page__nav-link">Forgot password?</Link>
                     <Link to="/signup" className="form-page__nav-link">Don't have an account? Register</Link>
                 </div>
 

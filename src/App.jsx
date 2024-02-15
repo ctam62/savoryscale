@@ -127,7 +127,7 @@ function App() {
                 />
                 <Routes>
                     <Route
-                        exact path='/'
+                        exact path='/home'
                         element={
                             <HomePage
                                 apiUrl={apiUrl}
@@ -148,7 +148,7 @@ function App() {
                         }
                     />
                     <Route
-                        exact path='/welcome'
+                        exact path='/'
                         element={<WelcomePage />}
                     />
                     <Route

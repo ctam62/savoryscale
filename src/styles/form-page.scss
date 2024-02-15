@@ -23,9 +23,24 @@
         margin-bottom: 1.5rem;
     }
 
+    &__subsubheader {
+        margin-top: 1rem;
+        @include body-text;
+        color: $color-accent;
+        max-width: 80%;
+
+        @include tablet {
+            max-width: 60%;
+        }
+    }
+
     &__nav {
         &-link {
             color: $color-accent-secondary;
+
+            &--forgot {
+                color: $color-accent;
+            }
         }
     }
 
@@ -33,7 +48,6 @@
         padding: 1.5rem;
         @include small-text;
         display: flex;
-        flex-direction: column;
         gap: 1rem;
     }
 
