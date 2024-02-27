@@ -1,4 +1,5 @@
 # SavoryScale
+![savoryscale](https://github.com/ctam62/savoryscale/assets/34747168/8fcdcfe9-2252-4b0d-a39a-72a96a7d5cb4)
 
 ## Overview
 
