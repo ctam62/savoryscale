@@ -1,15 +1,7 @@
 import './LoginForm.scss';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 
 export const LoginForm = ({ handleSubmit }) => {
-    const [checked, setChecked] = useState(false);
-
-    const handleChange = () => {
-        setChecked(!checked);
-    };
-
     return (
         <form className="login-form" onSubmit={handleSubmit}>
             <input

@@ -33,7 +33,6 @@ export const RecipePage = ({
     shopList,
     setShopList,
     calculateEndpointUsage,
-    handleUsageLimit
 }) => {
 
     const navigate = useNavigate();
@@ -87,11 +86,6 @@ export const RecipePage = ({
 
                 calculateEndpointUsage(2, null);
             } catch (error) {
-
-                if (error.response.status === 402) {
-                    handleUsageLimit();
-                }
-
                 console.error(error);
             }
         }

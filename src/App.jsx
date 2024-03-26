@@ -39,9 +39,6 @@ function App() {
 
     const cookies = new Cookies("user_usage", { path: '/', expires: tomorrow });
 
-
-    const [isLoading, setIsLoading] = useState(false);
-
     const [user, setUser] = useState(null);
     const [failedAuth, setFailedAuth] = useState(false);
     const [open, setOpen] = useState(false);
@@ -70,9 +67,6 @@ function App() {
         cookies.set('user_usage', usage + pointsUsed, { path: '/' });
     };
 
-    const handleUsageLimit = () => {
-
-    };
 
     const handleLikeButton = recipe => {
         const saveRecipe = async () => {
@@ -108,12 +102,6 @@ function App() {
         setOpen(false);
         navigate(-1);
     };
-
-    useEffect(() => {
-        if (cookies === usageLimit) {
-            handleUsageLimit();
-        }
-    }, []);
 
 
     return (
@@ -196,7 +184,6 @@ function App() {
                                 shopList={shopList}
                                 setShopList={setShopList}
                                 calculateEndpointUsage={calculateEndpointUsage}
-                                handleUsageLimit={handleUsageLimit}
                             />
                         }
                     />
@@ -222,7 +209,6 @@ function App() {
                                 shopList={shopList}
                                 setShopList={setShopList}
                                 calculateEndpointUsage={calculateEndpointUsage}
-                                handleUsageLimit={handleUsageLimit}
                             />
                         }
                     />
@@ -248,7 +234,6 @@ function App() {
                                 shopList={shopList}
                                 setShopList={setShopList}
                                 calculateEndpointUsage={calculateEndpointUsage}
-                                handleUsageLimit={handleUsageLimit}
                             />
                         }
                     />
