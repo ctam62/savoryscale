@@ -8,6 +8,47 @@
         @include input;
     }
 
+    &__checkbox {
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        border: 0.0625rem solid $color-accent;
+        min-width: 1rem;
+        min-height: 1rem;
+        max-width: 1rem;
+        max-height: 1rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+
+        @include tablet {
+            width: 1.75rem;
+            height: 1.75rem;
+            max-width: 1.75rem;
+            max-height: 1.75rem;
+        }
+
+        &--checked {
+            background-color: $color-accent-secondary;
+            border-color: $color-accent-secondary;
+
+            &::before {
+                content: "\2713";
+                font-size: 1.2em;
+                color: $color-highlight;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        &-label {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: $color-accent;
+        }
+    }
+
     &__button {
         @include button;
         @include form-button;
@@ -31,5 +72,12 @@
         &-error {
             width: 2rem;
         }
+    }
+
+    &__links {
+        @include small-text;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
     }
 }

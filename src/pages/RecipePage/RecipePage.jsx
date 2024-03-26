@@ -18,77 +18,103 @@ export const RecipePage = ({
     apiUrl,
     spoonacularApiUrl,
     apiKey,
-    recipeList,
+    token,
+    user,
+    setUser,
+    setFailedAuth,
+    savedRecipes,
     handleLikeButton,
     open,
     setOpen,
     handleClose,
+    handleBackNagivation,
     redirectPath,
     setRedirectPath,
     shopList,
     setShopList,
     calculateEndpointUsage,
-    handleUsageLimit
 }) => {
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { recipeId } = useParams();
+    let { recipeId } = useParams();
     const [ingredientData, setIngredientData] = useState({});
     const [equipmentData, setEquipmentData] = useState({});
 
     const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
     const [shopButtonDisabled, setShopButtonDisabled] = useState(true);
 
-    const recipe = JSON.parse(localStorage.getItem("recipeDetails"));
-    const localIngredients = JSON.parse(localStorage.getItem("ingredients"))?.ingredients || [];
+    const recipe = JSON.parse(sessionStorage.getItem("recipeDetails"));
+    const sessionIngredients = JSON.parse(sessionStorage.getItem("ingredients"))?.ingredients || [];
+    const sessionScaledRecipes = JSON.parse(sessionStorage.getItem("scaledRecipes")) || [];
 
-    const inCollection = recipeList.map(recipe => recipe.id).includes(parseInt(recipeId));
+    const inCollection = savedRecipes.map(recipe => recipe.id).includes(parseInt(recipeId));
 
 
     useEffect(() => {
+        if (!token) {
+            return setFailedAuth(true);
+        }
+
+        axios
+            .get(`${apiUrl}/api/user/current`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((response) => {
+                setUser(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+                setFailedAuth(true);
+            });
+
         const fetchIngredientAndToolsData = async () => {
+            if (location.pathname === `/recipe/${recipeId}/saved`) {
+                recipeId = recipe.recipeId;
+            }
+
             try {
                 const ingredients = await axios.get(`${spoonacularApiUrl}/recipes/${recipeId}/priceBreakdownWidget.json?apiKey=${apiKey}`);
                 const equipment = await axios.get(`${spoonacularApiUrl}/recipes/${recipeId}/equipmentWidget.json?apiKey=${apiKey}`);
                 setIngredientData(ingredients.data);
                 setEquipmentData(equipment.data);
-                localStorage.setItem("ingredients", JSON.stringify(ingredients.data));
-                localStorage.setItem("equipment", JSON.stringify(equipment.data));
+                sessionStorage.setItem("ingredients", JSON.stringify(ingredients.data));
+                sessionStorage.setItem("equipment", JSON.stringify(equipment.data));
 
                 calculateEndpointUsage(2, null);
             } catch (error) {
-
-                if (error.response.status === 402) {
-                    handleUsageLimit();
-                }
-
                 console.error(error);
             }
         }
 
         const fetchScaledRecipe = async () => {
             try {
-                const { data } = await axios.get(`${apiUrl}/api/scaled-recipes/${recipeId}`);
+                const { data } = await axios.get(`${apiUrl}/api/recipe/user/${user.id}/scaled_recipe/${recipeId}`);
                 setIngredientData(data);
                 setEquipmentData(data);
-                localStorage.setItem("ingredients", JSON.stringify({ ingredients: data.ingredients }));
-                localStorage.setItem("equipment", JSON.stringify({ equipment: data.equipment }));
+                sessionStorage.setItem("ingredients", JSON.stringify({ ingredients: [...data.ingredients], totalCost: data.totalCost }));
+                sessionStorage.setItem("equipment", JSON.stringify({ equipment: data.equipment }));
             } catch (error) {
                 console.error(error);
             }
         }
 
         if (location.pathname === `/recipe/${recipeId}/scaled`) {
-            fetchScaledRecipe();
+            if (user) {
+                fetchScaledRecipe();
+            }
         } else {
             fetchIngredientAndToolsData();
         }
+
+        setOpen(false);
     }, []);
 
 
-    const [servings, setServings] = useState(recipe.servings);
+    const [servings, setServings] = useState(recipe?.servings);
     const [activeTab, setActiveTab] = useState("details");
     const [activeTab2, setActiveTab2] = useState("steps");
 
@@ -105,14 +131,18 @@ export const RecipePage = ({
         }
     }, [servings]);
 
+
     const handleSave = () => {
-        const scaledRecipe = JSON.parse(localStorage.getItem("recipeDetails"));
-        const scaledIngredients = JSON.parse(localStorage.getItem("ingredients"));
-        const equipment = JSON.parse(localStorage.getItem("equipment")).equipment;
+        const scaledRecipe = JSON.parse(sessionStorage.getItem("recipeDetails"));
+        const scaledIngredients = JSON.parse(sessionStorage.getItem("ingredients"));
+        const equipment = JSON.parse(sessionStorage.getItem("equipment")).equipment;
 
         scaledRecipe.ingredients = scaledIngredients.ingredients;
         scaledRecipe.totalCost = scaledIngredients.totalCost;
         scaledRecipe.equipment = equipment;
+
+        sessionScaledRecipes.push(scaledRecipe);
+        sessionStorage.setItem("scaledRecipes", JSON.stringify(sessionScaledRecipes));
 
         setMessage("Your scaled recipe has been sucessfully added to your collection");
         setButtonText("View My Collection");
@@ -121,7 +151,7 @@ export const RecipePage = ({
 
         const postScaledRecipe = async () => {
             try {
-                await axios.post(`${apiUrl}/api/scaled-recipes`, scaledRecipe);
+                await axios.post(`${apiUrl}/api/recipe/user/${user.id}/scaled_recipe`, scaledRecipe);
             } catch (error) {
                 console.error(error);
             }
@@ -131,21 +161,32 @@ export const RecipePage = ({
     };
 
     const handleAddToShoppingList = () => {
-        const localStorageList = JSON.parse(localStorage.getItem("shopList") || "[]");
+        const postShoppingList = async (item) => {
+            try {
+                await axios.post(`${apiUrl}/api/shopping/user/${user.id}`, item);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-        let indexCounter = localStorageList.length;
+        const sessionStorageList = JSON.parse(sessionStorage.getItem("shopList") || "[]");
+
+        let indexCounter = sessionStorageList.length;
 
         activeCheckboxes.forEach(item => {
-            const shopItem = localIngredients.find(ingredient => ingredient.name === item);
+            const shopItem = sessionIngredients.find(ingredient => ingredient.name === item);
             indexCounter += 1;
+            shopItem.userId = user.id;
             shopItem.id = indexCounter;
             shopItem.origPrice = shopItem.price;
             shopItem.amount.metric.origValue = shopItem.amount.metric.value;
             shopItem.amount.us.origValue = shopItem.amount.us.value;
 
-            localStorageList.push(shopItem);
+            sessionStorageList.push(shopItem);
             setShopList([...shopList]);
-            localStorage.setItem("shopList", JSON.stringify(localStorageList));
+            sessionStorage.setItem("shopList", JSON.stringify(sessionStorageList));
+
+            postShoppingList(shopItem);
         });
 
         setMessage("Your ingredients have been sucessfully added to your shopping list");
@@ -160,7 +201,7 @@ export const RecipePage = ({
             return servings * scaleFactor;
         }
 
-        const storedDetails = JSON.parse(localStorage.getItem("recipeDetails"));
+        const storedDetails = JSON.parse(sessionStorage.getItem("recipeDetails"));
         const cals = recipe?.nutrition.nutrients.find(item => item.name === "Calories").amount / recipe?.servings * servings;
         const protein = scale(recipe?.nutrition.nutrients.find(item => item.name === "Protein").amount);
         const carbs = scale(recipe?.nutrition.nutrients.find(item => item.name === "Carbohydrates").amount);
@@ -174,7 +215,7 @@ export const RecipePage = ({
             storedDetails.nutrition.nutrients.find(item => item.name === "Carbohydrates").amount = carbs;
             storedDetails.nutrition.nutrients.find(item => item.name === "Fat").amount = fat;
             storedDetails.nutrition.weightPerServing.amount = weight;
-            localStorage.setItem("recipeDetails", JSON.stringify(storedDetails));
+            sessionStorage.setItem("recipeDetails", JSON.stringify(storedDetails));
         }
     };
 
@@ -191,7 +232,7 @@ export const RecipePage = ({
             />
 
             <nav className="recipe__nav">
-                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
+                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => handleBackNagivation(navigate)} />
                 <img
                     className="recipe__icons recipe__icons--like"
                     src={inCollection ? likeActiveIcon : likeIcon}

@@ -1,17 +1,27 @@
 import './GroceryItem.scss';
+import axios from 'axios';
 import { formatQuantity } from 'format-quantity';
 import removeIcon from '../../assets/icons/remove.svg';
 import plusIcon from '../../assets/icons/plus.svg';
 import minusIcon from '../../assets/icons/minus.svg';
 
 
-export const GroceryItem = ({ index, item, activeUnit, shopList, setShopList, updatePrice, calculateTotal }) => {
+export const GroceryItem = ({ index, item, activeUnit, shopList, setShopList, updatePrice, calculateTotal, apiUrl, user }) => {
+
+    const deleteItem = async (itemId) => {
+        try {
+            await axios.delete(`${apiUrl}/api/shopping/user/${user.id}/item/${itemId}`);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const handleRemove = (itemId) => {
         const filteredList = shopList.filter(entry => entry.id !== itemId);
         setShopList([...filteredList]);
         calculateTotal();
-        localStorage.setItem("shopList", JSON.stringify(filteredList));
+        sessionStorage.setItem("shopList", JSON.stringify(filteredList));
+        deleteItem(itemId);
     };
 
     return (

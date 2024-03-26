@@ -1,11 +1,10 @@
-import './LoginPage.scss';
+import '../../styles/form-page.scss';
 import axios from 'axios';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogoHeader } from '../../components/LogoHeader/LogoHeader';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
-import googleIcon from '../../assets/icons/google.svg';
 
 
 export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth }) => {
@@ -16,7 +15,7 @@ export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth })
         event.preventDefault();
 
         axios
-            .post(`${apiUrl}/api/users/login`, {
+            .post(`${apiUrl}/api/user/login`, {
                 email: event.target.email.value,
                 password: event.target.password.value
             })
@@ -24,19 +23,17 @@ export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth })
                 sessionStorage.setItem("token", response.data.token);
                 setFailedAuth(false);
                 setOpen(true);
-                navigate('/');
+                navigate('/home');
             })
             .catch((error) => {
                 setOpen(true);
                 setError(error.response?.data);
                 setFailedAuth(true);
             });
-
-
     };
 
     return (
-        <main className="login">
+        <main className="form-page">
             {error && <ConfirmationAlert
                 open={open}
                 handleClose={handleClose}
@@ -47,26 +44,18 @@ export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth })
 
             <LogoHeader />
 
-            <section className="login__content">
-                <h2 className="login__subheader">Login</h2>
+            <section className="form-page__content">
+                <h2 className="form-page__subheader">Login</h2>
 
                 <LoginForm handleSubmit={handleSubmit} error={error} />
 
-                <button
-                    className="login__button login__button--google"
-                    onClick={() => navigate('/')}>
-                    <img className="login__button-icon" src={googleIcon} alt="google icon" />
-                    Sign In with Google
-                </button>
-
-                <div className="login__links">
-                    <Link to="/welcome" className="login__nav-link">Forgot password?</Link>
-                    <Link to="/signup" className="login__nav-link">Create an account!</Link>
+                <div className="form-page__links">
+                    <Link to="/signup" className="form-page__nav-link">Don't have an account? Register</Link>
                 </div>
 
-                <p className="login__terms">By logging in, you are agreeing to our
-                    <Link to="/" className="login__nav-link"> User Agreement</Link> and
-                    <Link to="/" className="login__nav-link"> Privacy Policy</Link>
+                <p className="form-page__terms">By logging in, you are agreeing to our
+                    <Link to="/" className="form-page__nav-link"> User Agreement</Link> and
+                    <Link to="/" className="form-page__nav-link"> Privacy Policy</Link>
                 </p>
             </section>
         </main>

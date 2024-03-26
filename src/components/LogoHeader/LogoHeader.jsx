@@ -1,6 +1,7 @@
 import './LogoHeader.scss';
 import logo from '../../assets/logos/justice-scale1.svg';
 
+
 export const LogoHeader = () => {
     return (
         <header className="logo-header">

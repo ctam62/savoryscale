@@ -10,7 +10,7 @@ export const SignUpForm = ({ handleSubmit }) => {
                     type="text"
                     id="username"
                     name="username"
-                    placeholder="username"
+                    placeholder="username*"
                     autoComplete="username"
                 />
                 <input
@@ -18,7 +18,7 @@ export const SignUpForm = ({ handleSubmit }) => {
                     type="text"
                     id="email"
                     name="email"
-                    placeholder="email address"
+                    placeholder="email*"
                     autoComplete="off"
                 />
             </div>
@@ -29,7 +29,7 @@ export const SignUpForm = ({ handleSubmit }) => {
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="password"
+                    placeholder="password*"
                     autoComplete="new-password"
                 />
                 <input
@@ -37,7 +37,7 @@ export const SignUpForm = ({ handleSubmit }) => {
                     type="password"
                     id="confirm-password"
                     name="confirm-password"
-                    placeholder="confirm password"
+                    placeholder="confirm password*"
                     autoComplete="confirm-password"
                 />
             </div>
