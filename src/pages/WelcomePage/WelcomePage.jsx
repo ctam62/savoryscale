@@ -26,12 +26,6 @@ export const WelcomePage = () => {
                         Sign up
                     </button>
                     <button className="welcome__nav-button" onClick={() => navigate('/login')}>Login</button>
-                    <button
-                        className="welcome__nav-button welcome__nav-button--google"
-                        onClick={() => navigate('/')}>
-                        <img className="welcome__nav-button-icon" src={googleIcon} alt="google icon" />
-                        Login with Google
-                    </button>
 
                     <p className="welcome__terms">By signing up, you are agreeing to our
                         <Link to="/" className="welcome__nav-link"> User Agreement</Link> and

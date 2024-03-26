@@ -50,12 +50,12 @@ export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth })
 
                 <LoginForm handleSubmit={handleSubmit} error={error} />
 
-                <button
+                {/* <button
                     className="form-page__button form-page__button--google"
                     onClick={() => navigate('/')}>
                     <img className="form-page__button-icon" src={googleIcon} alt="google icon" />
                     Sign In with Google
-                </button>
+                </button> */}
 
                 <div className="form-page__links">
                     <Link to="/signup" className="form-page__nav-link">Don't have an account? Register</Link>
