@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LogoHeader } from '../../components/LogoHeader/LogoHeader';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
-import googleIcon from '../../assets/icons/google.svg';
 
 
 export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth }) => {
@@ -49,13 +48,6 @@ export const LoginPage = ({ apiUrl, open, setOpen, handleClose, setFailedAuth })
                 <h2 className="form-page__subheader">Login</h2>
 
                 <LoginForm handleSubmit={handleSubmit} error={error} />
-
-                {/* <button
-                    className="form-page__button form-page__button--google"
-                    onClick={() => navigate('/')}>
-                    <img className="form-page__button-icon" src={googleIcon} alt="google icon" />
-                    Sign In with Google
-                </button> */}
 
                 <div className="form-page__links">
                     <Link to="/signup" className="form-page__nav-link">Don't have an account? Register</Link>
