@@ -68,6 +68,7 @@ export const Collection = ({
         deleteRecipe();
     };
 
+
     useEffect(() => {
         if (!token) {
             return setFailedAuth(true);
@@ -113,6 +114,7 @@ export const Collection = ({
         }
     }, []);
 
+    
     if (failedAuth) {
         return (
             <main className="collection">

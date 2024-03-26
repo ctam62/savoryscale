@@ -145,6 +145,7 @@ export const ShoppingList = ({
         calculateTotal();
     }, [shopList]);
 
+
     if (failedAuth) {
         return (
             <main className="shopping">

@@ -137,6 +137,7 @@ export const RecipePage = ({
         }
     }, [servings]);
 
+
     const handleSave = () => {
         const scaledRecipe = JSON.parse(sessionStorage.getItem("recipeDetails"));
         const scaledIngredients = JSON.parse(sessionStorage.getItem("ingredients"));
