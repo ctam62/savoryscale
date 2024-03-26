@@ -52,15 +52,6 @@ export const ShoppingList = ({
         setTotalPrice(totalPrice);
     };
 
-    const updateItem = async (itemData) => {
-        try {
-            const { data } = await axios.patch(`${apiUrl}/api/user/shopping`, itemData);
-            setShopList(data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     const scalePrice = (value, index) => {
         const newList = [...shopList];
         const scaleFactor = (newList[index].origPrice / newList[index].amount.metric.origValue);
@@ -72,16 +63,28 @@ export const ShoppingList = ({
     const updatePrice = (sign, index) => {
         const newList = [...shopList];
 
+        const updateItem = async (itemData) => {
+          const updatedItem = { "amount": itemData.amount};
+
+          try {
+              await axios.patch(`${apiUrl}/api/shopping/user/${user.id}/item/${itemData.id}`, updatedItem);
+          } catch (error) {
+              console.error(error);
+          }
+        };
+
         if (sign === "plus") {
             newList[index].amount.metric.value++;
             scalePrice(newList[index].amount.metric.value, index);
             setShopList(newList);
             calculateTotal();
+            updateItem(newList[index]);
         } else {
             newList[index].amount.metric.value--;
             scalePrice(newList[index].amount.metric.value, index);
             setShopList(newList);
             calculateTotal();
+            updateItem(newList[index]);
         }
 
         sessionStorage.setItem("shopList", JSON.stringify(newList));
@@ -90,7 +93,18 @@ export const ShoppingList = ({
     const emptyList = () => {
         setShopList([]);
         sessionStorage.setItem("shopList", JSON.stringify([]));
+
+        const deleteShoppingList = async () => {
+            try {
+                await axios.delete(`${apiUrl}/api/shopping/user/${user.id}`);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        deleteShoppingList();
     };
+
 
     useEffect(() => {
         if (!token) {
@@ -107,13 +121,15 @@ export const ShoppingList = ({
                 setUser(response.data);
             })
             .catch((error) => {
+                console.error(error);
                 setFailedAuth(true);
             });
 
         const fetchShoppingList = async () => {
             try {
-                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/shopping`);
+                const { data } = await axios.get(`${apiUrl}/api/shopping/user/${user.id}`);
                 setShopList([...data]);
+                sessionStorage.setItem("shopList", JSON.stringify(data));
             } catch (error) {
                 console.error(error);
             }
@@ -184,6 +200,8 @@ export const ShoppingList = ({
                                 scalePrice={scalePrice}
                                 updatePrice={updatePrice}
                                 calculateTotal={calculateTotal}
+                                apiUrl={apiUrl}
+                                user={user}
                             />
                         )
                     }

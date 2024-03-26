@@ -98,7 +98,7 @@ export const RecipePage = ({
 
         const fetchScaledRecipe = async () => {
             try {
-                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/scaled_recipe/${recipeId}`);
+                const { data } = await axios.get(`${apiUrl}/api/recipe/user/${user.id}/scaled_recipe/${recipeId}`);
                 setIngredientData(data);
                 setEquipmentData(data);
                 sessionStorage.setItem("ingredients", JSON.stringify({ ingredients: [...data.ingredients], totalCost: data.totalCost }));
@@ -154,7 +154,7 @@ export const RecipePage = ({
 
         const postScaledRecipe = async () => {
             try {
-                await axios.post(`${apiUrl}/api/user/${user.id}/scaled_recipe`, scaledRecipe);
+                await axios.post(`${apiUrl}/api/recipe/user/${user.id}/scaled_recipe`, scaledRecipe);
             } catch (error) {
                 console.error(error);
             }
@@ -166,7 +166,7 @@ export const RecipePage = ({
     const handleAddToShoppingList = () => {
         const postShoppingList = async (item) => {
             try {
-                await axios.post(`${apiUrl}/api/user/${user.id}/list/shopping`, item);
+                await axios.post(`${apiUrl}/api/shopping/user/${user.id}`, item);
             } catch (error) {
                 console.error(error);
             }

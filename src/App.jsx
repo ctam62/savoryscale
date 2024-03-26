@@ -77,17 +77,17 @@ function App() {
     const handleLikeButton = recipe => {
         const saveRecipe = async () => {
             try {
-                const savedRecipes = await axios.get(`${apiUrl}/api/user/${user.id}/saved_recipe/`);
+                const savedRecipes = await axios.get(`${apiUrl}/api/recipe/user/${user.id}/saved_recipe`);
                 sessionStorage.setItem("savedRecipes", JSON.stringify(savedRecipes.data));
                 const sessionStorageList = JSON.parse(sessionStorage.getItem("savedRecipes"));
 
                 if (!savedRecipes.data.map(entry => entry.recipeId).includes(recipe.recipeId)) {
-                    const { data } = await axios.post(`${apiUrl}/api/user/${user.id}/saved_recipe`, recipe);
+                    const { data } = await axios.post(`${apiUrl}/api/recipe/user/${user.id}/saved_recipe`, recipe);
                     sessionStorageList.push(...data);
                     sessionStorage.setItem("savedRecipes", JSON.stringify(sessionStorageList));
                     setSavedRecipes([...sessionStorageList]);
                 } else {
-                    await axios.delete(`${apiUrl}/api/user/${user.id}/saved_recipe/${recipe.id}`);
+                    await axios.delete(`${apiUrl}/api/recipe/user/${user.id}/saved_recipe/${recipe.id}`);
                     const filteredList = sessionStorageList.filter(entry => entry.recipeId !== recipe.recipeId);
                     sessionStorage.setItem("savedRecipes", JSON.stringify(filteredList));
                     setSavedRecipes([...filteredList]);

@@ -44,7 +44,7 @@ export const HomePage = ({
         const offset = 0;
         const resultsLimit = 50;
         const mealTypeParam = `&type=${selectedFilter.join(",")}`
-        const recipeParams = `addRecipeNutrition=true${mealTypeParam}`;
+        const recipeParams = `addRecipeInstructions=true&addRecipeNutrition=true${mealTypeParam}`;
         const searchParams = `&number=${resultsLimit}&${recipeParams}&offset=${offset}`
 
         try {
@@ -92,7 +92,7 @@ export const HomePage = ({
 
         const fetchSavedRecipes = async () => {
             try {
-                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/saved_recipe`);
+                const { data } = await axios.get(`${apiUrl}/api/recipe/user/${user.id}/saved_recipe`);
                 setSavedRecipes(data);
             } catch (error) {
                 console.error(error);

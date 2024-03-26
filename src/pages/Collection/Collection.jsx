@@ -29,7 +29,7 @@ export const Collection = ({
 
         const deleteSavedRecipes = async () => {
             try {
-                await axios.delete(`${apiUrl}/api/user/${user.id}/saved_recipe`);
+                await axios.delete(`${apiUrl}/api/recipe/user/${user.id}/saved_recipe`);
             } catch (error) {
                 console.error(error);
             }
@@ -44,7 +44,7 @@ export const Collection = ({
 
         const deleteScaledRecipes = async () => {
             try {
-                await axios.delete(`${apiUrl}/api/user/${user.id}/scaled_recipe`);
+                await axios.delete(`${apiUrl}/api/recipe/user/${user.id}/scaled_recipe`);
             } catch (error) {
                 console.error(error);
             }
@@ -56,7 +56,7 @@ export const Collection = ({
     const handleRemoveButton = (recipeId) => {
         const deleteRecipe = async () => {
             try {
-                await axios.delete(`${apiUrl}/api/user/${user.id}/scaled_recipe/${recipeId}`);
+                await axios.delete(`${apiUrl}/api/recipe/user/${user.id}/scaled_recipe/${recipeId}`);
             } catch (error) {
                 console.error(error);
             }
@@ -89,8 +89,9 @@ export const Collection = ({
 
         const fetchSavedRecipes = async () => {
             try {
-                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/saved_recipe`);
+                const { data } = await axios.get(`${apiUrl}/api/recipe/user/${user.id}/saved_recipe`);
                 setSavedRecipes(data);
+                sessionStorage.setItem("savedRecipes", JSON.stringify(data));
             } catch (error) {
                 console.error(error);
             }
@@ -98,7 +99,7 @@ export const Collection = ({
 
         const fetchScaledRecipes = async () => {
             try {
-                const { data } = await axios.get(`${apiUrl}/api/user/${user.id}/scaled_recipe`);
+                const { data } = await axios.get(`${apiUrl}/api/recipe/user/${user.id}/scaled_recipe`);
                 setScaledRecipes(data);
                 sessionStorage.setItem("scaledRecipes", JSON.stringify(data));
             } catch (error) {
