@@ -115,6 +115,8 @@ export const RecipePage = ({
         } else {
             fetchIngredientAndToolsData();
         }
+
+        setOpen(false);
     }, []);
 
 
