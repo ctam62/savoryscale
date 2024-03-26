@@ -110,7 +110,7 @@
 }
 
 @mixin input {
-    width: 12.5rem;
+    width: 100%;
     padding: 0.75rem 1rem;
     outline: none;
     background-color: transparent;
@@ -131,7 +131,7 @@
     font-family: $body-font;
 
     @include tablet {
-        width: 15.625rem;
+        width: 100%;
         font-size: 1.25rem;
     }
 }

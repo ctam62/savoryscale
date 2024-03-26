@@ -11,16 +11,16 @@ export const Header = ({ user, setUser, setFailedAuth, setOpen }) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    if (pathname === "/welcome" || pathname === "/login" || pathname === '/signup') {
+    if (pathname === "/" || pathname === "/login" || pathname === '/signup' || pathname.includes('password')) {
         return (null);
     }
 
     const handleLogout = () => {
-        sessionStorage.removeItem("token");
+        sessionStorage.clear();
         setUser(null);
         setFailedAuth(true);
         setOpen(false);
-        navigate('/welcome');
+        navigate('/');
     };
 
     const handleNavigate = (path) => {
@@ -30,7 +30,7 @@ export const Header = ({ user, setUser, setFailedAuth, setOpen }) => {
 
     return (
         <header className="header">
-            <div className="header__logo" onClick={() => handleNavigate('/')}>
+            <div className="header__logo" onClick={() => handleNavigate('/home')}>
                 <img src={logo} alt="savory scale logo" className="header__logo-img" />
                 <p className="header__logo-text">SavoryScale</p>
             </div>

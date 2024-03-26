@@ -10,7 +10,7 @@ export const CardGrid = ({
     cookTime,
     handleLikeButton,
     handleRemoveButton,
-    recipeList,
+    savedRecipes,
     listSection,
     itemsPerPage,
     page
@@ -43,7 +43,7 @@ export const CardGrid = ({
                             cookTime={result[cookTime]}
                             handleLikeButton={() => handleLikeButton(result)}
                             handleRemoveButton={() => handleRemoveButton(result.id)}
-                            inCollection={recipeList.map(recipe => recipe.id).includes(result.id)}
+                            inCollection={savedRecipes.map(recipe => recipe.recipeId).includes(result.recipeId)}
                             listSection={listSection}
                         />
                     ).slice(0, quantityToShow)}

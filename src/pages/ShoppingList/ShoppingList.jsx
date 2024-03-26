@@ -9,21 +9,22 @@ import backIcon from '../../assets/icons/back-arrow.svg';
 
 export const ShoppingList = ({
     apiUrl,
+    token,
     user,
     setUser,
     failedAuth,
     setFailedAuth,
     shopList,
-    setShopList
-}) => {
+    setShopList,
+    handleBackNagivation
 
+}) => {
     const [activeUnit, setActiveUnit] = useState("metric");
     const [totalPrice, setTotalPrice] = useState(0);
 
     const navigate = useNavigate();
-    const list = JSON.parse(localStorage.getItem("shopList")) || [];
 
-    const groupedList = Object.values(list.reduce((acc, curr) => {
+    const groupedList = Object.values(shopList.reduce((acc, curr) => {
         const { name, ...rest } = curr;
         if (acc[name]) {
             acc[name] = {
@@ -56,41 +57,62 @@ export const ShoppingList = ({
         const scaleFactor = (newList[index].origPrice / newList[index].amount.metric.origValue);
         newList[index].price = value * scaleFactor;
         calculateTotal();
-        localStorage.setItem("shopList", JSON.stringify(newList));
+        sessionStorage.setItem("shopList", JSON.stringify(newList));
     };
 
     const updatePrice = (sign, index) => {
         const newList = [...shopList];
+
+        const updateItem = async (itemData) => {
+          const updatedItem = { "amount": itemData.amount};
+
+          try {
+              await axios.patch(`${apiUrl}/api/shopping/user/${user.id}/item/${itemData.id}`, updatedItem);
+          } catch (error) {
+              console.error(error);
+          }
+        };
 
         if (sign === "plus") {
             newList[index].amount.metric.value++;
             scalePrice(newList[index].amount.metric.value, index);
             setShopList(newList);
             calculateTotal();
+            updateItem(newList[index]);
         } else {
             newList[index].amount.metric.value--;
             scalePrice(newList[index].amount.metric.value, index);
             setShopList(newList);
             calculateTotal();
+            updateItem(newList[index]);
         }
 
-        localStorage.setItem("shopList", JSON.stringify(newList));
+        sessionStorage.setItem("shopList", JSON.stringify(newList));
     };
 
     const emptyList = () => {
         setShopList([]);
-        localStorage.setItem("shopList", JSON.stringify([]));
+        sessionStorage.setItem("shopList", JSON.stringify([]));
+
+        const deleteShoppingList = async () => {
+            try {
+                await axios.delete(`${apiUrl}/api/shopping/user/${user.id}`);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        deleteShoppingList();
     };
 
-    useEffect(() => {
-        const token = sessionStorage.getItem("token");
 
+    useEffect(() => {
         if (!token) {
             return setFailedAuth(true);
         }
 
         axios
-            .get(`${apiUrl}/api/users/current`, {
+            .get(`${apiUrl}/api/user/current`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -99,12 +121,30 @@ export const ShoppingList = ({
                 setUser(response.data);
             })
             .catch((error) => {
+                console.error(error);
                 setFailedAuth(true);
-                console.log(error);
             });
 
-        setShopList([...list]);
-    }, []);
+        const fetchShoppingList = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/shopping/user/${user.id}`);
+                setShopList([...data]);
+                sessionStorage.setItem("shopList", JSON.stringify(data));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        if (user) {
+            fetchShoppingList();
+        }
+
+    }, [token]);
+
+    useEffect(() => {
+        calculateTotal();
+    }, [shopList]);
+
 
     if (failedAuth) {
         return (
@@ -130,14 +170,10 @@ export const ShoppingList = ({
         );
     }
 
-    useEffect(() => {
-        calculateTotal();
-    }, [shopList]);
-
     return (
         <main className="shopping">
             <nav className="shopping__nav">
-                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => navigate(-1)} />
+                <img className="recipe__icons" src={backIcon} alt="back page icon" onClick={() => handleBackNagivation(navigate)} />
             </nav>
 
             <section className="shopping__section">
@@ -152,7 +188,7 @@ export const ShoppingList = ({
                 <UnitToggle activeUnit={activeUnit} setActiveUnit={setActiveUnit} />
 
                 <ul className="shopping__list">
-                    {list.length === 0 ?
+                    {shopList.length === 0 ?
                         <p className="shopping__status">There are no items in your shopping list</p> :
                         groupedList.map((item, index) =>
                             <GroceryItem
@@ -165,6 +201,8 @@ export const ShoppingList = ({
                                 scalePrice={scalePrice}
                                 updatePrice={updatePrice}
                                 calculateTotal={calculateTotal}
+                                apiUrl={apiUrl}
+                                user={user}
                             />
                         )
                     }

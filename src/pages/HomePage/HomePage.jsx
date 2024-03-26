@@ -12,11 +12,13 @@ export const HomePage = ({
     apiUrl,
     externalApiUrl,
     apiKey,
+    token,
     user,
     setUser,
     failedAuth,
     setFailedAuth,
-    recipeList,
+    savedRecipes,
+    setSavedRecipes,
     handleLikeButton,
     open,
     handleClose,
@@ -42,7 +44,7 @@ export const HomePage = ({
         const offset = 0;
         const resultsLimit = 50;
         const mealTypeParam = `&type=${selectedFilter.join(",")}`
-        const recipeParams = `addRecipeNutrition=true${mealTypeParam}`;
+        const recipeParams = `addRecipeInstructions=true&addRecipeNutrition=true${mealTypeParam}`;
         const searchParams = `&number=${resultsLimit}&${recipeParams}&offset=${offset}`
 
         try {
@@ -51,9 +53,12 @@ export const HomePage = ({
                     `${externalApiUrl}/recipes/complexSearch?query=${query}${searchParams}&apiKey=${apiKey}`
                 );
 
-                data.results.map(entry => entry.recipeId = entry.id);
+                data.results.map((entry) => {
+                    entry.recipeId = entry.id;
+                    entry.origServings = entry.servings;
+                });
                 setRecipeData(data);
-                localStorage.setItem("searchResults", JSON.stringify(data));
+                sessionStorage.setItem("searchResults", JSON.stringify(data));
                 calculateEndpointUsage(1, data.results.length);
             }
 
@@ -67,14 +72,12 @@ export const HomePage = ({
     };
 
     useEffect(() => {
-        const token = sessionStorage.getItem("token");
-
         if (!token) {
             return setFailedAuth(true);
         }
 
         axios
-            .get(`${apiUrl}/api/users/current`, {
+            .get(`${apiUrl}/api/user/current`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -87,7 +90,20 @@ export const HomePage = ({
                 setFailedAuth(true);
             });
 
-        setRecipeData(JSON.parse(localStorage.getItem("searchResults")));
+        const fetchSavedRecipes = async () => {
+            try {
+                const { data } = await axios.get(`${apiUrl}/api/recipe/user/${user.id}/saved_recipe`);
+                setSavedRecipes(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        if (user) {
+            fetchSavedRecipes();
+        }
+
+        setRecipeData(JSON.parse(sessionStorage.getItem("searchResults")));
     }, []);
 
     if (failedAuth) {
@@ -112,10 +128,6 @@ export const HomePage = ({
                 <p>Loading...</p>
             </main>
         );
-    }
-
-    if (!recipeData) {
-        return null;
     }
 
     return (
@@ -143,8 +155,8 @@ export const HomePage = ({
             />
 
             <SearchResults
-                results={recipeData.results}
-                recipeList={recipeList}
+                results={recipeData?.results}
+                savedRecipes={savedRecipes}
                 handleLikeButton={handleLikeButton}
             />
         </main>

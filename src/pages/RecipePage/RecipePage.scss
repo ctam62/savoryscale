@@ -6,6 +6,7 @@
     padding: $site-padding;
     @include small-text;
     display: intital;
+    width: 100%;
 
     @include tablet {
         max-width: 90%;

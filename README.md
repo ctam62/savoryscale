@@ -1,5 +1,11 @@
 # SavoryScale
 
+A capstone project from [BrainStation's](https://brainstation.io/) Software Engineering September 2023 bootcamp cohort. The backend server can be found [here](https://github.com/ctam62/savoryscale-api).
+
+## APP Preview
+<img src="./public/images/app_login_preview.png" alt="savoryscale app preview">
+<img src="./public/images/app_preview.png" alt="savoryscale app preview">
+
 ## Overview
 
 Meal planning can be a chore when you have a family to plan around, being an athlete, or simply trying to eat healthier. A web application that helps a user find savory recipes and assists with scaling ingredients for meal planning, meal prep and budget considerations. Access recipes, plan meals and create an grocery list on the go. Whether you are in the kitchen, at the grocery store, or at work, build a grocery list based on your tastes. Explore and experiment with different recipes more confidently with quantity adjustments and estimated meal costs.
@@ -7,7 +13,7 @@ Meal planning can be a chore when you have a family to plan around, being an ath
 
 ### Problem
 
-Meal planning can be a challenging task when you have to scale a recipe up or down for the number of people or meals. This can be a daunting task when planning a week’s worth of meals for a family, athlete, or for convenience; especially when having a healthy and balanced lifestyle. The app helps to scale and tally the ingredients to create a comprehensive grocery list and budget for your trip to the grocery store.
+Meal planning can be a challenging task when you have to scale a recipe up or down for the number of people or meals. This can be a daunting task when planning a week’s worth of meals for a family, athlete, or for convenience; especially when having a healthy and balanced lifestyle. The app helps to scale and tally the ingredients to create a comprehensive grocery list and budget for your next trip to the grocery store.
 
 
 ### User Profile
@@ -33,7 +39,19 @@ This app currently includes the following list of features:
 
 ### Tech Stack
 
-- Vite, React.js, Express.js, Node.js, PostgreSQL
+- Vite
+- Sass
+- React.js
+- Express.js
+  - Knex
+  - cors
+  - jsonwebtoken
+  - bcryptjs
+  - bodyparser
+  - json-case-convertor
+  - pg
+- Node.js
+- PostgreSQL
 
 ### External APIs
 - Spoonacular API
@@ -49,7 +67,6 @@ This app currently includes the following list of features:
 <img src="./public/images/wireframes2.png" alt="app wireframes"/>
 <img src="./public/images/wireframes3.png" alt="app wireframes"/>
 
-
 ### Data
 
 <img src="./public/images/datamap.png" alt="data map" width="400px" />
@@ -61,72 +78,114 @@ This app's API server has the following list of endpoints:
 **HTTP methods:**
 
   - GET endpoints
-    - Retrieve a single user
-      ```
-      /api/users/:id
-      ```
-    - Retrieve a list of recipes for a single user
-      ```
-      /api/users/:id/recipes
-      ```
-    - Retrieve a single recipe from a specific user
-      ```
-      /api/users/:id/recipes/:id
-      ```
-    - Retrieve list of recipes
-      ```
-      /api/recipes
-      ```
-    - Retrieve a single recipe
-      ```
-      /api/recipes/:id
-      ```
     - Retrieve list of meal type filters
       ```
       /api/mealtypes
       ```
+    - Retrieve a single user
+      ```
+      /api/user/:userId
+      ```
+    - Retrieve a list of recipes for a single user
+      ```
+      /api/user/:userId/recipe
+      ```
+    - Retrieve a single recipe for a specific user
+      ```
+      /api/user/:userId/recipe/:recipeId
+      ```
+    - Retrieve a user's shopping list
+      ```
+      /api/user/:userId/shopping
+      ```
+    - Retrieve a list of saved recipes for a single user
+      ```
+      /api/user/:userId/saved_recipe
+      ```
+    - Retrieve a single saved recipe for a specific user
+      ```
+      /api/user/:userId/saved_recipe/:savedRecipeId
+      ```
+    - Retrieve a list of scaled recipes for a single user
+      ```
+      /api/user/:userId/scaled_recipe
+      ```
+    - Retrieve a single scaled recipe for a specific user
+      ```
+      /api/user/:userId/scaled_recipe/:scaledRecipeId
+      ```
+    
 
 - POST endpoints *(sprint 2)*
     - Create a user
       ```
-      /api/users
+      /api/user
       ```
     - Add recipe to a user
       ```
-      /api/users/:id/recipes
+      /api/user/:userId/recipe
       ```
     - Create a recipe
-    ```
-    /api/recipes/
-    ```
+      ```
+      /api/user/:userId/recipe
+      ```
     - Save a scaled recipe
-    ```
-    /api/scaled-recipes/
-    ```
+      ```
+      /api/user/:userId/scaled_recipe
+      ```
+    - Save a recipe
+      ```
+      /api/user/:userId/saved_recipe
+      ```
+    - Add item to shopping list
+      ```
+      /api/user/:userId/shopping
+      ```
       
 - PUT/PATCH, DELETE endpoints *(sprint 2)*
   - Update user info or delete a user
     ```
-    /api/users/:id
+    /api/user/:userId
     ```
   - Delete a user's recipe
     ```
-    /api/users/:id/recipes/:id
+    /api/user/:userId/recipe/:recipeId
     ```
-  - Update a recipe
-  ```
-  /api/recipes/:id
-  ```
-  - Update a scaled recipe
-  ```
-  /api/scaled-recipes/:id
-  ```
+  - Update/Delete a user's recipe
+    ```
+    /api/user/:userId/recipe/:recipeId
+    ```
+  - Delete a user's saved recipe
+    ```
+    /api/user/:userId/saved_recipe/:savedRecipeId
+    ```
+  - Delete all saved recipes for a user
+    ```
+    /api/user/:userId/saved_recipe
+    ```
+  - Update/Delete a user's scaled recipe
+    ```
+    /api/user/:userId/scaled_recipe/:scaledRecipeId
+    ```
+  - Delete all scaled recipes for a user
+    ```
+    /api/user/:userId/scaled_recipe
+    ```
+  - Update/Delete a user's shopping list item
+    ```
+    /api/user/:userId/shopping/:itemId
+    ```
+  - Delete all shopping list items for a user
+    ```
+    /api/user/:userId/shopping
+    ```
+
 
 - RESPONSES: 
   - 200 success for all GET and PUT/PATCH requests
   - 201 created new content for POST requests
   - 404 not found
-  - 403 unauthorized; display if user tries to access user page without logging in
+  - 401 unauthorized; display if user tries to access user page without logging in
   - 400 bad request
   - 500 internal server error
 

@@ -1,50 +1,46 @@
-import '../../styles/form-page.scss';
+import './../../styles/form-page.scss';
 import axios from 'axios';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LogoHeader } from '../../components/LogoHeader/LogoHeader';
-import { SignUpForm } from '../../components/SignUpForm/SignUpForm';
 import { ConfirmationAlert } from '../../components/ConfirmationAlert/ConfirmationAlert';
+import { ForgotPasswordForm } from '../../components/ForgotPasswordForm/ForgotPasswordForm';
 
 
-export const SignUpPage = ({ apiUrl, open, setOpen, handleClose }) => {
-
+export const ForgotPassword = ({ apiUrl, open, setOpen, handleClose }) => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
 
+
     const handleSubmit = (event) => {
         event.preventDefault();
+        const email = event.target.email.value;
 
         axios
-            .post(`${apiUrl}/api/user/register`, {
-                username: event.target.username.value,
-                email: event.target.email.value,
-                password: event.target.password.value,
+            .post(`${apiUrl}/api/user`, {
+                email: email,
             })
-            .then(() => {
+            .then((response) => {
+                const userEmail = response.data.email;
                 setSuccess(true);
                 setOpen(true);
-                setError("");
-                event.target.reset();
+                console.log(`User with email exits! Send email to ${userEmail}`);
             })
             .catch((error) => {
                 setSuccess(false);
                 setOpen(true);
                 setError(error.response.data);
             });
-    };
+    }
 
     return (
         <main className="form-page">
-
             {success && <ConfirmationAlert
                 open={open}
                 handleClose={handleClose}
-                message="Your account has successfully been created."
-                buttonText="Login Here"
+                message="An email has been sent to reset your password."
                 error={false}
-                redirect={true}
-                redirectPath="/login"
+                redirect={false}
             />}
 
             {error && <ConfirmationAlert
@@ -58,24 +54,18 @@ export const SignUpPage = ({ apiUrl, open, setOpen, handleClose }) => {
             <LogoHeader />
 
             <section className="form-page__content">
-                <h2 className="form-page__subheader">Register</h2>
+                <h2 className="form-page__subheader">Forgot password</h2>
 
-                <SignUpForm
+                <ForgotPasswordForm
                     handleSubmit={handleSubmit}
                     success={success}
                     error={error}
                 />
 
                 <div className="form-page__links">
-                    <Link to="/login" className="form-page__nav-link">Already have an account? Login!</Link>
+                    <Link to="/login" className="form-page__nav-link form-page__nav-link--forgot">Back to Login</Link>
                 </div>
-
-                <p className="form-page__terms">By signing up, you are agreeing to our
-                    <Link to="/" className="form-page__nav-link"> User Agreement</Link> and
-                    <Link to="/" className="form-page__nav-link"> Privacy Policy</Link>
-                </p>
             </section>
         </main>
     );
 };
-

@@ -12,16 +12,16 @@ export const ConfirmationAlert = ({ open, handleClose, message, buttonText, erro
         <article className={`confirm ${!open ? "confirm--close" : ""} ${error && "confirm--error"}`}>
             <div className="confirm__content">
                 <div className="confirm__content--left">
-                    {error && <img
+                    {error ? <img
                         className="confirm__icon"
                         src={errorIcon}
                         alt="error icon"
-                    />}
-                    <img
-                        className="confirm__icon"
-                        src={successIcon}
-                        alt="success icon"
-                    />
+                    /> :
+                        <img
+                            className="confirm__icon"
+                            src={successIcon}
+                            alt="success icon"
+                        />}
                     <div className="confirm__message">
                         <p>{message}</p>
 

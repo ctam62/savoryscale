@@ -50,12 +50,12 @@ export const Item = ({
 
     const handleServingChange = () => {
         if (listType === "ingredients") {
-            const storedData = JSON.parse(localStorage.getItem("ingredients"));
+            const storedData = JSON.parse(sessionStorage.getItem("ingredients"));
             if (Object.keys(storedData).length !== 0) {
                 storedData.ingredients[itemId].amount.metric.value = scale(item.amount.metric.value);
                 storedData.ingredients[itemId].amount.us.value = scale(item.amount.us.value);
                 storedData.ingredients[itemId].price = scale(item.price);
-                localStorage.setItem("ingredients", JSON.stringify(storedData));
+                sessionStorage.setItem("ingredients", JSON.stringify(storedData));
             }
         }
     };
