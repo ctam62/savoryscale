@@ -237,3 +237,16 @@ This app will include a user login system in the next sprint update to allow use
   - Allow users with specific dietary needs or restrictions to customize recipes while maintaining accurate nutritional data.
   - Allow users to add/create their own recipes
 - Voice assistance to dictate recipe steps or voice command options
+
+
+## Setup
+1) Install nodeJS dependencies
+    ```
+    npm i
+    ```
+2) Create a .env file with variables from the sample file .env.sample
+
+3) Start the Vite App
+    ```
+    npm run dev
+    ```
