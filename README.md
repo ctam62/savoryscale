@@ -89,19 +89,19 @@ This app's API server has the following list of endpoints:
       ```
     - Retrieve a list of recipes for a single user
       ```
-      /api/user/:userId/recipe
+      /api/recipe/user/:userId/recipe
       ```
     - Retrieve a single recipe for a specific user
       ```
-      /api/user/:userId/recipe/:recipeId
+      /api/recipe/user/:userId/recipe/:recipeId
       ```
     - Retrieve a user's shopping list
       ```
-      /api/user/:userId/shopping
+      /api/shopping/user/:userId
       ```
     - Retrieve a list of saved recipes for a single user
       ```
-      /api/user/:userId/saved_recipe
+      /api/recipe/user/:userId/saved_recipe
       ```
     - Retrieve a single saved recipe for a specific user
       ```
@@ -109,11 +109,11 @@ This app's API server has the following list of endpoints:
       ```
     - Retrieve a list of scaled recipes for a single user
       ```
-      /api/user/:userId/scaled_recipe
+      /api/recipe/user/:userId/scaled_recipe
       ```
     - Retrieve a single scaled recipe for a specific user
       ```
-      /api/user/:userId/scaled_recipe/:scaledRecipeId
+      /api/recipe/user/:userId/scaled_recipe/:scaledRecipeId
       ```
     
 
@@ -124,23 +124,23 @@ This app's API server has the following list of endpoints:
       ```
     - Add recipe to a user
       ```
-      /api/user/:userId/recipe
+      /api/recipe/user/:userId/recipe
       ```
     - Create a recipe
       ```
-      /api/user/:userId/recipe
+      /api/recipe/user/:userId/recipe
       ```
     - Save a scaled recipe
       ```
-      /api/user/:userId/scaled_recipe
+      /api/recipe/user/:userId/scaled_recipe
       ```
     - Save a recipe
       ```
-      /api/user/:userId/saved_recipe
+      /api/recipe/user/:userId/saved_recipe
       ```
     - Add item to shopping list
       ```
-      /api/user/:userId/shopping
+      /api/shopping/user/:userId
       ```
       
 - PUT/PATCH, DELETE endpoints *(sprint 2)*
@@ -150,35 +150,35 @@ This app's API server has the following list of endpoints:
     ```
   - Delete a user's recipe
     ```
-    /api/user/:userId/recipe/:recipeId
+    /api/recipe/user/:userId/recipe/:recipeId
     ```
   - Update/Delete a user's recipe
     ```
-    /api/user/:userId/recipe/:recipeId
+    /api/recipe/user/:userId/recipe/:recipeId
     ```
   - Delete a user's saved recipe
     ```
-    /api/user/:userId/saved_recipe/:savedRecipeId
+    /api/recipe/user/:userId/saved_recipe/:savedRecipeId
     ```
   - Delete all saved recipes for a user
     ```
-    /api/user/:userId/saved_recipe
+    /api/recipe/user/:userId/saved_recipe
     ```
   - Update/Delete a user's scaled recipe
     ```
-    /api/user/:userId/scaled_recipe/:scaledRecipeId
+    /api/recipe/user/:userId/scaled_recipe/:scaledRecipeId
     ```
   - Delete all scaled recipes for a user
     ```
-    /api/user/:userId/scaled_recipe
+    /api/recipe/user/:userId/scaled_recipe
     ```
   - Update/Delete a user's shopping list item
     ```
-    /api/user/:userId/shopping/:itemId
+    /api/shopping/user/:userId/item/:itemId
     ```
   - Delete all shopping list items for a user
     ```
-    /api/user/:userId/shopping
+    /api/shopping/user/:userId
     ```
 
 
