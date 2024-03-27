@@ -241,13 +241,17 @@ This app will include a user login system in the next sprint update to allow use
 <br>
 
 ## Setup
-1) Install nodeJS dependencies
+Requirements for before running the client side application:
+1) Follow the instructions to setup the [backend API server](https://github.com/ctam62/savoryscale-api).
+
+2) Install nodeJS dependencies
     ```
     npm i
     ```
-2) Create a .env file with variables from the sample file .env.sample
+3) Create a .env file with variables from the sample file .env.sample
 
-3) Start the Vite App
+4) Start the Vite App
     ```
     npm run dev
     ```
+
