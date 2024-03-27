@@ -238,6 +238,7 @@ This app will include a user login system in the next sprint update to allow use
   - Allow users to add/create their own recipes
 - Voice assistance to dictate recipe steps or voice command options
 
+<br>
 
 ## Setup
 1) Install nodeJS dependencies
